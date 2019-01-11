@@ -1,0 +1,10 @@
+{
+  "manifest_version": 2,
+  "name": "React Quantum",
+  "version": "1.0.0",
+  "devtools_page": "devtools.html",
+  "content_security_policy": "script-src 'self'; object-src 'self'",
+  "permissions": [
+    "tabs"
+  ]
+}
