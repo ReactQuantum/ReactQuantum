@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { render } from 'react-dom';
+
 import TreeComponent from './components/TreeComponent'
 import Button from './components/Button'
-
 
 class App extends Component {
   constructor() {
@@ -26,10 +26,12 @@ class App extends Component {
   render() {
     return (
       <div>
+
         <h1>Hello World!</h1>
         <Button id={'button1'} clicked={this.clicked} counter={this.state.button1counter}></Button>
         <Button id={'button2'} clicked={this.clicked} counter={this.state.button2counter}></Button>
         <TreeComponent></TreeComponent>
+
       </div>
 
     )
