@@ -6,10 +6,9 @@ const myTreeData = [
     name: 'Top Level',
     attributes: {
       keyA: 'val A',
-      keyB: 'val B',
-      keyC: 'val c'
+      keyA: 'val B',
+      keyA: 'val c'
     },
-    stats: "SOMETHING!",
     children: [
       {
         name: 'Level 2: A',
@@ -17,7 +16,7 @@ const myTreeData = [
           shape: 'rect',
           shapeProps: {
             width: 20,
-            height: 40,
+            height: 20,
             x: -10,
             y: -10,
           }
@@ -60,8 +59,7 @@ const svgEllipse = {
 }
 
 
-
-class TreeComponent extends React.Component {
+export default class TreeComponent extends React.Component {
   constructor(props) {
     super(props);
     this.handleOnClick = this.handleOnClick.bind(this);
@@ -69,16 +67,17 @@ class TreeComponent extends React.Component {
   }
 
   handleOnClick(e) {
-    // console.log('/sdlfjdsl', this)
+    console.log('/sdlfjdsl', this)
     if (this.state.shape === svgSquare) {
       this.setState({shape: svgEllipse});
     } else {
       this.setState({shape: svgSquare});
     }
+
   }
 
   render() {
-
+    console.log(this.props)
     return (
 
       <div id="treeWrapper" style={{width: '50em', height: '20em'}}>
@@ -90,6 +89,3 @@ class TreeComponent extends React.Component {
     );
   }
 }
-
-
-export default TreeComponent;
