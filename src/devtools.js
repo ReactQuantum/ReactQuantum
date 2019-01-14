@@ -1,30 +1,37 @@
 import React, { Component } from 'react';
 import { render } from 'react-dom';
-import ComponentTree from './ComponentTree.js';
+
+import TreeComponent from './components/TreeComponent'
+import Button from './components/Button'
 
 class App extends Component {
   constructor() {
     super();
     this.state = {
-      counter: 0
+      button1counter: 0,
+      button2counter: 0
     }
 
     this.clicked = this.clicked.bind(this)
-    chrome.devtools.panels.create("Ceveritas", null, "devtools.html");
+    chrome.devtools.panels.create("React Quantum", null, "devtools.html");
   }
-  clicked() {
-    let counter = this.state.counter + 1
-    console.log(counter)
-    this.setState({
-      counter: counter
-    })
+  clicked(e) {
+    let counterId = `${e.target.id}counter`
+    let counter = this.state[counterId] + 1
+
+    let updateCounter = {}
+    updateCounter[counterId] = counter
+    this.setState(updateCounter)
   }
   render() {
     return (
       <div>
-        <h1>Hello!</h1>
-        <button onClick={this.clicked} style={{ width: 75, height: 45 }}>{this.state.counter}</button>
-        <ComponentTree/>
+
+        <h1>Hello World!</h1>
+        <Button id={'button1'} clicked={this.clicked} counter={this.state.button1counter}></Button>
+        <Button id={'button2'} clicked={this.clicked} counter={this.state.button2counter}></Button>
+        <TreeComponent></TreeComponent>
+
       </div>
 
     )
