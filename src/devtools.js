@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { render } from 'react-dom';
+import ComponentTree from './ComponentTree.js';
 
 class App extends Component {
   constructor() {
@@ -23,6 +24,7 @@ class App extends Component {
       <div>
         <h1>Hello!</h1>
         <button onClick={this.clicked} style={{ width: 75, height: 45 }}>{this.state.counter}</button>
+        <ComponentTree/>
       </div>
 
     )
