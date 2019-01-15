@@ -81,7 +81,7 @@ class TreeComponent extends React.Component {
 
     return (
 
-      <div id="treeWrapper" style={{width: '50em', height: '20em'}}>
+      <div id="treeWrapper" style={{width: '100%', height: '20em'}}>
 
         <Tree orientation='vertical' onClick={this.handleOnClick} nodeSvgShape={this.state.shape} separation={{siblings: .3,nonSiblings: .3}} data={myTreeData} />
 
