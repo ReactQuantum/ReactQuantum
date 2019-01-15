@@ -13,6 +13,7 @@ const myTreeData = [
     children: [
       {
         name: 'Level 2: A',
+        stats: '100ms',
         nodeSvgShape: {
           shape: 'rect',
           shapeProps: {
@@ -26,7 +27,7 @@ const myTreeData = [
         attributes: {
           keyA: 'val A',
         },
-        children: [{name: 'Jen', separation: {siblings: 20, nonSiblings: 20}}, {name: 'john'},{name: 'Jen'}, {name: 'john'},{name: 'Jen'}, {name: 'john'}]
+        children: [{name: 'Jen',stats: '101ms', separation: {siblings: 20, nonSiblings: 20}}, {name: 'john',stats: '102ms',},{name: 'Jen',stats: '103ms',}, {name: 'john',stats: '120ms',},{name: 'Jen',stats: '1111ms',}, {name: 'john', stats: '120ms',}]
       },
       {
         name: 'Level 2: B',
@@ -70,11 +71,13 @@ class TreeComponent extends React.Component {
 
   handleOnClick(e) {
     // console.log('/sdlfjdsl', this)
-    if (this.state.shape === svgSquare) {
-      this.setState({shape: svgEllipse});
-    } else {
-      this.setState({shape: svgSquare});
-    }
+    // if (this.state.shape === svgSquare) {
+    //   this.setState({shape: svgEllipse});
+    // } else {
+    //   this.setState({shape: svgSquare});
+    // }
+    let info = e.stats;
+    this.props.grabNodeStats(info);
   }
 
   render() {
