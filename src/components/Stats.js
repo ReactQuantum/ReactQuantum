@@ -5,15 +5,15 @@ class Stats extends React.Component {
       super(props);
    }
 
-    
-  
+
+
     render() {
         return (
         <div>
-           <h1>{this.props.stats}</h1> 
+           <h1>{this.props.stats}</h1>
         </div>
       )
-        
+
     }
   }
 

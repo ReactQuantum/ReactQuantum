@@ -27,7 +27,7 @@ const myTreeData = [
         attributes: {
           keyA: 'val A',
         },
-        children: [{name: 'Jen',stats: '101ms', separation: {siblings: 20, nonSiblings: 20}}, {name: 'john',stats: '102ms',},{name: 'Jen',stats: '103ms',}, {name: 'john',stats: '120ms',},{name: 'Jen',stats: '1111ms',}, {name: 'john', stats: '120ms',}]
+        children: [{name: 'Jen',stats: '101ms', separation: {siblings: 20, nonSiblings: 20}}, {name: 'john',stats: '102ms',},{name: 'Jen',stats: '103ms',}, {name: 'john',stats: '120ms',},{name: 'Jen',stats: '1111ms',}, {name: 'john',stats: '120ms',}]
       },
       {
         name: 'Level 2: B',
