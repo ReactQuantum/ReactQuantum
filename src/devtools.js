@@ -41,6 +41,10 @@ class App extends Component {
   grabNodeStats(stats) {
     this.setState({ nodeinfo: stats })
   }
+  grabNodeStats(stats) {
+    this.setState({ nodeinfo: stats })
+  }
+
   render() {
     return (
       <div>
