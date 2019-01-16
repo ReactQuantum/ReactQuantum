@@ -23,6 +23,10 @@ class App extends Component {
     updateCounter[counterId] = counter
     this.setState(updateCounter)
   }
+  componentDidMount() {
+    let port = chrome.runtime.connect({ name: 'dev-bg' });
+    port.postMessage("yo wdup");
+  }
   render() {
     return (
       <div>

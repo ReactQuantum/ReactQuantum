@@ -25,16 +25,16 @@ const myTreeData = [
         attributes: {
           keyA: 'val A',
         },
-        children: [{name: 'Jen', separation: {siblings: 20, nonSiblings: 20}}, {name: 'john'},{name: 'Jen'}, {name: 'john'},{name: 'Jen'}, {name: 'john'}]
+        children: [{ name: 'Jen', separation: { siblings: 20, nonSiblings: 20 } }, { name: 'john' }, { name: 'Jen' }, { name: 'john' }, { name: 'Jen' }, { name: 'john' }]
       },
       {
         name: 'Level 2: B',
-        children: [{name: 'Jen'}, {name: 'john'},{name: 'Jen'}, {name: 'john'},{name: 'Jen'}, {name: 'john'}]
+        children: [{ name: 'Jen' }, { name: 'john' }, { name: 'Jen' }, { name: 'john' }, { name: 'Jen' }, { name: 'john' }]
       },
       {
         name: 'Level 2: C',
-        attributes: {color: 'red'},
-        children: [{name: 'Jen'}, {name: 'john'},{name: 'Jen'}, {name: 'john'},{name: 'Jen'}, {name: 'john'}]
+        attributes: { color: 'red' },
+        children: [{ name: 'Jen' }, { name: 'john' }, { name: 'Jen' }, { name: 'john' }, { name: 'Jen' }, { name: 'john' }]
       },
     ],
   },
@@ -51,9 +51,9 @@ const svgSquare = {
 }
 
 const svgEllipse = {
-  shape:'ellipse',
+  shape: 'ellipse',
   shapeProps: {
-    rx:20,
+    rx: 20,
     ry: 10
   }
 }
@@ -63,26 +63,26 @@ export default class TreeComponent extends React.Component {
   constructor(props) {
     super(props);
     this.handleOnClick = this.handleOnClick.bind(this);
-    this.state = {shape: svgSquare, count: 0};
+    this.state = { shape: svgSquare, count: 0 };
   }
 
   handleOnClick(e) {
-    console.log('/sdlfjdsl', this)
+
     if (this.state.shape === svgSquare) {
-      this.setState({shape: svgEllipse});
+      this.setState({ shape: svgEllipse });
     } else {
-      this.setState({shape: svgSquare});
+      this.setState({ shape: svgSquare });
     }
 
   }
 
   render() {
-    console.log(this.props)
+
     return (
 
-      <div id="treeWrapper" style={{width: '50em', height: '20em'}}>
+      <div id="treeWrapper" style={{ width: '50em', height: '20em' }}>
 
-        <Tree orientation='vertical' onClick={this.handleOnClick} nodeSvgShape={this.state.shape} separation={{siblings: .3,nonSiblings: .3}} data={myTreeData} />
+        <Tree orientation='vertical' onClick={this.handleOnClick} nodeSvgShape={this.state.shape} separation={{ siblings: .3, nonSiblings: .3 }} data={myTreeData} />
 
       </div>
 
