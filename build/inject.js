@@ -10,21 +10,16 @@ for (let i of a.values()) {
 
 let nextUnitOfWork = current;
 let pushTarget = filter(current);
+let prev
 let temp = [pushTarget];
-//console.log(current);
+console.log(current);
 function workLoop() {
   //as long as there's nextUnitOfWork, continue the loop
   while (nextUnitOfWork !== null) {
     nextUnitOfWork = performUnitOfWork(nextUnitOfWork);
   }
-
-  console.log('inside inject.js', temp);
-  window.postMessage({
-    type: "injected",
-    data: temp
-  }, '*')
-
-
+  delete temp[0].return
+  console.log(JSON.stringify(temp));
 }
 
 function performUnitOfWork(workInProgress) {
@@ -49,6 +44,7 @@ function beginWork(workInProgress) {
     pushTarget = pushTarget.return;
     pushedFiber = filter(workInProgress.sibling);
     pushTarget.children.push(pushedFiber);
+    // delete pushTarget.return
   } else if (workInProgress.return.sibling !== null) {
     //if it doesn't have child and sibling, it's time to process its parent's sibling
     //its parent and sibling have the same parent.
@@ -57,9 +53,19 @@ function beginWork(workInProgress) {
     pushedFiber = filter(workInProgress.return.sibling);
     pushTarget.children.push(pushedFiber);
     pushTarget = pushedFiber;
+
+  } else {
+    pushTarget = pushTarget.return;
   }
 
+
   return workInProgress.child;
+}
+
+function delChildReturn(arr) {
+  for (let i = 0; i < arr.length; i++) {
+    delete arr[i].return
+  }
 }
 
 function filter(fiber) {
@@ -81,7 +87,6 @@ function filter(fiber) {
       name = "Unknown"
     }
   }
-
 
   let filteredFiber = {
     name: name,
@@ -108,7 +113,12 @@ function completeUnitOfWork(workInProgress) {
       // If there is a sibling, return it to perform work for this sibling
       return siblingFiber;
     } else if (returnFiber !== null) {
-      // If there's no more work in this returnFiber,continue the loop to complete the returnFiber.
+      // If there's no more work in this returnFiber, continue the loop to complete the returnFiber.
+      if (pushTarget.return !== null) {
+        if (pushTarget.children[0] !== undefined && pushTarget.children[0].return === undefined) {
+          pushTarget = pushTarget.return
+        }
+      }
       workInProgress = returnFiber;
       continue;
     } else {
@@ -119,6 +129,9 @@ function completeUnitOfWork(workInProgress) {
 }
 
 function completeWork(workInProgress) {
+  if (pushTarget !== null && pushTarget.children[0] !== undefined) {
+    delChildReturn(pushTarget.children)
+  }
   return null;
 }
 workLoop();
