@@ -35,7 +35,7 @@ class App extends Component {
       tabId: chrome.devtools.inspectedWindow.tabId
     });
     port.onMessage.addListener(message => {
-      console.log("from devtools", message)
+      console.log("from devtool", message)
     })
   }
   grabNodeStats(stats) {
@@ -49,7 +49,6 @@ class App extends Component {
         <Button id={'button2'} clicked={this.clicked} counter={this.state.button2counter}></Button>
         <TreeComponent grabNodeStats={this.grabNodeStats}></TreeComponent>
         <Stats stats={this.state.nodeinfo}></Stats>
-
       </div>
 
     )
