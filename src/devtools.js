@@ -27,8 +27,22 @@ class App extends Component {
     this.setState(updateCounter)
 
   }
+  componentDidMount() {
+    console.log("Component DID IN FACT mount")
+    let port = chrome.runtime.connect({ name: 'dev-bg' });
+    port.postMessage({
+      name: 'devtool',
+      tabId: chrome.devtools.inspectedWindow.tabId
+    });
+    port.onMessage.addListener(message => {
+      console.log("from devtool", message)
+    })
+  }
   grabNodeStats(stats) {
-    this.setState({nodeinfo: stats})
+    this.setState({ nodeinfo: stats })
+  }
+  grabNodeStats(stats) {
+    this.setState({ nodeinfo: stats })
   }
 
   render() {
@@ -39,7 +53,6 @@ class App extends Component {
         <Button id={'button2'} clicked={this.clicked} counter={this.state.button2counter}></Button>
         <TreeComponent grabNodeStats={this.grabNodeStats}></TreeComponent>
         <Stats stats={this.state.nodeinfo}></Stats>
-
       </div>
 
     )
