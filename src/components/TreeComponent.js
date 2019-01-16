@@ -9,7 +9,7 @@ const myTreeData = [
       keyB: 'val B',
       keyC: 'val c'
     },
-    stats: "ANYTHING AT ALL!!!!!",
+    stats: "ANYTHING AT ALL!",
     children: [
       {
         name: 'Level 2: A',
@@ -27,16 +27,16 @@ const myTreeData = [
         attributes: {
           keyA: 'val A',
         },
-        children: [{name: 'Jen',stats: '101ms', separation: {siblings: 20, nonSiblings: 20}}, {name: 'john',stats: '102ms',},{name: 'Jen',stats: '103ms',}, {name: 'john',stats: '120ms',},{name: 'Jen',stats: '1111ms',}, {name: 'john',stats: '120ms',}]
+        children: [{ name: 'Jen', stats: '101ms', separation: { siblings: 20, nonSiblings: 20 } }, { name: 'john', stats: '102ms', }, { name: 'Jen', stats: '103ms', }, { name: 'john', stats: '120ms', }, { name: 'Jen', stats: '1111ms', }, { name: 'john', stats: '120ms', }]
       },
       {
         name: 'Level 2: B',
-        children: [{name: 'Jen'}, {name: 'john'},{name: 'Jen'}, {name: 'john'},{name: 'Jen'}, {name: 'john'}]
+        children: [{ name: 'Jen' }, { name: 'john' }, { name: 'Jen' }, { name: 'john' }, { name: 'Jen' }, { name: 'john' }]
       },
       {
         name: 'Level 2: C',
-        attributes: {color: 'red'},
-        children: [{name: 'Jen'}, {name: 'john'},{name: 'Jen'}, {name: 'john'},{name: 'Jen'}, {name: 'john'}]
+        attributes: { color: 'red' },
+        children: [{ name: 'Jen' }, { name: 'john' }, { name: 'Jen' }, { name: 'john' }, { name: 'Jen' }, { name: 'john' }]
       },
     ],
   },
@@ -53,9 +53,9 @@ const svgSquare = {
 }
 
 const svgEllipse = {
-  shape:'ellipse',
+  shape: 'ellipse',
   shapeProps: {
-    rx:20,
+    rx: 20,
     ry: 10
   }
 }
@@ -90,7 +90,7 @@ class TreeComponent extends React.Component {
 
     return (
 
-      <div id="treeWrapper" style={{width: '100%', height: '20em'}}>
+      <div id="treeWrapper" style={{ width: '100%', height: '20em' }}>
 
         <Tree orientation='vertical' onMouseOver={this.mouseOver} nodeSvgShape={this.state.shape} separation={{siblings: .3,nonSiblings: .3}} data={myTreeData} />
 
