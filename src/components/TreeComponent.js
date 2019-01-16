@@ -9,7 +9,7 @@ const myTreeData = [
       keyB: 'val B',
       keyC: 'val c'
     },
-    stats: "SOMETHING!",
+    stats: "ANYTHING AT ALL!!!!!",
     children: [
       {
         name: 'Level 2: A',
@@ -65,17 +65,23 @@ const svgEllipse = {
 class TreeComponent extends React.Component {
   constructor(props) {
     super(props);
-    this.handleOnClick = this.handleOnClick.bind(this);
+    this.mouseOver = this.mouseOver.bind(this);
     this.state = {shape: svgSquare, count: 0};
   }
 
-  handleOnClick(e) {
-    // console.log('/sdlfjdsl', this)
-    // if (this.state.shape === svgSquare) {
-    //   this.setState({shape: svgEllipse});
-    // } else {
-    //   this.setState({shape: svgSquare});
-    // }
+  // handleOnClick(e) {
+  //   // console.log('/sdlfjdsl', this)
+  //   // if (this.state.shape === svgSquare) {
+  //   //   this.setState({shape: svgEllipse});
+  //   // } else {
+  //   //   this.setState({shape: svgSquare});
+  //   // }
+  //   let info = e.stats;
+  //   this.props.grabNodeStats(info);
+  // }
+
+  
+  mouseOver(e) {
     let info = e.stats;
     this.props.grabNodeStats(info);
   }
@@ -86,7 +92,7 @@ class TreeComponent extends React.Component {
 
       <div id="treeWrapper" style={{width: '100%', height: '20em'}}>
 
-        <Tree orientation='vertical' onClick={this.handleOnClick} nodeSvgShape={this.state.shape} separation={{siblings: .3,nonSiblings: .3}} data={myTreeData} />
+        <Tree orientation='vertical' onMouseOver={this.mouseOver} nodeSvgShape={this.state.shape} separation={{siblings: .3,nonSiblings: .3}} data={myTreeData} />
 
       </div>
 
