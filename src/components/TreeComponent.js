@@ -9,7 +9,7 @@ const myTreeData = [
       keyB: 'val B',
       keyC: 'val c'
     },
-    stats: "ANYTHING AT ALL!",
+    stats: "ANYTHING AT ALL!!!",
     children: [
       {
         name: 'Level 2: A',
