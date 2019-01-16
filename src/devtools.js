@@ -24,8 +24,15 @@ class App extends Component {
     this.setState(updateCounter)
   }
   componentDidMount() {
+    console.log("Component DID IN FACT mount")
     let port = chrome.runtime.connect({ name: 'dev-bg' });
-    port.postMessage("yo wdup");
+    port.postMessage({
+      name: 'devtool',
+      tabId: chrome.devtools.inspectedWindow.tabId
+    });
+    port.onMessage.addListener(message => {
+      console.log("from devtools", message)
+    })
   }
   render() {
     return (

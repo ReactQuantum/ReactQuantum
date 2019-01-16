@@ -28,10 +28,10 @@ window.addEventListener('message', e => {
   if (e.data.type == 'injected') {
     fiberRoot = e.data.data;
     console.log(fiberRoot)
-    chrome.runtime.sendMessage(
+    port.postMessage(
       {
-        type: "content-script",
-        message: fiberRoot
+        name: "fiberRoot",
+        message: "fiberRoot"
       }
     )
   } else {
