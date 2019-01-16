@@ -7,9 +7,28 @@
   "permissions": [
     "tabs"
   ],
+  "content_scripts": [
+    {
+      "run_at": "document_end",
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "contentScript.js"
+      ]
+    }
+  ],
   "background": {
     "scripts": [
       "backgroundScript.js"
+    ]
+  },
+  "web_accessible_resources": [
+    "inject.js"
+  ],
+  "externally_connectable": {
+    "ids": [
+      "*"
     ]
   }
 }
