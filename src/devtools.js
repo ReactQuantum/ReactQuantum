@@ -18,6 +18,7 @@ class App extends Component {
     this.clicked = this.clicked.bind(this);
     chrome.devtools.panels.create("React Quantum", null, "devtools.html");
   }
+
   clicked(e) {
     let counterId = `${e.target.id}counter`
     let counter = this.state[counterId] + 1
@@ -51,8 +52,8 @@ class App extends Component {
         <h1>Hello World!</h1>
         <Button id={'button1'} clicked={this.clicked} counter={this.state.button1counter}></Button>
         <Button id={'button2'} clicked={this.clicked} counter={this.state.button2counter}></Button>
-        <TreeComponent grabNodeStats={this.grabNodeStats}></TreeComponent>
         <Stats stats={this.state.nodeinfo}></Stats>
+        <TreeComponent grabNodeStats={this.grabNodeStats}></TreeComponent>
       </div>
 
     )

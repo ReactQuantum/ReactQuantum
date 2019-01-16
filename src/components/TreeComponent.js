@@ -1,8 +1,14 @@
 import React from 'react';
 import Tree from 'react-d3-tree';
 
-<<<<<<< HEAD
-
+const test1 = {
+  name: 'Level 2: C',
+  children: [{name: 'Level 3C: A', stats: '101ms'},
+  {name: 'Level 3C: B', stats: '102ms'},
+  {name: 'Level 3C: C', stats: '103ms'},
+  {name: 'Level 3C: D', stats: '120ms'},
+  {name: 'Level 3C: E', stats: '1111ms'}]
+};
 
 const test2 = {
   name: 'Level 2: C',
@@ -13,53 +19,7 @@ const test2 = {
   {name: 'Level 3C: E', stats: '1111ms'}]
 };
 
-const myTreeData = test1;
-=======
-const myTreeData = [
-  {
-    name: 'Top Level',
-    attributes: {
-      keyA: 'val A',
-      keyB: 'val B',
-      keyC: 'val c'
-    },
-    stats: "SOMETHING!",
-    children: [
-      {
-        name: 'Level 2: A',
-        stats: '100ms',
-        nodeSvgShape: {
-          shape: 'rect',
-          shapeProps: {
-            width: 20,
-            height: 40,
-            x: -10,
-            y: -10,
-          }
-        },
-
-        attributes: {
-          keyA: 'val A',
-        },
-<<<<<<< HEAD
-        children: [{ name: 'Jen', stats: '101ms', separation: { siblings: 20, nonSiblings: 20 } }, { name: 'john', stats: '102ms', }, { name: 'Jen', stats: '103ms', }, { name: 'john', stats: '120ms', }, { name: 'Jen', stats: '1111ms', }, { name: 'john', stats: '120ms', }]
-=======
-        children: [{name: 'Jen',stats: '101ms', separation: {siblings: 20, nonSiblings: 20}}, {name: 'john',stats: '102ms',},{name: 'Jen',stats: '103ms',}, {name: 'john',stats: '120ms',},{name: 'Jen',stats: '1111ms',}, {name: 'john',stats: '120ms',}]
->>>>>>> e20a216fa1191185b6da37d842f1fe3c0e257b6c
-      },
-      {
-        name: 'Level 2: B',
-        children: [{ name: 'Jen' }, { name: 'john' }, { name: 'Jen' }, { name: 'john' }, { name: 'Jen' }, { name: 'john' }]
-      },
-      {
-        name: 'Level 2: C',
-        attributes: { color: 'red' },
-        children: [{ name: 'Jen' }, { name: 'john' }, { name: 'Jen' }, { name: 'john' }, { name: 'Jen' }, { name: 'john' }]
-      },
-    ],
-  },
-];
->>>>>>> f9559673f84ae3908e71f23ced498d3bf39d89c1
+const myTreeData = test2;
 
 const svgSquare = {
   shape: 'rect',
@@ -72,9 +32,9 @@ const svgSquare = {
 }
 
 const svgEllipse = {
-  shape: 'ellipse',
+  shape:'ellipse',
   shapeProps: {
-    rx: 20,
+    rx:20,
     ry: 10
   }
 }
@@ -85,7 +45,7 @@ class TreeComponent extends React.Component {
   constructor(props) {
     super(props);
     this.handleOnClick = this.handleOnClick.bind(this);
-    this.state = { shape: svgSquare, count: 0 };
+    this.state = {shape: svgSquare, count: 0};
   }
 
   handleOnClick(e) {
@@ -101,24 +61,16 @@ class TreeComponent extends React.Component {
 
 
   componentWillUpdate () {
-    
+
   }
 
   render() {
 
     return (
 
-<<<<<<< HEAD
       <div id="treeWrapper" style={{width: '100%', height: '50em'}}>
-=======
-<<<<<<< HEAD
-      <div id="treeWrapper" style={{ width: '100%', height: '20em' }}>
-=======
-      <div id="treeWrapper" style={{width: '100%', height: '20em'}}>
->>>>>>> e20a216fa1191185b6da37d842f1fe3c0e257b6c
->>>>>>> f9559673f84ae3908e71f23ced498d3bf39d89c1
 
-        <Tree orientation='vertical' onClick={this.handleOnClick} nodeSvgShape={this.state.shape} separation={{ siblings: .3, nonSiblings: .3 }} data={myTreeData} />
+        <Tree orientation='vertical' onClick={this.handleOnClick} nodeSvgShape={this.state.shape} separation={{siblings: .3,nonSiblings: .3}} data={myTreeData} />
 
       </div>
 
