@@ -197,4 +197,3 @@ workLoop();
 // } else {
 //   console.log('can\'t hook to react')
 // }
-

@@ -60,6 +60,8 @@ class App extends Component {
     });
     port.onMessage.addListener(message => {
       console.log("fiberNode here in devtool", message.message)
+      //in here call setState
+      //message.message
     })
   }
 
