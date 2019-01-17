@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { render } from 'react-dom';
+import image from './public/reactQuantumLogo.png';
 
 import TreeComponent from './components/TreeComponent'
 import Stats from './components/Stats'
-import Button from './components/Button'
 
 class App extends Component {
   constructor() {
@@ -47,10 +47,8 @@ class App extends Component {
 
   render() {
     return (
-      <div>
-        <h1>Hello World!</h1>
-        <Button id={'button1'} clicked={this.clicked} counter={this.state.button1counter}></Button>
-        <Button id={'button2'} clicked={this.clicked} counter={this.state.button2counter}></Button>
+      <div> 
+        <img src={image} />
         <TreeComponent grabNodeStats={this.grabNodeStats}></TreeComponent>
         <Stats stats={this.state.nodeinfo}></Stats>
       </div>

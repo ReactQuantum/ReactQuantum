@@ -10,20 +10,21 @@ const myTreeData = [
       keyB: 'val B',
       keyC: 'val c'
     },
-    stats: "ANYTHING AT ALL!!",
+    stats: "CHANGED TO CIRCLE AGAIN!!!",
     children: [
       {
         name: 'Level 2: A',
         stats: '100ms',
-        nodeSvgShape: {
-          shape: 'rect',
-          shapeProps: {
-            width: 20,
-            height: 40,
-            x: -10,
-            y: -10,
-          }
-        },
+
+        // nodeSvgShape: {
+        //   shape: 'circle',
+        //   shapeProps: {
+        //     width: 20,
+        //     height: 40,
+        //     x: -10,
+        //     y: -10,
+        //   }
+        // },
 
         attributes: {
           keyA: 'val A',
@@ -43,15 +44,15 @@ const myTreeData = [
   },
 ];
 
-const svgSquare = {
-  shape: 'rect',
-  shapeProps: {
-    width: 20,
-    height: 20,
-    x: -10,
-    y: -10,
-  }
-}
+// const svgSquare = {
+//   shape: 'rect',
+//   shapeProps: {
+//     width: 20,
+//     height: 20,
+//     x: -10,
+//     y: -10,
+//   }
+// }
 
 const svgEllipse = {
   shape: 'ellipse',
@@ -61,13 +62,20 @@ const svgEllipse = {
   }
 }
 
+const svgCircle = {
+  shape: 'circle',
+  shapeProps: {
+    r: 15,
+    fill: "green"
+  }
+}
 
 
 class TreeComponent extends React.Component {
   constructor(props) {
     super(props);
     this.mouseOver = this.mouseOver.bind(this);
-    this.state = {shape: svgSquare, count: 0};
+    this.state = {shape: svgCircle, count: 0};
   }
 
   // handleOnClick(e) {
