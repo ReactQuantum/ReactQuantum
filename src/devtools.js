@@ -5,16 +5,31 @@ import TreeComponent from './components/TreeComponent'
 import Stats from './components/Stats'
 import Button from './components/Button'
 
+
+
 class App extends Component {
   constructor() {
     super();
     this.state = {
       button1counter: 0,
       button2counter: 0,
-      nodeinfo: 5
+      orientation: 'vertical',
+      nodeinfo: 5,
+      treeData: {
+          name: 'Level 2: C',
+          time: '100000ms',
+          children: [
+              {name: 'Level 3C: A', time: '101ms'},
+              {name: 'Level 3C: B', time: '102ms', nodeSvgShape: {shapeProps: {width: 20, height: 20, x: -10, y: -10, fill: 'green'}}},
+              {name: 'Level 3C: C', time: '103ms'},
+              {name: 'Level 3C: D', time: '120ms'},
+              {name: 'Level 3C: E', time: '1111ms'}
+            ]
+          }
     }
 
     this.grabNodeStats = this.grabNodeStats.bind(this);
+    this.changeOrientation = this.changeOrientation.bind(this);
     this.clicked = this.clicked.bind(this);
     chrome.devtools.panels.create("React Quantum", null, "devtools.html");
   }
@@ -28,6 +43,14 @@ class App extends Component {
     this.setState(updateCounter)
 
   }
+
+  changeOrientation() {
+    if (this.state.orientation === 'vertical') {
+      this.setState({orientation: 'horizontal'})
+    } else {
+      this.setState({orientation: 'vertical'})
+    }
+  }
   componentDidMount() {
     console.log("Component DID IN FACT mount")
     let port = chrome.runtime.connect({ name: 'dev-bg' });
@@ -39,25 +62,25 @@ class App extends Component {
       console.log("from devtool", message)
     })
   }
+
   grabNodeStats(stats) {
-    this.setState({ nodeinfo: stats })
+    this.setState({ nodeinfo: {time: stats.time, name: stats.name }})
   }
-  grabNodeStats(stats) {
-    this.setState({ nodeinfo: stats })
-  }
+
 
   render() {
     return (
       <div>
         <h1>Hello World!</h1>
         <Button id={'button1'} clicked={this.clicked} counter={this.state.button1counter}></Button>
-        <Button id={'button2'} clicked={this.clicked} counter={this.state.button2counter}></Button>
+        <Button id={'button2'} clicked={this.changeOrientation} counter='Orientation'></Button>
         <Stats stats={this.state.nodeinfo}></Stats>
-        <TreeComponent grabNodeStats={this.grabNodeStats}></TreeComponent>
+        <TreeComponent orientation={this.state.orientation} treeData={this.state.treeData} grabNodeStats={this.grabNodeStats}></TreeComponent>
       </div>
 
     )
   }
 }
+
 
 render(<App />, document.getElementById('root'));
