@@ -55,11 +55,11 @@ class App extends Component {
     console.log("Component DID IN FACT mount")
     let port = chrome.runtime.connect({ name: 'dev-bg' });
     port.postMessage({
-      name: 'devtool',
+      name: 'initialize',
       tabId: chrome.devtools.inspectedWindow.tabId
     });
     port.onMessage.addListener(message => {
-      console.log("from devtool", message)
+      console.log("fiberNode here in devtool", message.message)
     })
   }
 
