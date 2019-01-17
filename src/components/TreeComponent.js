@@ -89,7 +89,7 @@ const svgEllipse = {
   shape:'ellipse',
   shapeProps: {
     rx: 20,
-    ry: 10
+    ry: 20
   }
 }
 //function to be put in componentWillUpdate to change render times into individual render times and add color property accordingly
@@ -107,7 +107,7 @@ class TreeComponent extends React.Component {
   constructor(props) {
     super(props);
     this.mouseOver = this.mouseOver.bind(this);
-    this.state = {shape: svgSquare};
+    this.state = {shape: svgEllipse};
   }
 
   mouseOver(e) {
