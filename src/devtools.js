@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { render } from 'react-dom';
-import image from './public/reactQuantumLogo.png';
+import image from './public/assets/reactQuantumLogo.png';
 
 import TreeComponent from './components/TreeComponent'
 import Stats from './components/Stats'
@@ -46,6 +46,7 @@ class App extends Component {
   }
 
   render() {
+
     return (
       <div> 
         <img src={image} />
