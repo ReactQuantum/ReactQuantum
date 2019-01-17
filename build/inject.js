@@ -19,7 +19,11 @@ function workLoop() {
     nextUnitOfWork = performUnitOfWork(nextUnitOfWork);
   }
   delete temp[0].return
-  console.log(JSON.stringify(temp));
+  window.postMessage({
+    name: "fiberRoot",
+    data: temp
+  })
+  console.log(JSON.parse(JSON.stringify(temp)));
 }
 
 function performUnitOfWork(workInProgress) {
