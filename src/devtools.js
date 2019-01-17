@@ -16,16 +16,16 @@ class App extends Component {
       orientation: 'vertical',
       nodeinfo: 5,
       treeData: {
-          name: 'Level 2: C',
-          time: '100000ms',
-          children: [
-              {name: 'Level 3C: A', time: '101ms'},
-              {name: 'Level 3C: B', time: '102ms', nodeSvgShape: {shapeProps: {width: 20, height: 20, x: -10, y: -10, fill: 'green'}}},
-              {name: 'Level 3C: C', time: '103ms'},
-              {name: 'Level 3C: D', time: '120ms'},
-              {name: 'Level 3C: E', time: '1111ms'}
-            ]
-          }
+        name: 'Level 2: C',
+        time: '100000ms',
+        children: [
+          { name: 'Level 3C: A', time: '101ms' },
+          { name: 'Level 3C: B', time: '102ms', nodeSvgShape: { shapeProps: { width: 20, height: 20, x: -10, y: -10, fill: 'green' } } },
+          { name: 'Level 3C: C', time: '103ms' },
+          { name: 'Level 3C: D', time: '120ms' },
+          { name: 'Level 3C: E', time: '1111ms' }
+        ]
+      }
     }
 
     this.grabNodeStats = this.grabNodeStats.bind(this);
@@ -46,9 +46,9 @@ class App extends Component {
 
   changeOrientation() {
     if (this.state.orientation === 'vertical') {
-      this.setState({orientation: 'horizontal'})
+      this.setState({ orientation: 'horizontal' })
     } else {
-      this.setState({orientation: 'vertical'})
+      this.setState({ orientation: 'vertical' })
     }
   }
   componentDidMount() {
@@ -64,7 +64,7 @@ class App extends Component {
   }
 
   grabNodeStats(stats) {
-    this.setState({ nodeinfo: {time: stats.time, name: stats.name }})
+    this.setState({ nodeinfo: { time: stats.time, name: stats.name } })
   }
 
 
