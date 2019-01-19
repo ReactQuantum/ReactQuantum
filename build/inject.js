@@ -1,7 +1,3 @@
-//jae's algo goes here
-
-
-//var port = chrome.runtime.connect('2035', { name: "inject-bg" });
 var a = Object.values(window.__REACT_DEVTOOLS_GLOBAL_HOOK__._fiberRoots)[0]
 var current
 for (let i of a.values()) {
@@ -19,6 +15,7 @@ function workLoop() {
     nextUnitOfWork = performUnitOfWork(nextUnitOfWork);
   }
   delete temp[0].return
+  console.log(temp)
   console.log(JSON.stringify(temp));
 }
 
@@ -36,7 +33,7 @@ function performUnitOfWork(workInProgress) {
 function beginWork(workInProgress) {
   //perform work and return next (child/sibling/parent's sibling) fiber to perform work on
   let pushedFiber = pushTarget;
-  if (workInProgress.child !== null) {
+  if (workInProgress.child !== null && pushTarget.children[0] === undefined) {
     pushedFiber = filter(workInProgress.child);
     pushTarget.children.push(pushedFiber);
     pushTarget = pushedFiber;
@@ -54,7 +51,7 @@ function beginWork(workInProgress) {
     pushTarget.children.push(pushedFiber);
     pushTarget = pushedFiber;
 
-  } else {
+  } else if (workInProgress.sibling === null) {
     pushTarget = pushTarget.return;
   }
 
@@ -82,7 +79,7 @@ function filter(fiber) {
       if (stateNode.containerInfo) {
         name = stateNode.containerInfo.id
       }
-      name = stateNode.nodeName
+      name = stateNode.nodeNames
     } else {
       name = "Unknown"
     }
@@ -114,12 +111,17 @@ function completeUnitOfWork(workInProgress) {
       return siblingFiber;
     } else if (returnFiber !== null) {
       // If there's no more work in this returnFiber, continue the loop to complete the returnFiber.
-      if (pushTarget.return !== null) {
+      if (returnFiber.return !== null && returnFiber.return.sibling === null && pushTarget.return !== null) {
         if (pushTarget.children[0] !== undefined && pushTarget.children[0].return === undefined) {
           pushTarget = pushTarget.return
         }
       }
+      if (returnFiber.return !== null && returnFiber.return.sibling !== null) {
+        pushTarget = pushTarget.return
+        continue
+      }
       workInProgress = returnFiber;
+
       continue;
     } else {
       // We've reached the root.
@@ -135,62 +137,3 @@ function completeWork(workInProgress) {
   return null;
 }
 workLoop();
-
-
-
-
-
-    //rej(console.log("rejected")
-    //console.log(Object.getOwnPropertyNames(fiberRoots)[0])
-    //returnFiberNode()
-
-
-
-
-// Promise.all([returnFiberNode()]).then((result) => {
-//   let res = result[0]
-//   console.log(typeof Object.getOwnPropertyNames(res)[0] === 'string')
-
-
-//   for (let i of Object.values(result[1]).entries()) {
-//     console.log(i)
-//   }
-// })
-// async function c() {
-//   let wait = await b()
-
-//   console.log(Object.keys(wait)[0])
-
-// }
-// c()
-
-// console.log(async () => {
-//   await b;
-// })
-
-// b().then((res) => {
-//   let c = Object.keys(res)[0]
-//   let set = res[c]
-//   console.log(res)
-
-//   for (let i of set.values()) {
-//     console.log(i.current)
-//   }
-// }).catch((err) => console.log(err))
-
-
-
-// for (let i of a.values()) {
-//   console.log(i)
-// }
-// let set = a[k]
-
-
-// if (set) {
-//   for (let i of set.keys()) {
-//     console.log(i.current)
-//   }
-// } else {
-//   console.log('can\'t hook to react')
-// }
-
