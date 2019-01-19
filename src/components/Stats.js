@@ -10,7 +10,8 @@ class Stats extends React.Component {
     render() {
         return (
         <div>
-           <h1>{this.props.stats}</h1>
+          <h1>Component Name: {this.props.stats.name}</h1>
+          <h1>Render Time: {this.props.stats.time}</h1>
         </div>
       )
 
