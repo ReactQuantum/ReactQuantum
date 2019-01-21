@@ -12,7 +12,7 @@ chrome.runtime.onConnect.addListener(function (port) {
       devId = message.tabId
 
       chrome.tabs.sendMessage(devId, { message: "initialize", id: devId }, (response) => {
-        console.log("response after hello", response)
+        console.log("response after hello", devId, devPort);
       })
     } if (message.name === "fiberRoot") {
       //console.log("fiberRoot from content", message.name, message.message)

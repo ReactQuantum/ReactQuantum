@@ -5,7 +5,10 @@ import TreeComponent from './components/TreeComponent'
 import Stats from './components/Stats'
 import Button from './components/Button'
 
-
+let tempTreeData = {
+  name: 'Dummy',
+  time: '100000ms',
+}
 
 class App extends Component {
   constructor() {
@@ -16,16 +19,16 @@ class App extends Component {
       orientation: 'vertical',
       nodeinfo: 5,
       treeData: {
-          name: 'Level 2: C',
-          time: '100000ms',
-          children: [
-              {name: 'Level 3C: A', time: '101ms'},
-              {name: 'Level 3C: B', time: '102ms', nodeSvgShape: {shapeProps: {width: 20, height: 20, x: -10, y: -10, fill: 'green'}}},
-              {name: 'Level 3C: C', time: '103ms'},
-              {name: 'Level 3C: D', time: '120ms'},
-              {name: 'Level 3C: E', time: '1111ms'}
-            ]
-          }
+        name: 'Level 2: C',
+        time: '100000ms',
+        children: [
+          {name: 'Level 3C: A', time: '101ms'},
+          {name: 'Level 3C: B', time: '102ms', nodeSvgShape: {shapeProps: {width: 20, height: 20, x: -10, y: -10, fill: 'green'}}},
+          {name: 'Level 3C: C', time: '103ms'},
+          {name: 'Level 3C: D', time: '120ms'},
+          {name: 'Level 3C: E', time: '1111ms'}
+        ]
+      }
     }
 
     this.grabNodeStats = this.grabNodeStats.bind(this);
@@ -51,21 +54,36 @@ class App extends Component {
       this.setState({orientation: 'vertical'})
     }
   }
-  componentDidMount() {
-    console.log("Component DID IN FACT mount")
-    let port = chrome.runtime.connect({ name: 'dev-bg' });
-    port.postMessage({
-      name: 'devtool',
-      tabId: chrome.devtools.inspectedWindow.tabId
-    });
-    port.onMessage.addListener(message => {
-      console.log("from devtool", message)
-    })
-  }
 
   grabNodeStats(stats) {
     this.setState({ nodeinfo: {time: stats.time, name: stats.name }})
   }
+
+  componentDidMount() {
+    // console.log("Component DID IN FACT mount")
+    let port = chrome.runtime.connect({ name: 'dev-bg' });
+    // console.log("port open", port)
+    port.postMessage({
+      name: 'initialize',
+      tabId: chrome.devtools.inspectedWindow.tabId
+    });
+    port.onMessage.addListener(message => {
+      console.log("from devtool", message.message);
+      let tree = message.message[0];
+      tree.name = 'root';
+      console.log('new tree data', tree);
+      tempTreeData = tree;
+      this.setState({treeData: tempTreeData});
+      console.log("after setState", this.state);
+
+    })
+  }
+
+  componentDidUpdate() {
+  }
+
+
+
 
 
   render() {
