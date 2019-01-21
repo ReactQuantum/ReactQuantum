@@ -60,9 +60,9 @@ class App extends Component {
   }
 
   componentDidMount() {
-    // console.log("Component DID IN FACT mount")
+    console.log("Component DID IN FACT mount")
     let port = chrome.runtime.connect({ name: 'dev-bg' });
-    // console.log("port open", port)
+    console.log("port open", port)
     port.postMessage({
       name: 'initialize',
       tabId: chrome.devtools.inspectedWindow.tabId

@@ -11,21 +11,19 @@ let curr
 function filter(fiber) {
   let { actualDuration, elementType, stateNode } = fiber;
   let name = elementType
-  if (elementType !== null) {
+  if (elementType !== null && elementType.name !== "") {
     if (typeof elementType === "function") {
       name = elementType.name;
     } else if (typeof elementType === "object") {
       name = elementType.displayName;
     }
-  } else {
-    if (stateNode) {
-      if (stateNode.containerInfo) {
-        name = stateNode.containerInfo.id
-      }
-      name = stateNode.nodeName
-    } else {
-      name = "Unknown"
+  } else if (stateNode) {
+    if (stateNode.containerInfo) {
+      name = stateNode.containerInfo.id
     }
+    name = stateNode.nodeName
+  } else {
+    name = "Unknown"
   }
 
   let filteredFiber = {
