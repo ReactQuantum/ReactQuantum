@@ -21,24 +21,27 @@ function shouldInject() {
   }
 }
 
-function initialInject(message) {
-  if (message.message === 'initialize') {
-    console.log("content, msg was 'initialize'", messsage)
-    shouldInject()
-  }
-}
+// function initialInject(message) {
+//   if (message.message === 'initialize') {
+//     console.log("content, msg was 'initialize'", messsage)
+//     shouldInject()
+//   }
+// }
 
-chrome.runtime.onMessage.addListener((message) => console.log("initialization", message))
+//chrome.runtime.onMessage.addListener((message) => console.log("chrome.runtime.onMessage.addListener((message) in content", message))
 //initialInject(message))
 
-window.addEventListener("load", () => shouldInject());
+window.addEventListener("load", () => {
+  console.log("window.addEventListener('load')")
+  shouldInject()
+});
 
-window.addEventListener('message', e => {
-  console.log('e', e)
-  if (e.data.name === undefined) return;
-  if (e.data.name == 'inject') {
-    fiberRoot = e.data.data;
-    console.log("sending fiberRoot", fiberRoot)
+window.addEventListener('message', message => {
+  console.log("window.addEventListener('message') in content", message.data)
+  if (message.data.name === undefined) return;
+  if (message.data.name == 'inject') {
+    fiberRoot = message.data.data;
+    console.log("window.addEventListener, e.data.name was 'inject' in content", fiberRoot)
     port.postMessage(
       {
         name: "fiberRoot",
@@ -46,8 +49,7 @@ window.addEventListener('message', e => {
 
       }
     )
-  } else {
-    return;
+    console.log("port.postMessage({ name: 'fiberRoot', message: fiberRoot,}) in content")
   }
 });
 
