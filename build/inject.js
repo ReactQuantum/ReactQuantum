@@ -1,8 +1,6 @@
-//jae's algo goes here
-
-var a = Object.values(window.__REACT_DEVTOOLS_GLOBAL_HOOK__._fiberRoots)[0]
-var current
-for (let i of a.values()) {
+let hookedTree = Object.values(window.__REACT_DEVTOOLS_GLOBAL_HOOK__._fiberRoots)[0]
+let current
+for (let i of hookedTree.values()) {
   current = i.current
 }
 // if (nextUnitOfWork !== undefined) {
@@ -23,68 +21,12 @@ var prev
 var temp = [pushTarget];
 
 
-//console.log(current);
-function workLoop() {
-  //as long as there's nextUnitOfWork, continue the loop
-  while (nextUnitOfWork !== null) {
-    nextUnitOfWork = performUnitOfWork(nextUnitOfWork);
-  }
-  delete temp[0].return
-  window.postMessage({
-    name: "inject",
-    data: temp
-  })
-  console.log("temp in inject", temp);
-}
-
-function performUnitOfWork(workInProgress) {
-  //begin work on current fiber and next becomes its child
-  let next = beginWork(workInProgress);
-  if (next === null) {
-    //if there is no child, current fiber is the last child. Pass it into completeUnitOfWork
-    next = completeUnitOfWork(workInProgress);
-  }
-  //return next to workLoop
-  return next;
-}
-
-function beginWork(workInProgress) {
-  //perform work and return next (child/sibling/parent's sibling) fiber to perform work on
-  let pushedFiber = pushTarget;
-  if (workInProgress.child !== null) {
-    pushedFiber = filter(workInProgress.child);
-    pushTarget.children.push(pushedFiber);
-    pushTarget = pushedFiber;
-  } else if (workInProgress.sibling !== null) {
-    pushTarget = pushTarget.return;
-    pushedFiber = filter(workInProgress.sibling);
-    pushTarget.children.push(pushedFiber);
-    // delete pushTarget.return
-  } else if (workInProgress.return.sibling !== null) {
-    //if it doesn't have child and sibling, it's time to process its parent's sibling
-    //its parent and sibling have the same parent.
-    //so push the sibling to the parent's return property,
-    pushTarget = pushTarget.return;
-    pushedFiber = filter(workInProgress.return.sibling);
-    pushTarget.children.push(pushedFiber);
-    pushTarget = pushedFiber;
-
-  } else {
-    pushTarget = pushTarget.return;
-  }
-
-
-  return workInProgress.child;
-}
-
-function delChildReturn(arr) {
-  for (let i = 0; i < arr.length; i++) {
-    delete arr[i].return
-  }
-}
+let targ = filter(current)
+let arr = [targ];
+let curr
 
 function filter(fiber) {
-  let { actualDuration, elementType, sibling, stateNode } = fiber;
+  let { actualDuration, elementType, stateNode } = fiber;
   let name = elementType
   if (elementType !== null) {
     if (typeof elementType === "function") {
@@ -105,107 +47,117 @@ function filter(fiber) {
 
   let filteredFiber = {
     name: name,
-    renderTime: actualDuration,
-    children: []
+    renderTime: actualDuration === undefined ? "Only available in Dev Mode" : actualDuration,
+    children: [],
+    return: fiber.return !== null ? targ : null,
+    sibling: null
   };
-  if (fiber.return !== null) {
-    filteredFiber.return = pushTarget;
-  } else {
-    filteredFiber.return = null;
-  }
 
   return filteredFiber
 }
 
-function completeUnitOfWork(workInProgress) {
-  //this while loop iterates until there's no returnFiber or root has been reached.
-  while (true) {
-    let returnFiber = workInProgress.return;
-    let siblingFiber = workInProgress.sibling;
-    //set nextUnitOfWork to null
-    nextUnitOfWork = completeWork(workInProgress);
-    if (siblingFiber !== null) {
-      // If there is a sibling, return it to perform work for this sibling
-      return siblingFiber;
-    } else if (returnFiber !== null) {
-      // If there's no more work in this returnFiber, continue the loop to complete the returnFiber.
-      if (pushTarget.return !== null) {
-        if (pushTarget.children[0] !== undefined && pushTarget.children[0].return === undefined) {
-          pushTarget = pushTarget.return
+function createChild(workInProgress) {
+  //3.create a child
+  let next = workInProgress
+  let bottomFiber
+  //as long as there's child(next)
+  while (next !== null) {
+    //filter the child(next)
+    curr = filter(next);
+    //and push it into the children array of its parent(targ)
+    targ.children.push(curr);
+    let targSib = curr;
+    let lastSib;
+    //if the child(next) has a sibling,
+    if (next.sibling !== null) {
+      let nextSib = next.sibling
+      while (nextSib !== null) {
+        //filter the sibling
+        let filtSib = filter(nextSib)
+        //assign it as sibling of the child(next)
+        targSib.sibling = filtSib
+        // siblings have same parent(targ); push it to parent's children array
+        targ.children.push(filtSib);
+        //remember the last sibling worked on
+        lastSib = nextSib
+        //this loops if current sibling also has a sibling, otherwise loop breaks.
+        targSib = targSib.sibling
+        nextSib = nextSib.sibling
+      }
+      //the last sibling won't have a sibling; thus, null.
+      targSib.sibling = null;
+    }
+    //the current child becomes the target
+    targ = curr;
+    //if there's no next child;
+    if (next.child === null) {
+      //check if there's a sibling;
+      if (next.sibling !== null) {
+        //if so, bottomFiber is the lastSibling
+        bottomFiber = lastSib;
+      } else {
+        //else bottomFiber is current child
+        bottomFiber = next;
+      }
+    }
+    next = next.child;
+  }
+  return bottomFiber;
+}
+function createTree(workInProgress) {
+  // 1.next is current fiber's child
+  let next = workInProgress.child
+
+  let keepClimb = true;
+  let keepCreateChild = true;
+  while (keepCreateChild) {
+    //2.pass in child fiber to createChild function
+    let bottomFiber = createChild(next);
+    let climber = bottomFiber;
+    while (keepClimb) {
+      //if bottomFiber has a parent
+      if (climber.return !== null) {
+        //if the parent has a sibling
+        if (climber.return.sibling !== null && climber.return.sibling.child !== null) {
+          // break the loop and process the child of that sibling.
+          targ = targ.return.sibling;
+          next = climber.return.sibling.child;
+          break;
+        } else {
+          //otherwise, keep climbing up the parent
+          if (targ !== null) {
+            targ = targ.return
+            climber = climber.return
+            if (targ.return === null && climber.return === null) {
+              keepClimb = false;
+              keepCreateChild = false;
+            }
+          }
         }
       }
-      workInProgress = returnFiber;
-      continue;
-    } else {
-      // We've reached the root.
-      return null;
     }
   }
-}
-
-function completeWork(workInProgress) {
-  if (pushTarget !== null && pushTarget.children[0] !== undefined) {
-    delChildReturn(pushTarget.children)
+  //deleting circular references
+  let noCirc = JSON.stringify(arr, function (key, val) {
+    if (!Array.isArray(val) && val !== null && typeof val === "object") {
+      delete val["return"]
+    }
+    return val
   }
-  return null;
+  )
+  window.postMessage({
+    name: "inject",
+    data: noCirc
+  })
+  console.log("temp in inject", noCirc);
+  return noCirc;
 }
-workLoop();
+
+createTree(current)
 
 
 
 
 
-    //rej(console.log("rejected")
-    //console.log(Object.getOwnPropertyNames(fiberRoots)[0])
-    //returnFiberNode()
 
-
-
-
-// Promise.all([returnFiberNode()]).then((result) => {
-//   let res = result[0]
-//   console.log(typeof Object.getOwnPropertyNames(res)[0] === 'string')
-
-
-//   for (let i of Object.values(result[1]).entries()) {
-//     console.log(i)
-//   }
-// })
-// async function c() {
-//   let wait = await b()
-
-//   console.log(Object.keys(wait)[0])
-
-// }
-// c()
-
-// console.log(async () => {
-//   await b;
-// })
-
-// b().then((res) => {
-//   let c = Object.keys(res)[0]
-//   let set = res[c]
-//   console.log(res)
-
-//   for (let i of set.values()) {
-//     console.log(i.current)
-//   }
-// }).catch((err) => console.log(err))
-
-
-
-// for (let i of a.values()) {
-//   console.log(i)
-// }
-// let set = a[k]
-
-
-// if (set) {
-//   for (let i of set.keys()) {
-//     console.log(i.current)
-//   }
-// } else {
-//   console.log('can\'t hook to react')
-// }
 
