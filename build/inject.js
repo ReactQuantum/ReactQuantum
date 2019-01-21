@@ -1,18 +1,29 @@
 //jae's algo goes here
 
-
-//var port = chrome.runtime.connect('2035', { name: "inject-bg" });
 var a = Object.values(window.__REACT_DEVTOOLS_GLOBAL_HOOK__._fiberRoots)[0]
 var current
 for (let i of a.values()) {
   current = i.current
 }
+// if (nextUnitOfWork !== undefined) {
+//   nextUnitOfWork = x
+// } else {
 
-let nextUnitOfWork = current;
-let pushTarget = filter(current);
-let prev
-let temp = [pushTarget];
-console.log(current);
+//   let nextUnitOfWork = current;
+//   let pushTarget = filter(current);
+//   let prev
+//   let temp = [pushTarget];
+
+// }
+//var port = chrome.runtime.connect('2035', { name: "inject-bg" });
+
+var nextUnitOfWork = current;
+var pushTarget = filter(current);
+var prev
+var temp = [pushTarget];
+
+
+//console.log(current);
 function workLoop() {
   //as long as there's nextUnitOfWork, continue the loop
   while (nextUnitOfWork !== null) {
@@ -20,10 +31,10 @@ function workLoop() {
   }
   delete temp[0].return
   window.postMessage({
-    name: "fiberRoot",
+    name: "inject",
     data: temp
   })
-  console.log(JSON.parse(JSON.stringify(temp)));
+  console.log("temp in inject", temp);
 }
 
 function performUnitOfWork(workInProgress) {

@@ -5,8 +5,6 @@ import TreeComponent from './components/TreeComponent'
 import Stats from './components/Stats'
 import Button from './components/Button'
 
-
-
 class App extends Component {
   constructor() {
     super();
@@ -60,6 +58,9 @@ class App extends Component {
     });
     port.onMessage.addListener(message => {
       console.log("fiberNode here in devtool", message.message)
+      let treeArr = message.message
+
+
     })
   }
 
@@ -71,7 +72,7 @@ class App extends Component {
   render() {
     return (
       <div>
-        <h1>Hello World!</h1>
+        <h1>React Quantum</h1>
         <Button id={'button1'} clicked={this.clicked} counter={this.state.button1counter}></Button>
         <Button id={'button2'} clicked={this.changeOrientation} counter='Orientation'></Button>
         <Stats stats={this.state.nodeinfo}></Stats>
