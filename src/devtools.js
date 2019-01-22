@@ -14,6 +14,7 @@ class App extends Component {
       button2counter: 0,
       orientation: 'vertical',
       nodeinfo: 5,
+      startQuantum: false,
       treeData: {
         name: 'Level 2: C',
         time: '100000ms',
@@ -51,17 +52,35 @@ class App extends Component {
     }
   }
   componentDidMount() {
-    let port = chrome.runtime.connect({ name: "devTool" });
-
-    port.postMessage({
-      message: 'initialize',
-      tabId: chrome.devtools.inspectedWindow.tabId
-    })
+    let port = chrome.runtime.connect(null, { name: "devTool" });
+    let tabId = chrome.devtools.inspectedWindow.tabId;
+    console.log(port, tabId)
+    function post(message) {
+      message.tabId = tabId;
+      port.postMessage(message);
+    }
+    post({ message: 'initialize' })
+    // console.log(port)
+    // port.postMessage({
+    //   message: 'initialize',
+    //   tabId: chrome.devtools.inspectedWindow.tabId
+    // })
 
     port.onMessage.addListener(message => {
       console.log("chrome.runtime.onMessage in devTools message:", message)
     })
   }
+  startQuantum(e) {
+    chrome.runtime.sendMessage({
+      action: "clearPage",
+      target: "content",
+      tabId
+    });
+    this.setState({
+      startQuantum: true
+    })
+  }
+
 
   grabNodeStats(stats) {
     this.setState({ nodeinfo: { time: stats.time, name: stats.name } })
@@ -69,9 +88,11 @@ class App extends Component {
 
 
   render() {
+
     return (
       <div>
         <h1>React Quantum</h1>
+        <Button id={'startQuantum'} clicked={this.startQuantum}></Button>
         <Button id={'button1'} clicked={this.clicked} counter={this.state.button1counter}></Button>
         <Button id={'button2'} clicked={this.changeOrientation} counter='Orientation'></Button>
         <Stats stats={this.state.nodeinfo}></Stats>

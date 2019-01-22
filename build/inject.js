@@ -1,5 +1,5 @@
-let hookedTree = Object.values(window.__REACT_DEVTOOLS_GLOBAL_HOOK__._fiberRoots)[0]
-let current
+var hookedTree = Object.values(window.__REACT_DEVTOOLS_GLOBAL_HOOK__._fiberRoots)[0]
+var current
 for (let i of hookedTree.values()) {
   current = i.current
 }
@@ -21,9 +21,9 @@ var prev
 var temp = [pushTarget];
 
 
-let targ = filter(current)
-let arr = [targ];
-let curr
+var targ = filter(current)
+var arr = [targ];
+var curr
 
 function filter(fiber) {
   let { actualDuration, elementType, stateNode } = fiber;
@@ -45,7 +45,7 @@ function filter(fiber) {
     }
   }
 
-  let filteredFiber = {
+  var filteredFiber = {
     name: name,
     renderTime: actualDuration === undefined ? "Only available in Dev Mode" : actualDuration,
     children: [],
@@ -138,7 +138,7 @@ function createTree(workInProgress) {
     }
   }
   //deleting circular references
-  let noCirc = JSON.stringify(arr, function (key, val) {
+  var noCirc = JSON.stringify(arr, function (key, val) {
     if (!Array.isArray(val) && val !== null && typeof val === "object") {
       delete val["return"]
     }
@@ -149,7 +149,7 @@ function createTree(workInProgress) {
     name: "inject",
     data: noCirc
   })
-  console.log("temp in inject", noCirc);
+  //  console.log("temp in inject", noCirc);
   return noCirc;
 }
 

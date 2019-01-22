@@ -1,5 +1,5 @@
-var port = chrome.runtime.connect({ name: "content-bg" });
-
+var port = chrome.runtime.connect({ name: "content" });
+console.log(port)
 function injectScript(file) {
   const body = document.getElementsByTagName('body')[0];
   const scriptFile = document.createElement('script');
@@ -9,9 +9,10 @@ function injectScript(file) {
   body.appendChild(scriptFile);
 }
 
+
+
 function shouldInject() {
   let injected = document.getElementById('injectScript')
-
   if (injected === null) {
     injectScript(chrome.extension.getURL('inject.js'))
   } else {
@@ -21,12 +22,12 @@ function shouldInject() {
   }
 }
 
-// function initialInject(message) {
-//   if (message.message === 'initialize') {
-//     console.log("content, msg was 'initialize'", messsage)
-//     shouldInject()
-//   }
-// }
+function initialInject(message) {
+  if (message.message === 'initialize') {
+    console.log("content, msg was 'initialize'", message)
+    shouldInject()
+  }
+}
 
 //chrome.runtime.onMessage.addListener((message) => console.log("chrome.runtime.onMessage.addListener((message) in content", message))
 //initialInject(message))
@@ -41,7 +42,7 @@ window.addEventListener('message', message => {
   if (message.data.name === undefined) return;
   if (message.data.name == 'inject') {
     fiberRoot = message.data.data;
-    console.log("window.addEventListener, e.data.name was 'inject' in content", fiberRoot)
+    console.log("window.addEventListener, e.data.name was 'inject' in content", typeof fiberRoot)
     port.postMessage(
       {
         name: "fiberRoot",
