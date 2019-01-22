@@ -1,29 +1,15 @@
-let hookedTree = Object.values(window.__REACT_DEVTOOLS_GLOBAL_HOOK__._fiberRoots)[0]
-let current
+var hookedTree = Object.values(window.__REACT_DEVTOOLS_GLOBAL_HOOK__._fiberRoots)[0]
+var current
 for (let i of hookedTree.values()) {
   current = i.current
 }
-// if (nextUnitOfWork !== undefined) {
-//   nextUnitOfWork = x
-// } else {
-
-//   let nextUnitOfWork = current;
-//   let pushTarget = filter(current);
-//   let prev
-//   let temp = [pushTarget];
-
-// }
-//var port = chrome.runtime.connect('2035', { name: "inject-bg" });
 
 var nextUnitOfWork = current;
 var pushTarget = filter(current);
-var prev
 var temp = [pushTarget];
-
-
-let targ = filter(current)
-let arr = [targ];
-let curr
+var targ = filter(current)
+var arr = [targ];
+var curr
 
 function filter(fiber) {
   let { actualDuration, elementType, stateNode } = fiber;
