@@ -4,8 +4,7 @@ import { render } from 'react-dom';
 import TreeComponent from './components/TreeComponent'
 import Stats from './components/Stats'
 import Button from './components/Button'
-
-
+import { resolve } from 'path';
 
 class App extends Component {
   constructor() {
@@ -52,14 +51,15 @@ class App extends Component {
     }
   }
   componentDidMount() {
-    console.log("Component DID IN FACT mount")
-    let port = chrome.runtime.connect({ name: 'dev-bg' });
+    let port = chrome.runtime.connect({ name: "devTool" });
+
     port.postMessage({
-      name: 'initialize',
+      message: 'initialize',
       tabId: chrome.devtools.inspectedWindow.tabId
-    });
+    })
+
     port.onMessage.addListener(message => {
-      console.log("fiberNode here in devtool", message.message)
+      console.log("chrome.runtime.onMessage in devTools message:", message)
     })
   }
 
@@ -71,12 +71,12 @@ class App extends Component {
   render() {
     return (
       <div>
-        <h1>Hello World!</h1>
+        <h1>React Quantum</h1>
         <Button id={'button1'} clicked={this.clicked} counter={this.state.button1counter}></Button>
         <Button id={'button2'} clicked={this.changeOrientation} counter='Orientation'></Button>
         <Stats stats={this.state.nodeinfo}></Stats>
         <TreeComponent orientation={this.state.orientation} treeData={this.state.treeData} grabNodeStats={this.grabNodeStats}></TreeComponent>
-      </div>
+      </div >
 
     )
   }

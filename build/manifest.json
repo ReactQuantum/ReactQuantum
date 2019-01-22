@@ -21,7 +21,8 @@
   "background": {
     "scripts": [
       "backgroundScript.js"
-    ]
+    ],
+    "persistant": true
   },
   "web_accessible_resources": [
     "inject.js"

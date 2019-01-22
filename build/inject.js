@@ -3,6 +3,23 @@ let current
 for (let i of hookedTree.values()) {
   current = i.current
 }
+// if (nextUnitOfWork !== undefined) {
+//   nextUnitOfWork = x
+// } else {
+
+//   let nextUnitOfWork = current;
+//   let pushTarget = filter(current);
+//   let prev
+//   let temp = [pushTarget];
+
+// }
+//var port = chrome.runtime.connect('2035', { name: "inject-bg" });
+
+var nextUnitOfWork = current;
+var pushTarget = filter(current);
+var prev
+var temp = [pushTarget];
+
 
 let targ = filter(current)
 let arr = [targ];
@@ -139,6 +156,11 @@ function createTree(workInProgress) {
     return val
   }
   )
+  window.postMessage({
+    name: "inject",
+    data: noCirc
+  })
+  console.log("temp in inject", noCirc);
   return noCirc;
 }
 
