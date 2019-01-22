@@ -3,24 +3,10 @@ var current
 for (let i of hookedTree.values()) {
   current = i.current
 }
-// if (nextUnitOfWork !== undefined) {
-//   nextUnitOfWork = x
-// } else {
-
-//   let nextUnitOfWork = current;
-//   let pushTarget = filter(current);
-//   let prev
-//   let temp = [pushTarget];
-
-// }
-//var port = chrome.runtime.connect('2035', { name: "inject-bg" });
 
 var nextUnitOfWork = current;
 var pushTarget = filter(current);
-var prev
 var temp = [pushTarget];
-
-
 var targ = filter(current)
 var arr = [targ];
 var curr
@@ -34,15 +20,15 @@ function filter(fiber) {
     } else if (typeof elementType === "object") {
       name = elementType.displayName;
     }
-  } else {
-    if (stateNode) {
-      if (stateNode.containerInfo) {
-        name = stateNode.containerInfo.id
-      }
-      name = stateNode.nodeName
-    } else {
-      name = "Unknown"
+  } else if (stateNode) {
+    if (stateNode.containerInfo) {
+      name = stateNode.containerInfo.id
     }
+    name = stateNode.nodeName
+  }
+
+  if (name === undefined || name === "" || name === null) {
+    name = "Unknown"
   }
 
   var filteredFiber = {
@@ -104,17 +90,27 @@ function createChild(workInProgress) {
   }
   return bottomFiber;
 }
+
 function createTree(workInProgress) {
   // 1.next is current fiber's child
   let next = workInProgress.child
-
   let keepClimb = true;
   let keepCreateChild = true;
   while (keepCreateChild) {
     //2.pass in child fiber to createChild function
     let bottomFiber = createChild(next);
     let climber = bottomFiber;
+    let climberSib
+    //if bottomfiber has a child go back into the loop
+    if (climber.child !== null) {
+      climberSib = climber.child;
+    }
     while (keepClimb) {
+      if (climberSib !== undefined) {
+        targ = targ.sibling;
+        next = climberSib;
+        break;
+      }
       //if bottomFiber has a parent
       if (climber.return !== null) {
         //if the parent has a sibling
@@ -137,6 +133,7 @@ function createTree(workInProgress) {
       }
     }
   }
+
   //deleting circular references
   var noCirc = JSON.stringify(arr, function (key, val) {
     if (!Array.isArray(val) && val !== null && typeof val === "object") {
@@ -149,7 +146,6 @@ function createTree(workInProgress) {
     name: "inject",
     data: noCirc
   })
-  //  console.log("temp in inject", noCirc);
   return noCirc;
 }
 
