@@ -133,7 +133,7 @@ function createTree(workInProgress) {
       }
     }
   }
-  return arr
+
   //deleting circular references
   let noCirc = JSON.stringify(arr, function (key, val) {
     if (!Array.isArray(val) && val !== null && typeof val === "object") {
@@ -146,7 +146,7 @@ function createTree(workInProgress) {
     name: "inject",
     data: noCirc
   })
-  console.log("temp in inject", noCirc);
+
   return noCirc;
 }
 
