@@ -111,11 +111,7 @@ class App extends Component {
 
 
   render() {
-<<<<<<< HEAD
-    console.log('render--------------------------')
-=======
-
->>>>>>> dev
+    console.log('render ------------');
     return (
       <div>
         {this.state.startQuantum === false ?
