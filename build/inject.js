@@ -31,7 +31,7 @@ function filter(fiber) {
     name = "Unknown"
   }
 
-  let filteredFiber = {
+  var filteredFiber = {
     name: name,
     renderTime: actualDuration === undefined ? "Only available in Dev Mode" : actualDuration,
     children: [],
@@ -135,7 +135,7 @@ function createTree(workInProgress) {
   }
 
   //deleting circular references
-  let noCirc = JSON.stringify(arr, function (key, val) {
+  var noCirc = JSON.stringify(arr, function (key, val) {
     if (!Array.isArray(val) && val !== null && typeof val === "object") {
       delete val["return"]
     }
@@ -146,7 +146,6 @@ function createTree(workInProgress) {
     name: "inject",
     data: noCirc
   })
-
   return noCirc;
 }
 
