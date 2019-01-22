@@ -1,6 +1,6 @@
 let connections = {}
 chrome.runtime.onConnect.addListener(function (port) {
-  if (port.name != "devTool" && port.name != "content") {
+  if (port.name != "devTools" && port.name != "content") {
     return;
   }
   let extentionListener = (message) => {
@@ -15,6 +15,7 @@ chrome.runtime.onConnect.addListener(function (port) {
       return;
     }
     if (message.target) {
+      console.log("targeted message", message)
       var conn = connections[tabId][message.target];
       if (conn) {
         conn.postMessage(message);
@@ -56,28 +57,24 @@ chrome.runtime.onConnect.addListener(function (port) {
   //     }
   //   })
   // } else {
-  port.onMessage.addListener((message) => {
-    console.log("message in BG", message)
-    if (message.message === 'initialize') {
-      devPort = port
-      devId = message.tabId
-      chrome.tabs.sendMessage(devId, { message: "initialize", id: devId }, () => {
-        console.log('chrome.tabs.sendMessage(devId, { message: "initialize", id: devId }')
-      })
-    }
-    // if (message.name === "initialize") {
-    //   port.postMessage({ message: "initialize" })
-    //   console.log('port.postMessage({ message: "initialize" }) in background)')
-    // }
-    //console.log("port.onMessage.addListener((message, sender) in background", message)
-    if (message.name === "fiberRoot") {
-      //console.log("devId", devId)
-      devPort.postMessage({ name: 'fiberRoot', message: message.message })
-      console.log("devPort.postMessage({ name: 'fiberRoot', message: message.message }) in background")
-    }
-  })
-})
+  ////////////////////
+  // port.onMessage.addListener((message) => {
+  //   console.log("message in BG", message)
+  //   if (message.message === 'initialize') {
+  //     devPort = port
+  //     devId = message.tabId
+  //     chrome.tabs.sendMessage(devId, { message: "initialize", id: devId }, () => {
+  //       console.log('chrome.tabs.sendMessage(devId, { message: "initialize", id: devId }')
+  //     })
+  //   }
 
+  //   if (message.name === "fiberRoot") {
+  //     //console.log("devId", devId)
+  //     devPort.postMessage({ name: 'fiberRoot', message: message.message })
+  //     console.log("devPort.postMessage({ name: 'fiberRoot', message: message.message }) in background", devPort)
+  //   }
+  // })
+})
 /**
  * Receive one-time message from panel and relay to the content script.
  * This is for messages sent through 'chrome.runtime.sendMessage'.
@@ -88,10 +85,12 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
 
   // Messages from content scripts should have sender.tab set.
   // The are all relayed to the "panel" connection.
-  if (request.target == "content" && request.tabId) {
+  if (request.target == "content") {
+    console.log("startQuantum is here in BG", request)
     chrome.tabs.sendMessage(request.tabId, request);
   }
 
   return true;
 });
+////////////////////////
 

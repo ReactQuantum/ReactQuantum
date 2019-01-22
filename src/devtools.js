@@ -12,6 +12,7 @@ class App extends Component {
     this.state = {
       button1counter: 0,
       button2counter: 0,
+      startButton: 'Start Quantum',
       orientation: 'vertical',
       nodeinfo: 5,
       startQuantum: false,
@@ -31,6 +32,7 @@ class App extends Component {
     this.grabNodeStats = this.grabNodeStats.bind(this);
     this.changeOrientation = this.changeOrientation.bind(this);
     this.clicked = this.clicked.bind(this);
+    this.startQuantum = this.startQuantum.bind(this)
     chrome.devtools.panels.create("React Quantum", null, "devtools.html");
   }
 
@@ -52,7 +54,7 @@ class App extends Component {
     }
   }
   componentDidMount() {
-    let port = chrome.runtime.connect(null, { name: "devTool" });
+    let port = chrome.runtime.connect(null, { name: "devTools" });
     let tabId = chrome.devtools.inspectedWindow.tabId;
     console.log(port, tabId)
     function post(message) {
@@ -71,10 +73,12 @@ class App extends Component {
     })
   }
   startQuantum(e) {
+    let tabId = chrome.devtools.inspectedWindow.tabId;
+    console.log("clicked", tabId)
     chrome.runtime.sendMessage({
-      action: "clearPage",
+      name: "startQuantum",
       target: "content",
-      tabId
+      tabId: tabId
     });
     this.setState({
       startQuantum: true
@@ -91,12 +95,19 @@ class App extends Component {
 
     return (
       <div>
-        <h1>React Quantum</h1>
-        <Button id={'startQuantum'} clicked={this.startQuantum}></Button>
-        <Button id={'button1'} clicked={this.clicked} counter={this.state.button1counter}></Button>
-        <Button id={'button2'} clicked={this.changeOrientation} counter='Orientation'></Button>
-        <Stats stats={this.state.nodeinfo}></Stats>
-        <TreeComponent orientation={this.state.orientation} treeData={this.state.treeData} grabNodeStats={this.grabNodeStats}></TreeComponent>
+        {this.state.startQuantum === false ?
+          <div>
+            <h1>React Quantum</h1>
+            <Button id={'startQuantum'} clicked={this.startQuantum} counter={this.state.startButton}></Button>
+          </div> :
+          <div>
+            <h1>React Quantum</h1>
+            <Button id={'button1'} clicked={this.clicked} counter={this.state.button1counter}></Button>
+            <Button id={'button2'} clicked={this.changeOrientation} counter='Orientation'></Button>
+            <Stats stats={this.state.nodeinfo}></Stats>
+            <TreeComponent orientation={this.state.orientation} treeData={this.state.treeData} grabNodeStats={this.grabNodeStats}></TreeComponent>
+          </div>
+        }
       </div >
 
     )
