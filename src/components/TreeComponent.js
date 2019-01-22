@@ -92,15 +92,6 @@ const svgEllipse = {
     ry: 20
   }
 }
-//function to be put in componentWillUpdate to change render times into individual render times and add color property accordingly
-// function colorParseTree (objInArr) {
-//   for (var i = 0; i < objInArr.length; i++) {
-//     if (CONDITION ABOUT SPEED) {
-//       objectInArr[i].nodeSvgShape =
-//     }
-//   }
-// }
-
 
 
 class TreeComponent extends React.Component {
@@ -111,7 +102,7 @@ class TreeComponent extends React.Component {
   }
 
   mouseOver(e) {
-    let stats = {name: e.name, time: e.time};
+    let stats = {name: e.name, time: e.renderTime};
     this.props.grabNodeStats(stats);
   }
 

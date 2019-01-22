@@ -61,6 +61,7 @@ class App extends Component {
   }
 
   componentDidMount() {
+    console.log('component did mount')
     let port = chrome.runtime.connect({ name: "devTool" });
 
     port.postMessage({
@@ -70,6 +71,13 @@ class App extends Component {
 
     port.onMessage.addListener(message => {
       console.log("chrome.runtime.onMessage in devTools message:", message)
+      let tempTreeData = JSON.parse(message.message);
+      tempTreeData[0].name = 'root';
+      // console.log('=============', tempTreeData);
+      this.setState({treeData: tempTreeData})
+      console.log('after setState', this.state)
+      // console.log("----------------------------11")
+      // console.log("----------------------------22")
     })
   }
 
@@ -81,6 +89,7 @@ class App extends Component {
 
 
   render() {
+    console.log('render--------------------------')
     return (
       <div>
         <h1>React Quantum</h1>
