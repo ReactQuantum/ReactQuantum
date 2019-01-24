@@ -14,7 +14,7 @@ var curr
 function filter(fiber) {
   let { actualDuration, elementType, stateNode } = fiber;
   let name = elementType
-  if (elementType !== null) {
+  if (elementType !== null && elementType.name !== "") {
     if (typeof elementType === "function") {
       name = elementType.name;
     } else if (typeof elementType === "object") {
@@ -156,4 +156,10 @@ createTree(current)
 
 
 
-
+// if (set) {
+//   for (let i of set.keys()) {
+//     console.log(i.current)
+//   }
+// } else {
+//   console.log('can\'t hook to react')
+// }
