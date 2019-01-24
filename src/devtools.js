@@ -46,14 +46,14 @@ class App extends Component {
 
   changeOrientation() {
     if (this.state.orientation === 'vertical') {
-      this.setState({orientation: 'horizontal'})
+      this.setState({ orientation: 'horizontal' })
     } else {
-      this.setState({orientation: 'vertical'})
+      this.setState({ orientation: 'vertical' })
     }
   }
 
   grabNodeStats(stats) {
-    this.setState({ nodeinfo: {totalTime: stats.time, individualTime: stats.individualTime, name: stats.name }})
+    this.setState({ nodeinfo: { totalTime: stats.time, individualTime: stats.individualTime, name: stats.name } })
     console.log(stats)
   }
 
@@ -99,7 +99,7 @@ class App extends Component {
       console.log('before addIndividualTime', this, this.addIndividualTime, this.componentDidMount.addIndividualTime);
       addIndividualTime(tempTreeData);
       console.log('after individualTime =============', tempTreeData);
-      this.setState({treeData: tempTreeData})
+      this.setState({ treeData: tempTreeData })
       console.log('after setState', this.state)
 
       // console.log("----------------------------11")
@@ -130,6 +130,19 @@ class App extends Component {
       startQuantum: true
     })
   }
+  startQuantum(e) {
+    let tabId = chrome.devtools.inspectedWindow.tabId;
+    console.log("clicked", tabId)
+    chrome.runtime.sendMessage({
+      name: "startQuantum",
+      target: "content",
+      tabId: tabId
+    });
+    this.setState({
+      startQuantum: true
+    })
+  }
+
 
 
 
@@ -144,7 +157,7 @@ class App extends Component {
     console.log('render ------------');
     return (
       <div>
-        <h1 style={{color:'blue'}}>React Quantum</h1>
+        <h1 style={{ color: 'blue' }}>React Quantum</h1>
         {this.state.startQuantum === false ?
           <div>
             <Button
