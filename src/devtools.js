@@ -118,6 +118,19 @@ class App extends Component {
       startQuantum: true
     })
   }
+  startQuantum(e) {
+    let tabId = chrome.devtools.inspectedWindow.tabId;
+    console.log("clicked", tabId)
+    chrome.runtime.sendMessage({
+      name: "startQuantum",
+      target: "content",
+      tabId: tabId
+    });
+    this.setState({
+      startQuantum: true
+    })
+  }
+
 
 
   componentDidUpdate() {
