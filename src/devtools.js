@@ -22,7 +22,8 @@ class App extends Component {
       nodeinfo: 5,
       startQuantum: false,
       treeData: {
-        name: 'placeholder'
+        name: 'PLEASE REFRESH PAGE',
+        nodeSvgShape: { shapeProps: {fill: 'white'} }
       },
       green: 0.005,
       lightGreen: 0.01,
@@ -38,6 +39,7 @@ class App extends Component {
     chrome.devtools.panels.create("React Quantum", null, "devtools.html");
   }
 
+  //for counter button, REMOVE BEFORE LAUNCH
   clicked(e) {
     let counterId = `${e.target.id}counter`
     let counter = this.state[counterId] + 1
@@ -82,20 +84,20 @@ class App extends Component {
       function addIndividualTime(treeDataArr) {
         for (let i = 0; i < treeDataArr.length; i++) {
           if (treeDataArr[i].renderTime === 0) {
-            treeDataArr[i].individualTime === 0
+            treeDataArr[i].individualTime = 0;
           } else {
             let sumChildrenTime = 0;
             for (var j = 0; j < treeDataArr[i].children.length; j++) {
-              if (treeDataArr[i].children[j].renderTime === 0) {
-                if (treeDataArr[i].children[j].children[0]) {
-                  for (var k = 0; k < treeDataArr[i].children[j].children.length; k++) {
-                    sumChildrenTime += treeDataArr[i].children[j].children[k]
-                  }
+              let currentNode = treeDataArr[i].children[j];
+              if (currentNode.renderTime === 0 && currentNode.children > 0) {
+                for (var k = 0; k < currentNode.children.length; k++) {
+                  sumChildrenTime += currentNode.children[k].renderTime;
                 }
               } else {
               sumChildrenTime += treeDataArr[i].children[j].renderTime
               }
             }
+            console.log('in addIndividualTime', treeDataArr[i].name, treeDataArr[i].renderTime, sumChildrenTime)
             treeDataArr[i].individualTime = treeDataArr[i].renderTime - sumChildrenTime;
           }
         }
@@ -155,40 +157,9 @@ class App extends Component {
       startQuantum: true
     })
   }
-  startQuantum(e) {
-    let tabId = chrome.devtools.inspectedWindow.tabId;
-    console.log("clicked", tabId)
-    chrome.runtime.sendMessage({
-      name: "startQuantum",
-      target: "content",
-      tabId: tabId
-    });
-    this.setState({
-      startQuantum: true
-    })
-  }
-  startQuantum(e) {
-    let tabId = chrome.devtools.inspectedWindow.tabId;
-    console.log("clicked", tabId)
-    chrome.runtime.sendMessage({
-      name: "startQuantum",
-      target: "content",
-      tabId: tabId
-    });
-    this.setState({
-      startQuantum: true
-    })
-  }
-
-
-
 
   componentDidUpdate() {
   }
-
-
-
-
 
   render() {
     console.log('render ------------');
@@ -203,23 +174,33 @@ class App extends Component {
               counter={this.state.startButton}>
             </Button>
           </div> :
-          <div className='content'>
-            <Button
-              id={'button1'}
-              clicked={this.clicked}
-              counter={this.state.button1counter}>
-            </Button>
-            <Button
-              id={'button2'}
-              clicked={this.changeOrientation}
-              counter='Orientation'>
-            </Button>
-            <Stats stats={this.state.nodeinfo}></Stats>
-            <TreeComponent
-              orientation={this.state.orientation}
-              treeData={this.state.treeData}
-              grabNodeStats={this.grabNodeStats}>
-            </TreeComponent>
+          <div style={
+            {
+              display: "flex",
+              justifyContent: "space-between",
+              flexDirection: "row"
+            }
+          } className='content'>
+            <div id='infoPanel'>
+              <Button
+                id={'button1'}
+                clicked={this.clicked}
+                counter={this.state.button1counter}>
+              </Button>
+              <Button
+                id={'button2'}
+                clicked={this.changeOrientation}
+                counter='Orientation'>
+              </Button>
+              <Stats stats={this.state.nodeinfo}></Stats>
+            </div>
+            <div style={{ width: '70%', border: "black 2px solid"}}id='treePanel'>
+              <TreeComponent
+                orientation={this.state.orientation}
+                treeData={this.state.treeData}
+                grabNodeStats={this.grabNodeStats}>
+              </TreeComponent>
+            </div>
           </div>
         }
       </div >
