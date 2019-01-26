@@ -136,18 +136,10 @@ class App extends Component {
       console.log('before addIndividualTime', tempTreeData);
       addIndividualTime(tempTreeData);
       console.log('after individualTime =============', tempTreeData);
-<<<<<<< HEAD
       addColor(tempTreeData, this.state.green, this.state.lightGreen, this.state.yellow, this.state.orange);
       console.log('after addColor =============', tempTreeData);
       this.setState({treeData: tempTreeData});
       console.log('after setState', this.state);
-=======
-      this.setState({ treeData: tempTreeData })
-      console.log('after setState', this.state)
-
-      // console.log("----------------------------11")
-      // console.log("----------------------------22")
->>>>>>> dev
     })
   }
 
