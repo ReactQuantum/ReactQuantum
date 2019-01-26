@@ -22,11 +22,15 @@ class App extends Component {
       nodeinfo: 5,
       startQuantum: false,
       treeData: {
-        name: 'placeholder',
-        time: '10ms',
-      }
+        name: 'placeholder'
+      },
+      green: 0.005,
+      lightGreen: 0.01,
+      yellow: 0.05,
+      orange: 0.1,
+      red: 0.2
     }
-    // this.addIndividualTime = this.addIndividualTime.bind(this);
+
     this.grabNodeStats = this.grabNodeStats.bind(this);
     this.changeOrientation = this.changeOrientation.bind(this);
     this.clicked = this.clicked.bind(this);
@@ -74,6 +78,7 @@ class App extends Component {
     // })
 
     port.onMessage.addListener(message => {
+      //function subtracts children render time from its own render time to get individual render time
       function addIndividualTime(treeDataArr) {
         for (let i = 0; i < treeDataArr.length; i++) {
           if (treeDataArr[i].renderTime === 0) {
@@ -81,8 +86,15 @@ class App extends Component {
           } else {
             let sumChildrenTime = 0;
             for (var j = 0; j < treeDataArr[i].children.length; j++) {
-              // if (chid time = 0) {logic to add time of children of child}
+              if (treeDataArr[i].children[j].renderTime === 0) {
+                if (treeDataArr[i].children[j].children[0]) {
+                  for (var k = 0; k < treeDataArr[i].children[j].children.length; k++) {
+                    sumChildrenTime += treeDataArr[i].children[j].children[k]
+                  }
+                }
+              } else {
               sumChildrenTime += treeDataArr[i].children[j].renderTime
+              }
             }
             treeDataArr[i].individualTime = treeDataArr[i].renderTime - sumChildrenTime;
           }
@@ -93,19 +105,44 @@ class App extends Component {
           }
         }
       }
+
+      //adds color based on render time of node relative to total render time of app
+      function addColor(treeDataArr, green, lightGreen, yellow, orange) {
+        let totalTime = treeDataArr[0].renderTime;
+        let workToBeDone = [treeDataArr[0]];
+        while (workToBeDone.length > 0) {
+          let percentTime = workToBeDone[0].individualTime / totalTime;
+          if (percentTime < green) {
+            workToBeDone[0].nodeSvgShape = {shape: 'ellipse', shapeProps: {rx: 20, ry: 20, fill: '#80b74c'}};
+          } else if (percentTime < lightGreen) {
+            workToBeDone[0].nodeSvgShape = {shape: 'ellipse', shapeProps: {rx: 20, ry: 20, fill: '#a1c94f'}};
+          } else if (percentTime < yellow) {
+            workToBeDone[0].nodeSvgShape = {shape: 'ellipse', shapeProps: {rx: 20, ry: 20, fill: '#e6cc38'}};
+          } else if (percentTime < orange) {
+            workToBeDone[0].nodeSvgShape = {shape: 'ellipse', shapeProps: {rx: 20, ry: 20, fill: '#f69d27'}};
+          } else {
+            workToBeDone[0].nodeSvgShape = {shape: 'ellipse', shapeProps: {rx: 20, ry: 20, fill: '#e74e2c'}};
+          }
+          for (var i = 0; i < workToBeDone[0].children.length; i++) {
+            workToBeDone.push(workToBeDone[0].children[i]);
+          }
+          workToBeDone.shift();
+        }
+      }
+
       console.log("chrome.runtime.onMessage in devTools message:", message)
       let tempTreeData = JSON.parse(message.message);
-      tempTreeData[0].name = 'root';
-      console.log('before addIndividualTime', this, this.addIndividualTime, this.componentDidMount.addIndividualTime);
+      tempTreeData = tempTreeData[0].children;
+      console.log('before addIndividualTime', tempTreeData);
       addIndividualTime(tempTreeData);
       console.log('after individualTime =============', tempTreeData);
-      this.setState({treeData: tempTreeData})
-      console.log('after setState', this.state)
-
-      // console.log("----------------------------11")
-      // console.log("----------------------------22")
+      addColor(tempTreeData, this.state.green, this.state.lightGreen, this.state.yellow, this.state.orange);
+      console.log('after addColor =============', tempTreeData);
+      this.setState({treeData: tempTreeData});
+      console.log('after setState', this.state);
     })
   }
+
   startQuantum(e) {
     let tabId = chrome.devtools.inspectedWindow.tabId;
     console.log("clicked", tabId)
