@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { render } from 'react-dom';
-// import  './devtools.css';
 import TreeComponent from './components/TreeComponent'
 import Stats from './components/Stats'
 import Button from './components/Button'
 import { resolve } from 'path';
+import image from '../src/assets/React-Quantum-Logo.png';
 
 let tempTreeData = {
   name: 'Dummy',
@@ -157,27 +157,25 @@ class App extends Component {
     console.log('render ------------');
     return (
       <div>
-        <h1 style={{ color: 'blue' }}>React Quantum</h1>
+        <img src={image} />
+        
         {this.state.startQuantum === false ?
-          <div>
-            <Button
-              id={'startQuantum'}
-              clicked={this.startQuantum}
-              counter={this.state.startButton}>
-            </Button>
-          </div> :
+         <div>
+          <Button
+           id={'startQuantum'}
+           clicked={this.startQuantum}
+           counter={this.state.startButton}>
+          </Button>
+        </div> :
+
           <div className='content'>
-            <Button
-              id={'button1'}
-              clicked={this.clicked}
-              counter={this.state.button1counter}>
-            </Button>
+
             <Button
               id={'button2'}
               clicked={this.changeOrientation}
               counter='Orientation'>
             </Button>
-            <Stats stats={this.state.nodeinfo}></Stats>
+              <Stats stats={this.state.nodeinfo}></Stats>
             <TreeComponent
               orientation={this.state.orientation}
               treeData={this.state.treeData}
