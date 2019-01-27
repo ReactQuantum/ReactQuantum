@@ -12,7 +12,7 @@ var arr = [targ];
 var curr
 
 function filter(fiber) {
-  let { actualDuration, elementType, stateNode } = fiber;
+  let { actualDuration, elementType, stateNode, memoizedState, pendingProps } = fiber;
   let name = elementType
   if (elementType !== null && elementType.name !== "") {
     if (typeof elementType === "function") {
@@ -36,7 +36,9 @@ function filter(fiber) {
     renderTime: actualDuration === undefined ? "Only available in Dev Mode" : actualDuration,
     children: [],
     return: fiber.return !== null ? targ : null,
-    sibling: null
+    sibling: null,
+    memoizedState: memoizedState,
+    pendingProps: pendingProps
   };
 
   return filteredFiber
