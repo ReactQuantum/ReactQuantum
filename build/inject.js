@@ -14,7 +14,7 @@ var curr
 function filter(fiber) {
   let { actualDuration, elementType, stateNode, memoizedState, pendingProps } = fiber;
   let name = elementType
-  if (elementType !== null) {
+  if (elementType !== null && elementType.name !== "") {
     if (typeof elementType === "function") {
       name = elementType.name;
     } else if (typeof elementType === "object") {
@@ -31,7 +31,7 @@ function filter(fiber) {
     name = "Unknown"
   }
 
-  let filteredFiber = {
+  var filteredFiber = {
     name: name,
     renderTime: actualDuration === undefined ? "Only available in Dev Mode" : actualDuration,
     children: [],
@@ -137,7 +137,7 @@ function createTree(workInProgress) {
   }
 
   //deleting circular references
-  let noCirc = JSON.stringify(arr, function (key, val) {
+  var noCirc = JSON.stringify(arr, function (key, val) {
     if (!Array.isArray(val) && val !== null && typeof val === "object") {
       delete val["return"]
     }
@@ -148,7 +148,6 @@ function createTree(workInProgress) {
     name: "inject",
     data: noCirc
   })
-
   return noCirc;
 }
 
@@ -159,4 +158,10 @@ createTree(current)
 
 
 
-
+// if (set) {
+//   for (let i of set.keys()) {
+//     console.log(i.current)
+//   }
+// } else {
+//   console.log('can\'t hook to react')
+// }

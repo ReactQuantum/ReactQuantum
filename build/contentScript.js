@@ -1,5 +1,5 @@
-var port = chrome.runtime.connect({ name: "content-bg" });
-
+var port = chrome.runtime.connect({ name: "content" });
+console.log(port)
 function injectScript(file) {
   const body = document.getElementsByTagName('body')[0];
   const scriptFile = document.createElement('script');
@@ -9,9 +9,18 @@ function injectScript(file) {
   body.appendChild(scriptFile);
 }
 
+function setupPortIfNeeded() {
+  if (!port) {
+    port = chrome.runtime.connect({ name: "content" });
+    port.postMessage({ message: "initialize" });
+    port.onDisconnect.addListener(function () {
+      port = null;
+    });
+  }
+}
+
 function shouldInject() {
   let injected = document.getElementById('injectScript')
-
   if (injected === null) {
     injectScript(chrome.extension.getURL('inject.js'))
   } else {
@@ -23,7 +32,7 @@ function shouldInject() {
 
 // function initialInject(message) {
 //   if (message.message === 'initialize') {
-//     console.log("content, msg was 'initialize'", messsage)
+//     console.log("content, msg was 'initialize'", message)
 //     shouldInject()
 //   }
 // }
@@ -36,16 +45,30 @@ window.addEventListener("load", () => {
   shouldInject()
 });
 
+chrome.runtime.onMessage.addListener((message) => {
+  console.log("content-script: onMessage", message);
+  if (message.name == "startQuantum") {
+    console.log("starting quantum from content")
+    shouldInject()
+  }
+});
+
+
 window.addEventListener('message', message => {
-  console.log("window.addEventListener('message') in content", message.data)
+  console.log("window.addEventListener('message') in content", message.data.name)
   if (message.data.name === undefined) return;
+  if (message.data.name === "startQuantum") {
+    shouldInject()
+  }
   if (message.data.name == 'inject') {
+    setupPortIfNeeded()
     fiberRoot = message.data.data;
-    console.log("window.addEventListener, e.data.name was 'inject' in content", fiberRoot)
+    console.log("window.addEventListener, e.data.name was 'inject' in content", typeof fiberRoot)
     port.postMessage(
       {
         name: "fiberRoot",
         message: fiberRoot,
+        target: "devTools"
 
       }
     )
@@ -75,7 +98,7 @@ function subscriber(mutations) {
       //  console.log("mutations.removedNodes", mutations.removedNodes)
       if (mutation.addedNodes.length) {
         if (mutation.addedNodes[0].nodeName === 'SCRIPT' && mutation.addedNodes[0].getAttribute('id') === 'injectScript') {
-          console.log('update was a script injection')
+          console.log('update was a script injection', mutation.addedNodes.length)
           fiberUpdate = false;
         }
       }
@@ -84,7 +107,7 @@ function subscriber(mutations) {
         //console.log("mutation.removedNodes nodeType", mutation.removedNodes[0].nodeType)
 
         if (mutation.removedNodes[0].nodeName === 'SCRIPT' && mutation.removedNodes[0].getAttribute('id') === 'injectScript') {
-          console.log('update was a script removal')
+          console.log('update was a script removal', mutation.removedNodes.length > 0)
           fiberUpdate = false;
         }
       }
@@ -93,7 +116,7 @@ function subscriber(mutations) {
   if (fiberUpdate) {
     shouldInject()
     fiberUpdate = false;
-    console.log("fiberUpdate back to false")
+    //  console.log("fiberUpdate back to false")
   }
 }
 
