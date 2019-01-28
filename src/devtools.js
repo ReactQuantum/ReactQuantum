@@ -2,14 +2,10 @@ import React, { Component } from 'react';
 import { render } from 'react-dom';
 // import  './devtools.css';
 import TreeComponent from './components/TreeComponent'
+import PercentColorInput from './components/PercentColorInput'
 import Stats from './components/Stats'
 import Button from './components/Button'
 import { resolve } from 'path';
-
-let tempTreeData = {
-  name: 'Dummy',
-  renderTime: '100000ms',
-}
 
 class App extends Component {
   constructor() {
@@ -29,9 +25,10 @@ class App extends Component {
       lightGreen: 0.01,
       yellow: 0.05,
       orange: 0.1,
-      red: 0.2
     }
 
+    // this.changePercentages = this.changePercentages.bind(this);
+    this.updateTreeState = this.updateTreeState.bind(this);
     this.grabNodeStats = this.grabNodeStats.bind(this);
     this.changeOrientation = this.changeOrientation.bind(this);
     this.clicked = this.clicked.bind(this);
@@ -47,7 +44,10 @@ class App extends Component {
     let updateCounter = {}
     updateCounter[counterId] = counter
     this.setState(updateCounter)
+  }
 
+  updateTreeState(treeDataArr) {
+    this.setState({treeData: treeDataArr});
   }
 
   changeOrientation() {
@@ -63,6 +63,29 @@ class App extends Component {
     console.log(stats)
   }
 
+  addColor(treeDataArr, green, lightGreen, yellow, orange) {
+    let totalTime = treeDataArr[0].renderTime;
+    let workToBeDone = [treeDataArr[0]];
+    while (workToBeDone.length > 0) {
+      let percentTime = workToBeDone[0].individualTime / totalTime;
+      if (percentTime < green) {
+        workToBeDone[0].nodeSvgShape = {shape: 'ellipse', shapeProps: {rx: 20, ry: 20, fill: '#80b74c'}};
+      } else if (percentTime < lightGreen) {
+        workToBeDone[0].nodeSvgShape = {shape: 'ellipse', shapeProps: {rx: 20, ry: 20, fill: '#a1c94f'}};
+      } else if (percentTime < yellow) {
+        workToBeDone[0].nodeSvgShape = {shape: 'ellipse', shapeProps: {rx: 20, ry: 20, fill: '#e6cc38'}};
+      } else if (percentTime < orange) {
+        workToBeDone[0].nodeSvgShape = {shape: 'ellipse', shapeProps: {rx: 20, ry: 20, fill: '#f69d27'}};
+      } else {
+        workToBeDone[0].nodeSvgShape = {shape: 'ellipse', shapeProps: {rx: 20, ry: 20, fill: '#e74e2c'}};
+      }
+      for (var i = 0; i < workToBeDone[0].children.length; i++) {
+        workToBeDone.push(workToBeDone[0].children[i]);
+      }
+      workToBeDone.shift();
+    }
+    return treeDataArr;
+  }
 
   componentDidMount() {
     let port = chrome.runtime.connect(null, { name: "devTools" });
@@ -130,6 +153,7 @@ class App extends Component {
           }
           workToBeDone.shift();
         }
+        return treeDataArr;
       }
 
       console.log("chrome.runtime.onMessage in devTools message:", message)
@@ -193,6 +217,14 @@ class App extends Component {
                 counter='Orientation'>
               </Button>
               <Stats stats={this.state.nodeinfo}></Stats>
+              <PercentColorInput
+                treeData={this.state.treeData}
+                percentForGreen={this.state.green}
+                percentForLightGreen={this.state.lightGreen}
+                percentForYellow={this.state.yellow}
+                percentForOrange={this.state.orange}
+                updateTreeState={this.updateTreeState}
+              />
             </div>
             <div style={{ width: '70%', border: "black 2px solid"}}id='treePanel'>
               <TreeComponent
