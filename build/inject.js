@@ -199,7 +199,6 @@ function treeConstruct(currentTree) {
               }
             }
 
-
             if (parentSib === null) {
               targ = targ.return;
               climber = climber.return;
@@ -230,6 +229,12 @@ function treeConstruct(currentTree) {
       return val
     }
     )
+
+    window.postMessage({
+      name: "inject",
+      data: noCirc
+    })
+    console.log("------------------end of shouldInject----------------")
 
     return noCirc;
   }
