@@ -83,11 +83,6 @@ class TreeComponent extends React.Component {
   }
 
 
-
-  //parse through next props to add color property base one render time relative to total render time
-  // componentWillUpdate (nextProps, nextState) {
-  // }
-
   render() {
 
     return (
