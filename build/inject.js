@@ -3,12 +3,16 @@ function pullAndCloneTree() {
     var visitedNodes = [];
     var clonedCopy = [];
     function clone(item) {
+
       if (typeof item === "object" && !Array.isArray(item) && item !== null) {
         if (visitedNodes.indexOf(item) === -1) {
           visitedNodes.push(item);
           var cloneObject = {};
           clonedCopy.push(cloneObject);
-          cloneObject._REACT_QUANTUM_render_count = 0;
+          if (Object.keys(item).includes('alternate')) {
+            cloneObject._REACT_QUANTUM_render_count = 0;
+          }
+
           for (var i in item) {
             if (item.hasOwnProperty(i)) {
               cloneObject[i] = clone(item[i]);
@@ -70,8 +74,10 @@ function treeConstruct(currentTree) {
   var arr = [targ];
   var curr;
 
+
+  //add
   function filter(fiber) {
-    let { actualDuration, elementType, stateNode, memoizedState, _REACT_QUANTUM_render_count } = fiber;
+    let { actualDuration, elementType, stateNode, memoizedState, memoizedProps, _REACT_QUANTUM_render_count } = fiber;
     let name = elementType
     if (elementType !== null) {
       if (typeof elementType === "function") {
@@ -90,6 +96,15 @@ function treeConstruct(currentTree) {
       name = "Unknown"
     }
 
+    if (memoizedProps) {
+      memoizedProps = JSON.stringify(memoizedProps, function (key, val) {
+        if (!Array.isArray(val) && val !== null && typeof val === "object") {
+          delete val["children"]
+        }
+        return val
+      })
+    }
+
     let filteredFiber = {
       name: name,
       renderTime: actualDuration === undefined ? "Only available in Dev Mode" : actualDuration,
@@ -97,6 +112,7 @@ function treeConstruct(currentTree) {
       return: fiber.return !== null ? targ : null,
       sibling: null,
       memoizedState: memoizedState,
+      memoizedProps: memoizedProps,
       _REACT_QUANTUM_render_count: _REACT_QUANTUM_render_count
     };
 
@@ -194,17 +210,19 @@ function treeConstruct(currentTree) {
         }
       }
     }
-    console.log(arr)
-    return arr
+    console.log("hey arr", arr)
     //deleting circular references
-    let noCirc = JSON.stringify(arr, function (key, val) {
+    var noCirc = JSON.stringify(arr, function (key, val) {
       if (!Array.isArray(val) && val !== null && typeof val === "object") {
         delete val["return"]
       }
       return val
-    }
-    )
-
+    })
+    window.postMessage({
+      name: "inject",
+      data: noCirc
+    })
+    console.log("end of shouldInject")
     return noCirc;
   }
 
