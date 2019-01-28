@@ -1,15 +1,22 @@
 import React, { Component } from 'react';
 import { render } from 'react-dom';
-// import  './devtools.css';
 import TreeComponent from './components/TreeComponent'
 import Stats from './components/Stats'
 import Button from './components/Button'
 import { resolve } from 'path';
+import image from '../src/assets/ReactQuantumLogo2.png';
+import styled from 'styled-components';
 
 let tempTreeData = {
   name: 'Dummy',
   renderTime: '100000ms',
 }
+
+const WrapperStyled = styled.div`
+  width: 100%;
+  text-align: center;
+`;
+
 
 class App extends Component {
   constructor() {
@@ -18,7 +25,7 @@ class App extends Component {
       button1counter: 0,
       button2counter: 0,
       startButton: 'Start Quantum',
-      orientation: 'vertical',
+      // orientation: 'vertical',
       nodeinfo: 5,
       startQuantum: false,
       treeData: {
@@ -32,7 +39,7 @@ class App extends Component {
     }
 
     this.grabNodeStats = this.grabNodeStats.bind(this);
-    this.changeOrientation = this.changeOrientation.bind(this);
+    // this.changeOrientation = this.changeOrientation.bind(this);
     this.clicked = this.clicked.bind(this);
     this.startQuantum = this.startQuantum.bind(this)
     chrome.devtools.panels.create("React Quantum", null, "devtools.html");
@@ -48,13 +55,13 @@ class App extends Component {
 
   }
 
-  changeOrientation() {
-    if (this.state.orientation === 'vertical') {
-      this.setState({ orientation: 'horizontal' })
-    } else {
-      this.setState({ orientation: 'vertical' })
-    }
-  }
+  // changeOrientation() {
+  //   if (this.state.orientation === 'vertical') {
+  //     this.setState({ orientation: 'horizontal' })
+  //   } else {
+  //     this.setState({ orientation: 'vertical' })
+  //   }
+  // }
 
   grabNodeStats(stats) {
     this.setState({ nodeinfo: { totalTime: stats.time, individualTime: stats.individualTime, name: stats.name } })
@@ -81,6 +88,9 @@ class App extends Component {
       //function subtracts children render time from its own render time to get individual render time
       function addIndividualTime(treeDataArr) {
         for (let i = 0; i < treeDataArr.length; i++) {
+          if (treeDataArr[i].memoizedProps) {
+            treeDataArr[i].memoizedProps = JSON.parse(treeDataArr[i].memoizedProps)
+          }
           if (treeDataArr[i].renderTime === 0) {
             treeDataArr[i].individualTime === 0
           } else {
@@ -93,7 +103,7 @@ class App extends Component {
                   }
                 }
               } else {
-              sumChildrenTime += treeDataArr[i].children[j].renderTime
+                sumChildrenTime += treeDataArr[i].children[j].renderTime
               }
             }
             treeDataArr[i].individualTime = treeDataArr[i].renderTime - sumChildrenTime;
@@ -113,15 +123,15 @@ class App extends Component {
         while (workToBeDone.length > 0) {
           let percentTime = workToBeDone[0].individualTime / totalTime;
           if (percentTime < green) {
-            workToBeDone[0].nodeSvgShape = {shape: 'ellipse', shapeProps: {rx: 20, ry: 20, fill: '#80b74c'}};
+            workToBeDone[0].nodeSvgShape = { shape: 'ellipse', shapeProps: { rx: 20, ry: 20, fill: '#80b74c' } };
           } else if (percentTime < lightGreen) {
-            workToBeDone[0].nodeSvgShape = {shape: 'ellipse', shapeProps: {rx: 20, ry: 20, fill: '#a1c94f'}};
+            workToBeDone[0].nodeSvgShape = { shape: 'ellipse', shapeProps: { rx: 20, ry: 20, fill: '#a1c94f' } };
           } else if (percentTime < yellow) {
-            workToBeDone[0].nodeSvgShape = {shape: 'ellipse', shapeProps: {rx: 20, ry: 20, fill: '#e6cc38'}};
+            workToBeDone[0].nodeSvgShape = { shape: 'ellipse', shapeProps: { rx: 20, ry: 20, fill: '#e6cc38' } };
           } else if (percentTime < orange) {
-            workToBeDone[0].nodeSvgShape = {shape: 'ellipse', shapeProps: {rx: 20, ry: 20, fill: '#f69d27'}};
+            workToBeDone[0].nodeSvgShape = { shape: 'ellipse', shapeProps: { rx: 20, ry: 20, fill: '#f69d27' } };
           } else {
-            workToBeDone[0].nodeSvgShape = {shape: 'ellipse', shapeProps: {rx: 20, ry: 20, fill: '#e74e2c'}};
+            workToBeDone[0].nodeSvgShape = { shape: 'ellipse', shapeProps: { rx: 20, ry: 20, fill: '#e74e2c' } };
           }
           for (var i = 0; i < workToBeDone[0].children.length; i++) {
             workToBeDone.push(workToBeDone[0].children[i]);
@@ -138,7 +148,7 @@ class App extends Component {
       console.log('after individualTime =============', tempTreeData);
       addColor(tempTreeData, this.state.green, this.state.lightGreen, this.state.yellow, this.state.orange);
       console.log('after addColor =============', tempTreeData);
-      this.setState({treeData: tempTreeData});
+      this.setState({ treeData: tempTreeData });
       console.log('after setState', this.state);
     })
   }
@@ -193,36 +203,35 @@ class App extends Component {
   render() {
     console.log('render ------------');
     return (
-      <div>
-        <h1 style={{ color: 'blue' }}>React Quantum</h1>
+      <WrapperStyled>
+        <div>
+          <img src={image} href="https://github.com/ReactQuantum/ReactQuantum" />
+        
         {this.state.startQuantum === false ?
-          <div>
-            <Button
+
+            <div style={{width: '100%', alignContent: 'center', display: 'flex', justifyContent: 'center'}}>
+              <Button
               id={'startQuantum'}
               clicked={this.startQuantum}
               counter={this.state.startButton}>
-            </Button>
-          </div> :
+              </Button> 
+            </div> :
+
           <div className='content'>
-            <Button
-              id={'button1'}
-              clicked={this.clicked}
-              counter={this.state.button1counter}>
-            </Button>
-            <Button
-              id={'button2'}
-              clicked={this.changeOrientation}
-              counter='Orientation'>
-            </Button>
-            <Stats stats={this.state.nodeinfo}></Stats>
+
+              <div>
+                <Stats stats={this.state.nodeinfo}></Stats>
+              </div>
             <TreeComponent
               orientation={this.state.orientation}
               treeData={this.state.treeData}
               grabNodeStats={this.grabNodeStats}>
             </TreeComponent>
+        
           </div>
         }
-      </div >
+        </div>
+      </WrapperStyled >
 
     )
   }
