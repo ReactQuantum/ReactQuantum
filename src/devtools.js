@@ -5,11 +5,18 @@ import Stats from './components/Stats'
 import Button from './components/Button'
 import { resolve } from 'path';
 import image from '../src/assets/ReactQuantumLogo2.png';
+import styled from 'styled-components';
 
 let tempTreeData = {
   name: 'Dummy',
   renderTime: '100000ms',
 }
+
+const WrapperStyled = styled.div`
+  width: 100%;
+  text-align: center;
+`;
+
 
 class App extends Component {
   constructor() {
@@ -18,7 +25,7 @@ class App extends Component {
       button1counter: 0,
       button2counter: 0,
       startButton: 'Start Quantum',
-      orientation: 'vertical',
+      // orientation: 'vertical',
       nodeinfo: 5,
       startQuantum: false,
       treeData: {
@@ -32,7 +39,7 @@ class App extends Component {
     }
 
     this.grabNodeStats = this.grabNodeStats.bind(this);
-    this.changeOrientation = this.changeOrientation.bind(this);
+    // this.changeOrientation = this.changeOrientation.bind(this);
     this.clicked = this.clicked.bind(this);
     this.startQuantum = this.startQuantum.bind(this)
     chrome.devtools.panels.create("React Quantum", null, "devtools.html");
@@ -48,13 +55,13 @@ class App extends Component {
 
   }
 
-  changeOrientation() {
-    if (this.state.orientation === 'vertical') {
-      this.setState({ orientation: 'horizontal' })
-    } else {
-      this.setState({ orientation: 'vertical' })
-    }
-  }
+  // changeOrientation() {
+  //   if (this.state.orientation === 'vertical') {
+  //     this.setState({ orientation: 'horizontal' })
+  //   } else {
+  //     this.setState({ orientation: 'vertical' })
+  //   }
+  // }
 
   grabNodeStats(stats) {
     this.setState({ nodeinfo: { totalTime: stats.time, individualTime: stats.individualTime, name: stats.name } })
@@ -193,34 +200,35 @@ class App extends Component {
   render() {
     console.log('render ------------');
     return (
-      <div>
-        <img src={image} />
+      <WrapperStyled>
+        <div>
+          <img src={image} href="https://github.com/ReactQuantum/ReactQuantum" />
         
         {this.state.startQuantum === false ?
-         <div>
-          <Button
-           id={'startQuantum'}
-           clicked={this.startQuantum}
-           counter={this.state.startButton}>
-          </Button>
-        </div> :
+
+            <div style={{width: '100%', alignContent: 'center', display: 'flex', justifyContent: 'center'}}>
+              <Button
+              id={'startQuantum'}
+              clicked={this.startQuantum}
+              counter={this.state.startButton}>
+              </Button> 
+            </div> :
 
           <div className='content'>
 
-            <Button
-              id={'button2'}
-              clicked={this.changeOrientation}
-              counter='Orientation'>
-            </Button>
-              <Stats stats={this.state.nodeinfo}></Stats>
+              <div>
+                <Stats stats={this.state.nodeinfo}></Stats>
+              </div>
             <TreeComponent
               orientation={this.state.orientation}
               treeData={this.state.treeData}
               grabNodeStats={this.grabNodeStats}>
             </TreeComponent>
+        
           </div>
         }
-      </div >
+        </div>
+      </WrapperStyled >
 
     )
   }

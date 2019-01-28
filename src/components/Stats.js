@@ -2,22 +2,16 @@ import React from 'react';
 import styled from 'styled-components';
 
 const StatsStyled = styled.div`
-  color: white;
-  background-color: #a3a3a3;
-  font-size: 12px;
+  color: #595959;
+  text-shadow: 1px 1px 2px #a3a3a3; 
+  font-size: 8px;
   font-family: "Trebuchet MS";
   margin: 1em;
   padding: 0.25em 1em;
-  border: 1px solid #424242;
-  width: 50%;
-  height: 140px;
-  -webkit-box-shadow: 4px 5px 10px 0px rgba(0,0,0,0.38);
--moz-box-shadow: 4px 5px 10px 0px rgba(0,0,0,0.38);
-box-shadow: 4px 5px 10px 0px rgba(0,0,0,0.38);
-border-radius: 8px 113px 8px 8px;
--moz-border-radius: 8px 113px 8px 8px;
--webkit-border-radius: 8px 113px 8px 8px;
-border: 0.5px solid #000000;
+  width: 35%;
+  height: auto;
+  text-align: left;
+  float: left;
 `;
 
 class Stats extends React.Component {

@@ -15,13 +15,24 @@ const ButtonStyled = styled.button`
 	cursor:pointer;
 	color:#ffffff;
 	font-family: Trebuchet MS;
-	font-size:14px;
+	font-size: 24px;
 	font-weight:bold;
-	// padding:16px 31px;
+  padding: 15px 25px;
 	text-decoration:none;
   text-shadow:2px 1px 3px #2f6627;
   text-align: center;
   width: auto;
+
+  &:hover {
+    background-color: #3e8e41;
+  }
+
+  &:active {
+    background-color: #3e8e41;
+    box-shadow: 0 5px #666;
+    transform: translateY(4px);
+  }
+
   `;
 
 class Button extends Component {
@@ -30,7 +41,7 @@ class Button extends Component {
   }
   render() {
     return (
-      <ButtonStyled id={this.props.id} onClick={this.props.clicked} style={{ width: 75, height: 45 }}>
+      <ButtonStyled id={this.props.id} onClick={this.props.clicked} >
         {this.props.counter}
       </ButtonStyled>
     )
