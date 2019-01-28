@@ -8,8 +8,6 @@ import { resolve } from 'path';
 import image from '../src/assets/ReactQuantumLogo2.png';
 import styled from 'styled-components';
 
-<<<<<<< HEAD
-=======
 let tempTreeData = {
   name: 'Dummy',
   renderTime: '100000ms',
@@ -21,7 +19,6 @@ const WrapperStyled = styled.div`
 `;
 
 
->>>>>>> dev
 class App extends Component {
   constructor() {
     super();
@@ -209,7 +206,7 @@ class App extends Component {
       <WrapperStyled>
         <div>
           <img src={image} href="https://github.com/ReactQuantum/ReactQuantum" />
-        
+
         {this.state.startQuantum === false ?
 
             <div style={{width: '100%', alignContent: 'center', display: 'flex', justifyContent: 'center'}}>
@@ -217,60 +214,28 @@ class App extends Component {
               id={'startQuantum'}
               clicked={this.startQuantum}
               counter={this.state.startButton}>
-<<<<<<< HEAD
-            </Button>
-          </div> :
-          <div style={
-            {
-              display: "flex",
-              justifyContent: "space-between",
-              flexDirection: "row"
-            }
-          } className='content'>
-            <div id='infoPanel'>
-              <Button
-                id={'button1'}
-                clicked={this.clicked}
-                counter={this.state.button1counter}>
               </Button>
-              <Button
-                id={'button2'}
-                clicked={this.changeOrientation}
-                counter='Orientation'>
-              </Button>
-              <Stats stats={this.state.nodeinfo}></Stats>
-              <PercentColorInput
-                treeData={this.state.treeData}
-                percentForGreen={this.state.green}
-                percentForLightGreen={this.state.lightGreen}
-                percentForYellow={this.state.yellow}
-                percentForOrange={this.state.orange}
-                updateTreeState={this.updateTreeState}
-              />
-            </div>
-            <div style={{ width: '70%', border: "black 2px solid"}}id='treePanel'>
-              <TreeComponent
-                orientation={this.state.orientation}
-                treeData={this.state.treeData}
-                grabNodeStats={this.grabNodeStats}>
-              </TreeComponent>
-            </div>
-=======
-              </Button> 
             </div> :
 
           <div className='content'>
 
               <div>
                 <Stats stats={this.state.nodeinfo}></Stats>
+                <PercentColorInput
+                  treeData={this.state.treeData}
+                  percentForGreen={this.state.green}
+                  percentForLightGreen={this.state.lightGreen}
+                  percentForYellow={this.state.yellow}
+                  percentForOrange={this.state.orange}
+                  updateTreeState={this.updateTreeState}
+                />
               </div>
             <TreeComponent
               orientation={this.state.orientation}
               treeData={this.state.treeData}
               grabNodeStats={this.grabNodeStats}>
             </TreeComponent>
-        
->>>>>>> dev
+
           </div>
         }
         </div>
