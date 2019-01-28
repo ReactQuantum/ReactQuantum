@@ -131,6 +131,7 @@ function treeConstruct(currentTree) {
       targ.children.push(curr);
       let targSib = curr;
       let lastSib;
+      let foundLastSib = false;
       //if the child(next) has a sibling,
       if (next.sibling !== null) {
         let nextSib = next.sibling
@@ -141,8 +142,12 @@ function treeConstruct(currentTree) {
           targSib.sibling = filtSib
           // siblings have same parent(targ); push it to parent's children array
           targ.children.push(filtSib);
-          //remember the last sibling worked on
-          lastSib = nextSib
+          //remember the sibling that has a child
+          if (!foundLastSib && nextSib.child !== null) {
+            lastSib = nextSib;
+            foundLastSib = true;
+          }
+
           //this loops if current sibling also has a sibling, otherwise loop breaks.
           targSib = targSib.sibling
           nextSib = nextSib.sibling
@@ -191,11 +196,32 @@ function treeConstruct(currentTree) {
         //if bottomFiber has a parent
         if (climber.return !== null) {
           //if the parent has a sibling
-          if (climber.return.sibling !== null && climber.return.sibling.child !== null) {
+          //         if (climber.return.sibling !== null && climber.return.sibling.child !== null) {
+          if (climber.return.sibling !== null) {
+
             // break the loop and process the child of that sibling.
-            targ = targ.return.sibling;
-            next = climber.return.sibling.child;
-            break;
+            let parentSib = climber.return.sibling
+            let parentTarg = targ.return.sibling;
+            //find the first sibling that has the child;
+            if (parentSib !== null || parentTarg !== null) {
+              while (parentSib !== null) {
+                if (parentSib.child !== null) {
+                  targ = parentTarg;
+                  next = parentSib.child
+                  break;
+                }
+                parentTarg = parentTarg.sibling;
+                parentSib = parentSib.sibling;
+              }
+            }
+
+            if (parentSib === null) {
+              targ = targ.return;
+              climber = climber.return;
+            } else {
+              break;
+            }
+
           } else {
             //otherwise, keep climbing up the parent
             if (targ !== null) {
