@@ -16,6 +16,7 @@
     "@babel/preset-react": "^7.0.0",
     "babel-loader": "^8.0.5",
     "css-loader": "^2.1.0",
+    "file-loader": "^3.0.1",
     "style-loader": "^0.23.1",
     "webpack": "^4.28.1",
     "webpack-cli": "^3.2.1",
@@ -26,6 +27,7 @@
     "react": "^16.7.0",
     "react-d3-tree": "^1.12.2",
     "react-dom": "^16.7.0",
-    "require": "^2.4.20"
+    "require": "^2.4.20",
+    "styled-components": "^4.1.3"
   }
 }
