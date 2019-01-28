@@ -88,6 +88,9 @@ class App extends Component {
       //function subtracts children render time from its own render time to get individual render time
       function addIndividualTime(treeDataArr) {
         for (let i = 0; i < treeDataArr.length; i++) {
+          if (treeDataArr[i].memoizedProps) {
+            treeDataArr[i].memoizedProps = JSON.parse(treeDataArr[i].memoizedProps)
+          }
           if (treeDataArr[i].renderTime === 0) {
             treeDataArr[i].individualTime === 0
           } else {
@@ -100,7 +103,7 @@ class App extends Component {
                   }
                 }
               } else {
-              sumChildrenTime += treeDataArr[i].children[j].renderTime
+                sumChildrenTime += treeDataArr[i].children[j].renderTime
               }
             }
             treeDataArr[i].individualTime = treeDataArr[i].renderTime - sumChildrenTime;
@@ -120,15 +123,15 @@ class App extends Component {
         while (workToBeDone.length > 0) {
           let percentTime = workToBeDone[0].individualTime / totalTime;
           if (percentTime < green) {
-            workToBeDone[0].nodeSvgShape = {shape: 'ellipse', shapeProps: {rx: 20, ry: 20, fill: '#80b74c'}};
+            workToBeDone[0].nodeSvgShape = { shape: 'ellipse', shapeProps: { rx: 20, ry: 20, fill: '#80b74c' } };
           } else if (percentTime < lightGreen) {
-            workToBeDone[0].nodeSvgShape = {shape: 'ellipse', shapeProps: {rx: 20, ry: 20, fill: '#a1c94f'}};
+            workToBeDone[0].nodeSvgShape = { shape: 'ellipse', shapeProps: { rx: 20, ry: 20, fill: '#a1c94f' } };
           } else if (percentTime < yellow) {
-            workToBeDone[0].nodeSvgShape = {shape: 'ellipse', shapeProps: {rx: 20, ry: 20, fill: '#e6cc38'}};
+            workToBeDone[0].nodeSvgShape = { shape: 'ellipse', shapeProps: { rx: 20, ry: 20, fill: '#e6cc38' } };
           } else if (percentTime < orange) {
-            workToBeDone[0].nodeSvgShape = {shape: 'ellipse', shapeProps: {rx: 20, ry: 20, fill: '#f69d27'}};
+            workToBeDone[0].nodeSvgShape = { shape: 'ellipse', shapeProps: { rx: 20, ry: 20, fill: '#f69d27' } };
           } else {
-            workToBeDone[0].nodeSvgShape = {shape: 'ellipse', shapeProps: {rx: 20, ry: 20, fill: '#e74e2c'}};
+            workToBeDone[0].nodeSvgShape = { shape: 'ellipse', shapeProps: { rx: 20, ry: 20, fill: '#e74e2c' } };
           }
           for (var i = 0; i < workToBeDone[0].children.length; i++) {
             workToBeDone.push(workToBeDone[0].children[i]);
@@ -145,7 +148,7 @@ class App extends Component {
       console.log('after individualTime =============', tempTreeData);
       addColor(tempTreeData, this.state.green, this.state.lightGreen, this.state.yellow, this.state.orange);
       console.log('after addColor =============', tempTreeData);
-      this.setState({treeData: tempTreeData});
+      this.setState({ treeData: tempTreeData });
       console.log('after setState', this.state);
     })
   }
