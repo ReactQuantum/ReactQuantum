@@ -34,16 +34,16 @@ window.addEventListener('load', () => {
 });
 
 chrome.runtime.onMessage.addListener((message) => {
-  if (message.name == 'startQuantum') {
+  if (message.name === 'startQuantum') {
     shouldInject();
   }
 });
 
 window.addEventListener('message', (message) => {
   if (message.data.name === undefined) return;
-  if (message.data.name == 'inject') {
+  if (message.data.name === 'inject') {
     setupPortIfNeeded();
-    fiberRoot = message.data.data;
+    const fiberRoot = message.data.data;
     port.postMessage(
       {
         name: 'fiberRoot',
