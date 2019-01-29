@@ -18,8 +18,6 @@ The beauty is in the heat map: Nodes will change color depending on the componen
   
 In the meantime, local setup instructions are as follows:</p>
 
-**NOTE: React Quantum works best for React v16+ local projects in development environments.**
-
 1. `$ git clone https://github.com/ReactQuantum/ReactQuantum.git`
 
 2. `$ cd ReactQuantum`
@@ -37,6 +35,8 @@ In the meantime, local setup instructions are as follows:</p>
 8. Click the Start Quantum button, refresh the page
 
 9. Optimize components!
+
+**NOTE: React Quantum works best for React v16+ local projects in development environments.**
 
 <h2>Definitions</h2>
 
