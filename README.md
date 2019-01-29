@@ -38,4 +38,10 @@ Click the Start Quantum button, refresh the page
 
 Optimize components!
 ```
+<h2>Definitions</h2>
+
+| Term | Definition |
+| --- | --- |
+| Total render time | Total time a component took to render, *including its children* |
+| Individual render time | Total time an *individual* component took to render |
 
