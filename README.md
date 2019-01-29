@@ -14,7 +14,8 @@ ___
 The beauty is in the heat map: Nodes will change color depending on the component's rendering speed, making it easy to pinpoint possible bottlenecks at a glance. :fire:</p>
 
 <h2>How To Get It</h2>
-<p>Quantum will soon be available as an extension through the Google Chrome Web Store! 
+<p>Quantum will soon be available as an extension through the Google Chrome Web Store.<br>
+  
 In the meantime, local setup instructions are as follows:</p>
 
 **NOTE: React Quantum works best for React v16+ local projects in development environments.**
