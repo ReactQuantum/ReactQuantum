@@ -3,6 +3,7 @@
 </p>
 <h4 align="center">Visualize your React application's component performance metrics with a live heat map.</h4>
 <p align="center">
+<img src="https://img.shields.io/twitter/follow/reactQuantum.svg?label=Follow&style=social">
 <img src="https://img.shields.io/badge/release-beta-yellow.svg?style=plastic">
 <img src="https://img.shields.io/badge/contributions-welcome-green.svg?style=plastic">
  <p>
