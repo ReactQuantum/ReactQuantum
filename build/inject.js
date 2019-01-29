@@ -96,15 +96,15 @@ function treeConstruct(currentTree) {
       name = "Unknown"
     }
 
-    //     if (memoizedProps) {
-    //       memoizedProps = JSON.stringify(memoizedProps, function (key, val) {
-    //         console.log()
-    //         if (!Array.isArray(val) && val !== null && typeof val === "object") {
-    //           delete val["children"]
-    //         }
-    //         return val
-    //       })
-    //     }
+        if (memoizedProps) {
+          memoizedProps = JSON.stringify(memoizedProps, function (key, val) {
+            console.log()
+            if (!Array.isArray(val) && val !== null && typeof val === "object") {
+              delete val["children"]
+            }
+            return val
+          })
+        }
 
     let filteredFiber = {
       name: name,

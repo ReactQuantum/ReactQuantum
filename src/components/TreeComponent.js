@@ -1,6 +1,7 @@
 import React from 'react';
 import Tree from 'react-d3-tree';
 import styled from 'styled-components';
+import PercentColorInput from './PercentColorInput';
 
 
 const OrientationButtonStyled = styled.div`
@@ -35,6 +36,11 @@ margin: 8px;
   box-shadow: 0 5px #666;
   transform: translateY(4px);
 }
+`;
+
+const TreeWindowStyled = styled.div`
+
+
 `;
 
 const svgSquare = {
@@ -86,23 +92,28 @@ class TreeComponent extends React.Component {
   render() {
 
     return (
-
-      <div id="treeWrapper" style={{width: '100%', height: '50em', float: 'right', border: '0.5px solid #ababab', margin: '10px', boxShadow: '2px 2px 2px 2px'}}>
-         <OrientationButtonStyled
-            id={'button2'}
-            onClick={this.changeOrientation}
-            counter='Orientation'>
-            Change Orientation
+      <div>
+        <div id="treeWrapper" style={{width: '100%', height: '60em', float: 'right', border: '0.5px solid #ababab', margin: '10px', boxShadow: '1.5px 1.5px 1.5px 1.5px #ababab'}}>
+        <PercentColorInput />
+        <OrientationButtonStyled
+              id={'button2'}
+              onClick={this.changeOrientation}
+              counter='Orientation'>
+              Change Orientation
           </OrientationButtonStyled>
-        <Tree
-          translate={{x: 200, y: 100}}
-          orientation={this.state.orientation}
-          onMouseOver={this.mouseOver}
-          nodeSvgShape={this.state.shape}
-          separation={{siblings: .6,nonSiblings: .6}}
-          data={this.props.treeData}
-        />
+            <div style={{width: '98%', height: '50em'}}>
 
+            <Tree
+              translate={{x: 200, y: 100}}
+              orientation={this.state.orientation}
+              onMouseOver={this.mouseOver}
+              nodeSvgShape={this.state.shape}
+              separation={{siblings: .6,nonSiblings: .6}}
+              data={this.props.treeData}
+            />
+          </div>
+
+        </div>
       </div>
 
     );
