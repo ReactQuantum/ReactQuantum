@@ -9,7 +9,7 @@
 ___
 
 <h2>What It Does</h2>
-<p>React Quantum parses through your React application to create a color-coded tree representation of its component hierarchy. On hover, each tree node will display two key component performance metrics&mdash;render time and re-render frequency&mdash;as well as memoized state and props that indicate the source of render. 
+<p>React Quantum parses through your React application to create a color-coded tree model of its component hierarchy. On hover, each tree node will display two key component performance metrics&mdash;render time and re-render frequency&mdash;as well as memoized state and props to indicate what, specifically, initiated the render. 
 
 The beauty is in the heat map: Nodes will change color depending on the component's rendering performance, making it easy to pinpoint possible bottlenecks at a glance. :fire:</p>
 
@@ -30,9 +30,9 @@ In the meantime, local setup instructions are as follows:</p>
 
 6. Click the Load Unpacked button, then select your './ReactQuantum/build' directory
 
-7. Open Chrome Developer Tools (Inspect) on any page that uses React, then click on the React Quantum panel
+7. Open Chrome Developer Tools (Inspect) on any page that uses React, then click on `React Quantum` at the top of the Developer Tools panel
 
-8. Click the Start Quantum button, refresh the page
+8. Click the `Start Quantum` button, then refresh the page or set state to trigger a re-render
 
 9. Optimize components!
 
@@ -42,7 +42,7 @@ In the meantime, local setup instructions are as follows:</p>
 
 | Term | Definition |
 | --- | --- |
-| Render | When a component is painted on the DOM |
+| Render | When a React component instance or DOM is updated on the HTML DOM |
 | Total render time | Total time a component took to render, including its children |
 | Individual render time | Total time an individual component took to render |
 | Memoized state and props | The state and props before the component re-rendered |
