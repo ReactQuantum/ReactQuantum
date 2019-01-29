@@ -38,10 +38,6 @@ margin: 8px;
 }
 `;
 
-const TreeWindowStyled = styled.div`
-
-
-`;
 
 const svgSquare = {
   shape: 'rect',
@@ -68,29 +64,33 @@ class TreeComponent extends React.Component {
     super(props);
     this.mouseOver = this.mouseOver.bind(this);
     this.state = {
-      shape: svgEllipse,
-      orientation: 'vertical'
+      orientation: 'vertical',
     };
 
     this.changeOrientation = this.changeOrientation.bind(this);
   }
 
   mouseOver(e) {
-    let stats = {name: e.name, time: e.renderTime, individualTime: e.individualTime, memoizedProps: e.memoizedProps, memoizedState: e.memoizedState};
-    this.props.grabNodeStats(stats);
+    const stats = {
+      name: e.name, time: e.renderTime, individualTime: e.individualTime, memoizedProps: e.memoizedProps, memoizedState: e.memoizedState,
+    };
+    const { grabNodeStats } = this.props;
+    grabNodeStats(stats);
   }
 
   changeOrientation() {
-    if (this.state.orientation === 'vertical') {
-      this.setState({ orientation: 'horizontal' })
+    const { orientation } = this.state;
+    if (orientation === 'vertical') {
+      this.setState({ orientation: 'horizontal' });
     } else {
-      this.setState({ orientation: 'vertical' })
+      this.setState({ orientation: 'vertical' });
     }
   }
 
 
   render() {
-
+    const { orientation, shape } = this.state;
+    const { treeData } = this.props;
     return (
       <div>
         <div id="treeWrapper" style={{width: '100%', height: '60em', float: 'right', border: '0.5px solid #ababab', margin: '10px', boxShadow: '1.5px 1.5px 1.5px 1.5px #ababab'}}>
