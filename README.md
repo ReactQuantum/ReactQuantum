@@ -48,3 +48,5 @@ In the meantime, local setup instructions are as follows:</p>
 | Individual render time | Total time an individual component instance or DOM element took to render |
 | Memoized state and props | The state and props before the component re-rendered |
 
+<h2>Contributing</h2>
+<h3>Pending Features</h3>
