@@ -205,7 +205,7 @@ class App extends Component {
                   <Button
                     id="startQuantum"
                     clicked={this.startQuantum}
-                    counter="Start Button"
+                    counter="Start Quantum"
                   />
                 </div>
               )
@@ -215,13 +215,13 @@ class App extends Component {
                     <StatsPanelStyled>
                       <Stats stats={nodeinfo} />
                       <StatsStyled style={{ marginTop: '-10px' }}>
-                        <h1>Memoized State:</h1>
+                        <h1>Current State:</h1>
                       </StatsStyled>
                       <StatsWindowStyled>
                         <ReactJson src={nodeinfo.memoizedState} />
                       </StatsWindowStyled>
                       <StatsStyled>
-                        <h1>Memoized Props:</h1>
+                        <h1>Props:</h1>
                       </StatsStyled>
                       <StatsWindowStyled>
                         <ReactJson src={nodeinfo.memoizedProps} />
@@ -238,6 +238,7 @@ class App extends Component {
                         updateTreeState={this.updateTreeState}
                       /> */}
                       <TreeComponent
+                        updateTreeState={this.updateTreeState}
                         orientation={orientation}
                         treeData={treeData}
                         grabNodeStats={this.grabNodeStats}
