@@ -42,6 +42,7 @@ Optimize components!
 
 | Term | Definition |
 | --- | --- |
-| Total render time | Total time a component took to render, *including its children* |
-| Individual render time | Total time an *individual* component took to render |
+| Total render time | Total time a component took to render, including its children |
+| Individual render time | Total time an individual component took to render |
+| Memoized state and props | The state and props before the component re-rendered |
 
