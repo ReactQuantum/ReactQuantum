@@ -43,10 +43,13 @@ In the meantime, local setup instructions are as follows:</p>
 
 | Term | Definition |
 | --- | --- |
-| Render | When a React component instance or DOM element is updated on the HTML DOM |
+| Render | When a React component instance or DOM element is processed and checked to see if work needs to be done.  |
 | Total render time | Total time a component took to render, including its children |
 | Individual render time | Total time an individual component instance or DOM element took to render |
-| Memoized state and props | The state and props before the component re-rendered |
+| Current State | The current state of a component. Only stateful nodes will have a value for this property. |
+| Props | The current props object being passed to this node. |
+| Commit Count | The number of times a node’s work has started in the commit phase. This could be changes to a component’s state or props, or a DOM element being added or removed. |
+
 
 <h2>Contributing</h2>
 <h3>Pending Features</h3>
