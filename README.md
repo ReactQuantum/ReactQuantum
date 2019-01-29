@@ -4,6 +4,7 @@
 <h4 align="center">Visualize your React application's component performance metrics with a live heat map.</h4>
 <p align="center">
 <img src="https://img.shields.io/badge/release-beta-yellow.svg">
+<img src="https://img.shields.io/badge/contributions-welcome-green.svg">
  <p>
 
 ___
@@ -42,8 +43,8 @@ In the meantime, local setup instructions are as follows:</p>
 
 | Term | Definition |
 | --- | --- |
-| Render | When a React component instance or DOM is updated on the HTML DOM |
+| Render | When a React component instance or DOM element is updated on the HTML DOM |
 | Total render time | Total time a component took to render, including its children |
-| Individual render time | Total time an individual component took to render |
+| Individual render time | Total time an individual component instance or DOM element took to render |
 | Memoized state and props | The state and props before the component re-rendered |
 
