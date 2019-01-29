@@ -33,6 +33,7 @@
     "react": "^16.8.0-alpha.1",
     "react-d3-tree": "^1.12.2",
     "react-dom": "^16.8.0-alpha.1",
+    "react-json-view": "^1.19.1",
     "require": "^2.4.20",
     "styled-components": "^4.1.3"
   }

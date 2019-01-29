@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { render } from 'react-dom';
 import styled from 'styled-components';
+import ReactJson from 'react-json-view';
 import TreeComponent from './components/TreeComponent';
 import Button from './components/Button';
 import PercentColorInput from './components/PercentColorInput';
@@ -11,6 +12,34 @@ const WrapperStyled = styled.div`
   width: 100%;
   text-align: center;
 `;
+
+const ContentStyled = styled.div`
+  display: flex;
+  justify-content: space-between;
+
+`;
+
+const StatsPanelStyled = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  border: 0.5px solid #ababab;
+  margin: 10px;
+  box-shadow: 2px 2px 2px 2px;
+  width: 35em;
+  height: 60em;
+`;
+
+const StatsWindowStyled = styled.div`
+  border: 0.5px solid #ababab;
+  height: 20em;
+  width: 95%;
+  overflow: auto;
+  margin: 2.5%;
+  text-align: left;
+`;
+
+
 class App extends Component {
   constructor() {
     super();
@@ -28,7 +57,6 @@ class App extends Component {
       orange: 0.1,
     };
 
-    // this.changePercentages = this.changePercentages.bind(this);
     this.updateTreeState = this.updateTreeState.bind(this);
     this.grabNodeStats = this.grabNodeStats.bind(this);
     // this.changeOrientation = this.changeOrientation.bind(this);
@@ -36,14 +64,6 @@ class App extends Component {
     this.startQuantum = this.startQuantum.bind(this);
     chrome.devtools.panels.create('React Quantum', null, 'devtools.html');
   }
-
-  // changeOrientation() {
-  // if (this.state.orientation === 'vertical') {
-  // this.setState({ orientation: 'horizontal' })
-  //   } else {
-  //     this.setState({ orientation: 'vertical' })
-  //   }
-  // }
 
   componentDidMount() {
     const port = chrome.runtime.connect(null, { name: 'devTools' });
@@ -146,8 +166,8 @@ class App extends Component {
   }
 
   grabNodeStats(stats) {
-    this.setState({ nodeinfo: { totalTime: stats.time, individualTime: stats.individualTime, name: stats.name } });
-    console.log(stats);
+    this.setState({ nodeinfo: { totalTime: stats.time, individualTime: stats.individualTime, name: stats.name, memoizedProps: stats.memoizedProps, memoizedState: stats.memoizedState } })
+    console.log('grab node stats', stats)
   }
 
   clicked(e) {
@@ -170,25 +190,29 @@ class App extends Component {
         <div>
           <img src={image} href="https://github.com/ReactQuantum/ReactQuantum" alt="" />
 
-
           {startQuantum === false
-            ? (
-              <div style={{
-                width: '100%', alignContent: 'center', display: 'flex', justifyContent: 'center',
-              }}
-              >
-                <Button
-                  id="startQuantum"
-                  clicked={this.startQuantum}
-                  counter="Start Quantum"
-                />
+            ? <div style={{ width: '100%', alignContent: 'center', display: 'flex', justifyContent: 'center' }}>
+              <Button
+                id={'startQuantum'}
+                clicked={this.startQuantum}
+                counter={this.state.startButton}>
+              </Button>
+            </div> :
 
-              </div>
-            )
-            : (
-              <div className="content">
-                <div>
-                  <Stats stats={nodeinfo} />
+            <div className='content'>
+              <ContentStyled>
+                <StatsPanelStyled>
+                  <Stats stats={this.state.nodeinfo}></Stats>
+                  <p>memoized props</p>
+                  <StatsWindowStyled>
+                    <ReactJson src={this.state.nodeinfo.memoizedProps} />
+                  </StatsWindowStyled>
+                  <p>memoized state</p>
+                  <StatsWindowStyled>
+                    <ReactJson src={this.state.nodeinfo.memoizedState} />
+                  </StatsWindowStyled>
+                </StatsPanelStyled>
+                <div style={{ width: '35em', height: '60em' }}>
                   <PercentColorInput
                     treeData={treeData}
                     percentForGreen={green}
@@ -197,15 +221,17 @@ class App extends Component {
                     percentForOrange={orange}
                     updateTreeState={this.updateTreeState}
                   />
+                  <TreeComponent
+                    orientation={this.state.orientation}
+                    treeData={this.state.treeData}
+                    grabNodeStats={this.grabNodeStats}>
+                  </TreeComponent>
                 </div>
-                <TreeComponent
-                  orientation={orientation}
-                  treeData={treeData}
-                  grabNodeStats={this.grabNodeStats}
-                />
-              </div>
-            )
+              </ContentStyled>
+            </div>
+
           }
+
         </div>
       </WrapperStyled>
 
