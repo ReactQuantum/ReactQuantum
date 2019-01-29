@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { render } from 'react-dom';
 import styled from 'styled-components';
 import ReactJson from 'react-json-view';
-import TreeComponent from './components/TreeComponent';
+import TreeComponent from './components/TreeComponent.jsx';
 import Button from './components/Button';
 import PercentColorInput from './components/PercentColorInput';
 import Stats from './components/Stats';
@@ -70,38 +70,39 @@ class App extends Component {
     const { tabId } = chrome.devtools.inspectedWindow;
 
     function post(message) {
-      message.tabId = tabId;
+      const newMessage = message;
+      newMessage.tabId = tabId;
       port.postMessage(message);
     }
     post({ message: 'initialize' });
     port.onMessage.addListener((message) => {
       // function subtracts children render time from its own render time to get individual render time
       function addIndividualTime(treeDataArr) {
-        for (let i = 0; i < treeDataArr.length; i += 1) {
-          if (treeDataArr[i].memoizedProps) {
-            treeDataArr[i].memoizedProps = JSON.parse(treeDataArr[i].memoizedProps);
+        const treeDataArrCopy = treeDataArr;
+        for (let i = 0; i < treeDataArrCopy.length; i += 1) {
+          if (treeDataArrCopy[i].memoizedProps) {
+            treeDataArrCopy[i].memoizedProps = JSON.parse(treeDataArrCopy[i].memoizedProps);
           }
-          if (treeDataArr[i].renderTime === 0) {
-            treeDataArr[i].individualTime = 0;
+          if (treeDataArrCopy[i].renderTime === 0) {
+            treeDataArrCopy[i].individualTime = 0;
           } else {
             let sumChildrenTime = 0;
-            for (let j = 0; j < treeDataArr[i].children.length; j += 1) {
-              const currentNode = treeDataArr[i].children[j];
+            for (let j = 0; j < treeDataArrCopy[i].children.length; j += 1) {
+              const currentNode = treeDataArrCopy[i].children[j];
               if (currentNode.renderTime === 0 && currentNode.children > 0) {
                 for (let k = 0; k < currentNode.children.length; k += 1) {
                   sumChildrenTime += currentNode.children[k].renderTime;
                 }
               } else {
-                sumChildrenTime += treeDataArr[i].children[j].renderTime;
+                sumChildrenTime += treeDataArrCopy[i].children[j].renderTime;
               }
             }
-            console.log('in addIndividualTime', treeDataArr[i].name, treeDataArr[i].renderTime, sumChildrenTime);
-            treeDataArr[i].individualTime = treeDataArr[i].renderTime - sumChildrenTime;
+            treeDataArrCopy[i].individualTime = treeDataArrCopy[i].renderTime - sumChildrenTime;
           }
         }
-        for (let i = 0; i < treeDataArr.length; i += 1) {
-          if (treeDataArr[i].children.length > 0) {
-            addIndividualTime(treeDataArr[i].children);
+        for (let i = 0; i < treeDataArrCopy.length; i += 1) {
+          if (treeDataArrCopy[i].children.length > 0) {
+            addIndividualTime(treeDataArrCopy[i].children);
           }
         }
       }
@@ -135,16 +136,12 @@ class App extends Component {
         green, lightGreen, yellow, orange,
       } = this.state;
 
-      console.log('chrome.runtime.onMessage in devTools message:', message);
       let tempTreeData = JSON.parse(message.message);
+      console.log('tempTreeData', tempTreeData);
       tempTreeData = tempTreeData[0].children;
-      console.log('before addIndividualTime', tempTreeData);
       addIndividualTime(tempTreeData);
-      console.log('after individualTime =============', tempTreeData);
       addColor(tempTreeData, green, lightGreen, yellow, orange);
-      console.log('after addColor =============', tempTreeData);
       this.setState({ treeData: tempTreeData });
-      console.log('after setState', this.state);
     });
   }
 
@@ -171,7 +168,6 @@ class App extends Component {
         totalTime: stats.time, individualTime: stats.individualTime, name: stats.name, memoizedProps: stats.memoizedProps, memoizedState: stats.memoizedState,
       },
     });
-    console.log('grab node stats', stats);
   }
 
   clicked(e) {
@@ -185,7 +181,6 @@ class App extends Component {
   }
 
   render() {
-    console.log('render ------------');
     const {
       nodeinfo, treeData, green, lightGreen, yellow, orange, orientation, startQuantum,
     } = this.state;

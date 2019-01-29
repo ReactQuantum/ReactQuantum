@@ -1,12 +1,12 @@
-let connections = {}
-chrome.runtime.onConnect.addListener(function (port) {
-  if (port.name != "devTools" && port.name != "content") {
+const connections = {};
+chrome.runtime.onConnect.addListener((port) => {
+  if (port.name !== 'devTools' && port.name !== 'content') {
     return;
   }
-  let extentionListener = (message) => {
-    let tabId = port.sender.tab ? port.sender.tab.id : message.tabId;
+  const extentionListener = (message) => {
+    const tabId = port.sender.tab ? port.sender.tab.id : message.tabId;
 
-    if (message.message == "initialize") {
+    if (message.message === 'initialize') {
       if (!connections[tabId]) {
         connections[tabId] = {};
       }
@@ -14,16 +14,16 @@ chrome.runtime.onConnect.addListener(function (port) {
       return;
     }
     if (message.target) {
-      var conn = connections[tabId][message.target];
+      const conn = connections[tabId][message.target];
       if (conn) {
         conn.postMessage(message);
       }
     }
-  }
-  port.onMessage.addListener(extentionListener)
-  port.onDisconnect.addListener((port) => {
-    var tabs = Object.keys(connections);
-    for (var i = 0; i < tabs.length; i++) {
+  };
+  port.onMessage.addListener(extentionListener);
+  port.onDisconnect.addListener(() => {
+    const tabs = Object.keys(connections);
+    for (let i = 0; i < tabs.length; i += 1) {
       if (connections[tabs[i]][port.name] === port) {
         delete connections[tabs[i]][port.name];
 
@@ -34,13 +34,12 @@ chrome.runtime.onConnect.addListener(function (port) {
       }
     }
   });
-})
+});
 
-chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-  if (request.target == "content") {
-    console.log("startQuantum is here in BG", request)
+chrome.runtime.onMessage.addListener((request) => {
+  if (request.target === 'content') {
+    console.log('startQuantum is here in BG', request);
     chrome.tabs.sendMessage(request.tabId, request);
   }
   return true;
 });
-
