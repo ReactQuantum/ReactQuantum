@@ -27,6 +27,7 @@
     "react": "^16.7.0",
     "react-d3-tree": "^1.12.2",
     "react-dom": "^16.7.0",
+    "react-json-view": "^1.19.1",
     "require": "^2.4.20",
     "styled-components": "^4.1.3"
   }
