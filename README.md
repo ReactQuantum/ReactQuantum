@@ -5,7 +5,7 @@
 
 ___
 
-<h4>What It Does</h4>
+<h2>What It Does</h2>
 <p>React Quantum parses through your React application to create a color-coded tree representation of its component hierarchy. On hover, each tree node will display two key component performance metrics&mdash;render time and re-render frequency&mdash;as well as memoized state and props for added context. 
 
 The beauty is in the heat map: Nodes will change color depending on the component's rendering speed, making it simple to pinpoint possible bottlenecks at a glance. :fire:</p>
