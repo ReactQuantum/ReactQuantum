@@ -6,7 +6,8 @@
   "scripts": {
     "build": "webpack --mode production --devtool inline-source-map",
     "start-dev": "webpack-dev-server --mode development --devtool inline-source-map --hot",
-    "build-dev": "webpack --mode development --devtool inline-source-map"
+    "build-dev": "webpack --mode development --devtool inline-source-map",
+    "lint": "eslint"
   },
   "author": "",
   "license": "ISC",
@@ -16,6 +17,11 @@
     "@babel/preset-react": "^7.0.0",
     "babel-loader": "^8.0.5",
     "css-loader": "^2.1.0",
+    "eslint": "^5.12.1",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-plugin-import": "^2.15.0",
+    "eslint-plugin-jsx-a11y": "^6.2.0",
+    "eslint-plugin-react": "^7.12.4",
     "file-loader": "^3.0.1",
     "style-loader": "^0.23.1",
     "webpack": "^4.28.1",
@@ -24,9 +30,10 @@
   },
   "dependencies": {
     "path": "^0.12.7",
-    "react": "^16.7.0",
+    "react": "^16.8.0-alpha.1",
     "react-d3-tree": "^1.12.2",
-    "react-dom": "^16.7.0",
+    "react-dom": "^16.8.0-alpha.1",
+    "react-json-view": "^1.19.1",
     "require": "^2.4.20",
     "styled-components": "^4.1.3"
   }
