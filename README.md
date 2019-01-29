@@ -1,8 +1,8 @@
 <p align="center">
   <img width="390" height="134" src="https://user-images.githubusercontent.com/35183001/51876992-720b6180-2338-11e9-9d85-faa80c1e4572.png">
+  <img src="https://img.shields.io/badge/release-beta-yellow.svg">
 </p>
 <h4 align="center">Visualize your React application's component performance metrics in the form of a live heat map.</h4>
-<img src="https://img.shields.io/badge/<version>-<beta>-<yellow>.svg">
 
 ___
 
