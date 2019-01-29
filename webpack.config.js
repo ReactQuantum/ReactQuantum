@@ -1,10 +1,10 @@
-const path = require('path')
+const path = require('path');
 
 module.exports = {
-  entry: './src/devtools.js',
+  entry: './src/devtools.jsx',
   output: {
     path: path.resolve(__dirname, 'build'),
-    filename: 'webpack-bundle.js'
+    filename: 'webpack-bundle.js',
   },
   module: {
     rules: [
@@ -15,17 +15,17 @@ module.exports = {
           {
             loader: 'babel-loader',
             options: {
-              presets: ['@babel/react', "@babel/preset-env"]
-            }
-          }
-        ]
+              presets: ['@babel/react', '@babel/preset-env'],
+            },
+          },
+        ],
       },
       {
         test: /\.$css$/,
         use: [
           'style-loader',
-          'css-loader'
-        ]
+          'css-loader',
+        ],
       },
       {
         test: /\.(png|jpg|gif)$/,
@@ -35,13 +35,13 @@ module.exports = {
             options: {},
           },
         ],
-      }
-    ]
+      },
+    ],
   },
 
   devServer: {
     contentBase: path.resolve(__dirname, '.'),
     port: 3000,
-    open: true
-  }
-}
+    open: true,
+  },
+};

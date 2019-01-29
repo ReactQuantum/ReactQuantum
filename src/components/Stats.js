@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 const StatsStyled = styled.div`
   color: #595959;
-  text-shadow: 1px 1px 2px #a3a3a3; 
+  text-shadow: 1px 1px 2px #a3a3a3;
   font-size: 8px;
   font-family: "Trebuchet MS";
   margin: 1em;
@@ -23,10 +23,10 @@ class Stats extends React.Component {
 
     render() {
         return (
-          <StatsStyled>          
-              <h1>Component Name: {this.props.stats.name}</h1>
-              <h1>Total Render Time: {this.props.stats.totalTime}</h1>
-              <h1>Individual Render Time: {this.props.stats.individualTime}</h1>
+          <StatsStyled>
+              <h1>Component Name:<br/>{this.props.stats.name}</h1>
+              <h1>Total Render Time:<br/>{this.props.stats.totalTime}</h1>
+              <h1>Individual Render Time:<br/>{this.props.stats.individualTime}</h1>
           </StatsStyled>
       )
 

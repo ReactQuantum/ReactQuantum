@@ -70,7 +70,7 @@ class TreeComponent extends React.Component {
   }
 
   mouseOver(e) {
-    let stats = {name: e.name, time: e.renderTime, individualTime: e.individualTime};
+    let stats = {name: e.name, time: e.renderTime, individualTime: e.individualTime, memoizedProps: e.memoizedProps, memoizedState: e.memoizedState};
     this.props.grabNodeStats(stats);
   }
 
@@ -83,24 +83,19 @@ class TreeComponent extends React.Component {
   }
 
 
-
-  //parse through next props to add color property base one render time relative to total render time
-  // componentWillUpdate (nextProps, nextState) {
-  // }
-
   render() {
 
     return (
 
-      <div id="treeWrapper" style={{width: '55%', height: '50em', float: 'right', border: '0.5px solid #ababab', margin: '10px', boxShadow: '2px 2px 2px 2px'}}>
+      <div id="treeWrapper" style={{width: '100%', height: '50em', float: 'right', border: '0.5px solid #ababab', margin: '10px', boxShadow: '2px 2px 2px 2px'}}>
          <OrientationButtonStyled
             id={'button2'}
-            clicked={this.changeOrientation}
+            onClick={this.changeOrientation}
             counter='Orientation'>
             Change Orientation
           </OrientationButtonStyled>
         <Tree
-          translate={{x: 300, y: 100}}
+          translate={{x: 200, y: 100}}
           orientation={this.state.orientation}
           onMouseOver={this.mouseOver}
           nodeSvgShape={this.state.shape}

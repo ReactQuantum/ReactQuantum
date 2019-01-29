@@ -96,14 +96,15 @@ function treeConstruct(currentTree) {
       name = "Unknown"
     }
 
-    if (memoizedProps) {
-      memoizedProps = JSON.stringify(memoizedProps, function (key, val) {
-        if (!Array.isArray(val) && val !== null && typeof val === "object") {
-          delete val["children"]
-        }
-        return val
-      })
-    }
+    //     if (memoizedProps) {
+    //       memoizedProps = JSON.stringify(memoizedProps, function (key, val) {
+    //         console.log()
+    //         if (!Array.isArray(val) && val !== null && typeof val === "object") {
+    //           delete val["children"]
+    //         }
+    //         return val
+    //       })
+    //     }
 
     let filteredFiber = {
       name: name,
@@ -130,6 +131,7 @@ function treeConstruct(currentTree) {
       //and push it into the children array of its parent(targ)
       targ.children.push(curr);
       let targSib = curr;
+      let foundLastSib = false;
       let lastSib;
       //if the child(next) has a sibling,
       if (next.sibling !== null) {
@@ -139,26 +141,40 @@ function treeConstruct(currentTree) {
           let filtSib = filter(nextSib)
           //assign it as sibling of the child(next)
           targSib.sibling = filtSib
+          lastSib = nextSib;
           // siblings have same parent(targ); push it to parent's children array
           targ.children.push(filtSib);
-          //remember the last sibling worked on
-          lastSib = nextSib
           //this loops if current sibling also has a sibling, otherwise loop breaks.
           targSib = targSib.sibling
           nextSib = nextSib.sibling
         }
-        //the last sibling won't have a sibling; thus, null.
-        targSib.sibling = null;
+
       }
       //the current child becomes the target
       targ = curr;
       //if there's no next child;
       if (next.child === null) {
         //check if there's a sibling;
+        //look for sibling that has a child
         if (next.sibling !== null) {
+          let lastChSib = next.sibling;
+          let lastChTarg = targ.sibling;
+          while (lastChSib !== null) {
+            if (lastChSib.child !== null) {
+              targ = lastChTarg;
+              bottomFiber = lastChSib;
+              break;
+            }
+            lastChTarg = lastChTarg.sibling;
+            lastChSib = lastChSib.sibling;
+          }
+          //if there was no sibling with no child;
+          if (lastChSib === null) {
+            bottomFiber = lastSib;
+          }
           //if so, bottomFiber is the lastSibling
-          bottomFiber = lastSib;
         } else {
+          //if sibling doesn't have child.
           //else bottomFiber is current child
           bottomFiber = next;
         }
@@ -178,24 +194,45 @@ function treeConstruct(currentTree) {
       let bottomFiber = createChild(next);
       let climber = bottomFiber;
       let climberSib
-      //if bottomfiber has a child go back into the loop
+      //       if bottomfiber has a child go back into the loop
       if (climber.child !== null) {
         climberSib = climber.child;
       }
       while (keepClimb) {
         if (climberSib !== undefined) {
-          targ = targ.sibling;
+          targ = targ;
           next = climberSib;
           break;
         }
         //if bottomFiber has a parent
         if (climber.return !== null) {
           //if the parent has a sibling
-          if (climber.return.sibling !== null && climber.return.sibling.child !== null) {
+          //         if (climber.return.sibling !== null && climber.return.sibling.child !== null) {
+          if (climber.return.sibling !== null) {
+
             // break the loop and process the child of that sibling.
-            targ = targ.return.sibling;
-            next = climber.return.sibling.child;
-            break;
+            let parentSib = climber.return.sibling
+            let parentTarg = targ.return.sibling;
+            //find the first sibling that has the child;
+            if (parentSib !== null || parentTarg !== null) {
+              while (parentSib !== null) {
+                if (parentSib.child !== null) {
+                  targ = parentTarg;
+                  next = parentSib.child
+                  break;
+                }
+                parentTarg = parentTarg.sibling;
+                parentSib = parentSib.sibling;
+              }
+            }
+
+            if (parentSib === null) {
+              targ = targ.return;
+              climber = climber.return;
+            } else {
+              break;
+            }
+
           } else {
             //otherwise, keep climbing up the parent
             if (targ !== null) {
@@ -210,7 +247,7 @@ function treeConstruct(currentTree) {
         }
       }
     }
-    console.log("hey arr", arr)
+
     //deleting circular references
     var noCirc = JSON.stringify(arr, function (key, val) {
       if (!Array.isArray(val) && val !== null && typeof val === "object") {
@@ -222,8 +259,6 @@ function treeConstruct(currentTree) {
       name: "inject",
       data: noCirc
     })
-    console.log("end of shouldInject")
-    return noCirc;
   }
 
   createTree(currentTree)
