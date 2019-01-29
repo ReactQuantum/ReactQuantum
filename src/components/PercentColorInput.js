@@ -28,15 +28,15 @@ class PercentColorInput extends Component {
     while (workToBeDone.length > 0) {
       let percentTime = workToBeDone[0].individualTime / totalTime;
       if (percentTime < green) {
-        workToBeDone[0].nodeSvgShape = {shape: 'ellipse', shapeProps: {rx: 20, ry: 20, fill: '#80b74c'}};
+        workToBeDone[0].nodeSvgShape = { shape: 'ellipse', shapeProps: { rx: 20, ry: 20, fill: '#80b74c' } };
       } else if (percentTime < lightGreen) {
-        workToBeDone[0].nodeSvgShape = {shape: 'ellipse', shapeProps: {rx: 20, ry: 20, fill: '#a1c94f'}};
+        workToBeDone[0].nodeSvgShape = { shape: 'ellipse', shapeProps: { rx: 20, ry: 20, fill: '#a1c94f' } };
       } else if (percentTime < yellow) {
-        workToBeDone[0].nodeSvgShape = {shape: 'ellipse', shapeProps: {rx: 20, ry: 20, fill: '#e6cc38'}};
+        workToBeDone[0].nodeSvgShape = { shape: 'ellipse', shapeProps: { rx: 20, ry: 20, fill: '#e6cc38' } };
       } else if (percentTime < orange) {
-        workToBeDone[0].nodeSvgShape = {shape: 'ellipse', shapeProps: {rx: 20, ry: 20, fill: '#f69d27'}};
+        workToBeDone[0].nodeSvgShape = { shape: 'ellipse', shapeProps: { rx: 20, ry: 20, fill: '#f69d27' } };
       } else {
-        workToBeDone[0].nodeSvgShape = {shape: 'ellipse', shapeProps: {rx: 20, ry: 20, fill: '#e74e2c'}};
+        workToBeDone[0].nodeSvgShape = { shape: 'ellipse', shapeProps: { rx: 20, ry: 20, fill: '#e74e2c' } };
       }
       for (var i = 0; i < workToBeDone[0].children.length; i++) {
         workToBeDone.push(workToBeDone[0].children[i]);
@@ -82,13 +82,13 @@ class PercentColorInput extends Component {
 
   render() {
     return (
-      <form style={{borderBottom: '0.5px solid #ababab', boxShadow: '0 4px 2px -2px #ababab', paddingBottom: '5px'}}>
-         <div style={{ width: '98%', display: 'inline', justifyContent: 'left'}}>
-         <label style={{padding: '3px'}}>Green</label><input type="text" style={{ width: '40px', padding: '3px', marginTop: '5px'}} value={this.state.green} placeholder="percentForGreen"  id='green' onChange={this.changeTempPercentages}/>
-         <label>Lightgreen</label><input type="text" style={{ width: '40px', padding: '3px'}} value={this.state.lightGreen} placeholder="percentForLightGreen" id='lightGreen' onChange={this.changeTempPercentages}/>
-         <label>Yellow</label> <input type="text" style={{ width: '40px', padding: '3px'}} value={this.state.yellow} placeholder="percentForYellow" id='yellow' onChange={this.changeTempPercentages}/>
-         <label>Orange</label> <input type="text" style={{ width: '40px', padding: '3px'}} value={this.state.orange} placeholder="percentForOrange" id='orange' onChange={this.changeTempPercentages}/>
-          <input type="button" onClick={this.updateTree} value="Submit"></input>
+      <form style={{ borderBottom: '0.5px solid #ababab', boxShadow: '0 4px 2px -2px #ababab', paddingBottom: '5px' }}>
+        <div style={{ width: '98%', display: 'inline', justifyContent: 'left' }}>
+          <label style={{ padding: '3px' }}>Green</label><input type="text" style={{ width: '40px', padding: '3px', marginTop: '5px' }} value={this.state.green} placeholder="percentForGreen" id='green' onChange={this.changeTempPercentages} />
+          <label>Light Green</label><input type="text" style={{ width: '40px', padding: '3px' }} value={this.state.lightGreen} placeholder="percentForLightGreen" id='lightGreen' onChange={this.changeTempPercentages} />
+          <label>Yellow</label> <input type="text" style={{ width: '40px', padding: '3px' }} value={this.state.yellow} placeholder="percentForYellow" id='yellow' onChange={this.changeTempPercentages} />
+          <label>Orange</label> <input type="text" style={{ width: '40px', padding: '3px' }} value={this.state.orange} placeholder="percentForOrange" id='orange' onChange={this.changeTempPercentages} />
+          <input style={{ marginLeft: "5px" }} type="button" onClick={this.updateTree} value="Submit"></input>
         </div>
       </form>
     )

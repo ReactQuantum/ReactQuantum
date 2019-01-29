@@ -1,6 +1,6 @@
 {
   "name": "React-Quantum",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "react timer devtool",
   "main": "devtools.js",
   "scripts": {
