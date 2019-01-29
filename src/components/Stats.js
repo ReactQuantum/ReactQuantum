@@ -8,11 +8,12 @@ const StatsStyled = styled.div`
   font-family: "Trebuchet MS";
   margin: 1em;
   padding: 0.25em 1em;
-  width: 35%;
+  width: 45%;
   height: auto;
   text-align: left;
   float: left;
 `;
+
 
 class Stats extends React.Component {
     constructor(props) {
@@ -33,4 +34,5 @@ class Stats extends React.Component {
     }
   }
 
-  export default Stats
+  export { StatsStyled, Stats };
+

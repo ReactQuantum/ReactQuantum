@@ -5,8 +5,8 @@ import ReactJson from 'react-json-view';
 import TreeComponent from './components/TreeComponent.jsx';
 import Button from './components/Button';
 import PercentColorInput from './components/PercentColorInput';
-import Stats from './components/Stats';
-import image from './assets/ReactQuantumLogo2.png';
+import { Stats, StatsStyled } from './components/Stats';
+import image from './assets/ReactQuantumLogo.png';
 
 const WrapperStyled = styled.div`
   width: 100%;
@@ -25,18 +25,24 @@ const StatsPanelStyled = styled.div`
   justify-content: flex-start;
   border: 0.5px solid #ababab;
   margin: 10px;
-  box-shadow: 2px 2px 2px 2px;
+  box-shadow: 1.5px 1.5px 1.5px 1.5px #ababab;
   width: 35em;
   height: 60em;
 `;
 
 const StatsWindowStyled = styled.div`
-  border: 0.5px solid #ababab;
+  border: none;
   height: 20em;
   width: 95%;
   overflow: auto;
-  margin: 2.5%;
   text-align: left;
+  color: #595959;
+  text-shadow: 1px 1px 2px #a3a3a3;
+  font-size: 16px;
+  font-family: "Trebuchet MS";
+  margin: 1em;
+  padding: 0.25em 1em;
+  float: left;
 `;
 
 
@@ -208,24 +214,29 @@ class App extends Component {
                   <ContentStyled>
                     <StatsPanelStyled>
                       <Stats stats={nodeinfo} />
-                      <p>memoized props</p>
-                      <StatsWindowStyled>
-                        <ReactJson src={nodeinfo.memoizedProps} />
-                      </StatsWindowStyled>
-                      <p>memoized state</p>
+                      <StatsStyled style={{ marginTop: '-10px'}}>
+                        <h1>Memoized State:</h1>
+                      </StatsStyled>
                       <StatsWindowStyled>
                         <ReactJson src={nodeinfo.memoizedState} />
                       </StatsWindowStyled>
+                      <StatsStyled>
+                        <h1>Memoized Props:</h1>
+                      </StatsStyled>
+                      <StatsWindowStyled>
+                        <ReactJson src={nodeinfo.memoizedProps} />
+                      </StatsWindowStyled>
                     </StatsPanelStyled>
-                    <div style={{ width: '35em', height: '60em' }}>
-                      <PercentColorInput
+
+                    <div style={{ width: '45%', height: '60em' }}>
+                      {/* <PercentColorInput
                         treeData={treeData}
                         percentForGreen={green}
                         percentForLightGreen={lightGreen}
                         percentForYellow={yellow}
                         percentForOrange={orange}
                         updateTreeState={this.updateTreeState}
-                      />
+                      /> */}
                       <TreeComponent
                         orientation={orientation}
                         treeData={treeData}

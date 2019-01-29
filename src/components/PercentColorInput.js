@@ -1,4 +1,12 @@
 import React, { Component } from "react";
+import styled from 'styled-components';
+
+const InputStyled = styled.input`
+  width: 10%;
+  outline: none;
+  display: inline;
+`;
+
 
 class PercentColorInput extends Component {
   constructor(props) {
@@ -74,12 +82,14 @@ class PercentColorInput extends Component {
 
   render() {
     return (
-      <form>
-        <input type="text" value={this.state.green} placeholder="percentForGreen"  id='green' onChange={this.changeTempPercentages}></input>Green<br/>
-        <input type="text" value={this.state.lightGreen} placeholder="percentForLightGreen" id='lightGreen' onChange={this.changeTempPercentages}></input>Lightgreen<br/>
-        <input type="text" value={this.state.yellow} placeholder="percentForYellow" id='yellow' onChange={this.changeTempPercentages}></input>Yellow<br/>
-        <input type="text" value={this.state.orange} placeholder="percentForOrange" id='orange' onChange={this.changeTempPercentages}></input>Orange<br/>
-        <input type="button" onClick={this.updateTree} value="Submit"></input>
+      <form style={{borderBottom: '0.5px solid #ababab', boxShadow: '0 4px 2px -2px #ababab', paddingBottom: '5px'}}>
+         <div style={{ width: '98%', display: 'inline', justifyContent: 'left'}}>
+         <label style={{padding: '3px'}}>Green</label><input type="text" style={{ width: '40px', padding: '3px', marginTop: '5px'}} value={this.state.green} placeholder="percentForGreen"  id='green' onChange={this.changeTempPercentages}/>
+         <label>Lightgreen</label><input type="text" style={{ width: '40px', padding: '3px'}} value={this.state.lightGreen} placeholder="percentForLightGreen" id='lightGreen' onChange={this.changeTempPercentages}/>
+         <label>Yellow</label> <input type="text" style={{ width: '40px', padding: '3px'}} value={this.state.yellow} placeholder="percentForYellow" id='yellow' onChange={this.changeTempPercentages}/>
+         <label>Orange</label> <input type="text" style={{ width: '40px', padding: '3px'}} value={this.state.orange} placeholder="percentForOrange" id='orange' onChange={this.changeTempPercentages}/>
+          <input type="button" onClick={this.updateTree} value="Submit"></input>
+        </div>
       </form>
     )
   }
