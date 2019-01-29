@@ -17,25 +17,25 @@ The beauty is in the heat map: Nodes will change color depending on the componen
 <p>Quantum will soon be available as an extension through the Google Chrome Web Store! In the meantime, local setup instructions are as follows:</p>
 
 ```
-# Clone this repository
+Clone this repository
 $ git clone https://github.com/ReactQuantum/ReactQuantum.git
 
-# Install dependencies
+Install dependencies
 $ npm install
 
-# Run the bundler
+Run the bundler
 $ npm run build-dev
 
-# Visit chrome://extensions/
+Visit chrome://extensions/
 
-# Click the Load Unpacked button
+Click the Load Unpacked button
 
-# Select your './ReactQuantum/build' directory
+Select your './ReactQuantum/build' directory
 
-# Open Chrome Developer Tools (Inspect) and click on the React Quantum panel
+Open Chrome Developer Tools (Inspect) and click on the React Quantum panel
 
-# Click the Start Quantum button, refresh the page
+Click the Start Quantum button, refresh the page
 
-# Optimize!
+Optimize!
 ```
 
