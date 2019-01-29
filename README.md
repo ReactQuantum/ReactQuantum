@@ -38,6 +38,7 @@ The beauty is in the heat map: Nodes will change color depending on the componen
 
 | Term | Definition |
 | --- | --- |
+| Render | When a component is painted on the DOM |
 | Total render time | Total time a component took to render, including its children |
 | Individual render time | Total time an individual component took to render |
 | Memoized state and props | The state and props before the component re-rendered |
