@@ -75,7 +75,7 @@ class PercentColorInput extends Component {
 
   changeTempPercentages(e) {
     let temp = {};
-    temp[e.target.id] = e.target.value;
+    temp[e.target.id] = e.target.value / 100;
     this.setState(temp);
   }
 
@@ -84,11 +84,14 @@ class PercentColorInput extends Component {
     return (
       <form style={{ borderBottom: '0.5px solid #ababab', boxShadow: '0 4px 2px -2px #ababab', paddingBottom: '5px' }}>
         <div style={{ width: '98%', display: 'inline', justifyContent: 'left' }}>
-          <label style={{ padding: '3px' }}>Green</label><input type="text" style={{ width: '40px', padding: '3px', marginTop: '5px' }} value={this.state.green} placeholder="percentForGreen" id='green' onChange={this.changeTempPercentages} />
-          <label>Light Green</label><input type="text" style={{ width: '40px', padding: '3px' }} value={this.state.lightGreen} placeholder="percentForLightGreen" id='lightGreen' onChange={this.changeTempPercentages} />
-          <label>Yellow</label> <input type="text" style={{ width: '40px', padding: '3px' }} value={this.state.yellow} placeholder="percentForYellow" id='yellow' onChange={this.changeTempPercentages} />
-          <label>Orange</label> <input type="text" style={{ width: '40px', padding: '3px' }} value={this.state.orange} placeholder="percentForOrange" id='orange' onChange={this.changeTempPercentages} />
-          <input style={{ marginLeft: "5px" }} type="button" onClick={this.updateTree} value="Submit"></input>
+          <p>Node colors are determined by lowest input percentage above individual render time divided by total render time of app. Nodes are be red otherwise.</p>
+          <div style={{ display: 'flex', justifyContent: 'space-around', padding: '5px'}}>
+            <span><input type="number" step="0.1" style={{ width: '45px', padding: '3px' }} value={this.state.green * 100} placeholder="percentForGreen" id='green' onChange={this.changeTempPercentages} />%<br/><label>Green</label></span>
+            <span><input type="number" step="0.1" style={{ width: '45px', padding: '3px' }} value={this.state.lightGreen * 100} placeholder="percentForLightGreen" id='lightGreen' onChange={this.changeTempPercentages} />%<br/><label>Light Green</label></span>
+            <span><input type="number" step="0.1" style={{ width: '45px', padding: '3px' }} value={this.state.yellow * 100} placeholder="percentForYellow" id='yellow' onChange={this.changeTempPercentages} />%<br/><label>Yellow</label></span>
+            <span><input type="number" step="0.1" style={{ width: '45px', padding: '3px' }} value={this.state.orange * 100} placeholder="percentForOrange" id='orange' onChange={this.changeTempPercentages} />%<br/><label>Orange</label></span>
+            <input style={{height: '40px', width: '60px'}} type="button" onClick={this.updateTree} value="Submit"></input>
+          </div>
         </div>
       </form>
     )

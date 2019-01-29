@@ -101,10 +101,10 @@ class TreeComponent extends React.Component {
               counter='Orientation'>
               Change Orientation
           </OrientationButtonStyled>
-            <div style={{width: '98%', height: '50em'}}>
+            <div style={{width: '98%', height: '45em'}}>
 
             <Tree
-              translate={{x: 200, y: 100}}
+              translate={{x: 100, y: 100}}
               orientation={this.state.orientation}
               onMouseOver={this.mouseOver}
               nodeSvgShape={this.state.shape}
