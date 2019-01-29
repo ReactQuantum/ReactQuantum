@@ -52,4 +52,4 @@ In the meantime, local setup instructions are as follows:</p>
 
 
 <h2>Contribute</h2>
-Please let us know about bugs and suggestions at react.quantum@gmail.com. Feel free to fork this repo and submit pull requests!
+Feel free to fork this repo and submit pull requests. If you'd like to report bugs or send suggestions, please write to us at [mailto](mailto:react.quantum@gmail.com). 
