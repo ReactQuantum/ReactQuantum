@@ -77,6 +77,7 @@ class PercentColorInput extends Component {
     let temp = {};
     temp[e.target.id] = e.target.value / 100;
     this.setState(temp);
+    console.log(this.state);
   }
 
 

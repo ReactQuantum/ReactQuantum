@@ -94,7 +94,7 @@ class TreeComponent extends React.Component {
     return (
       <div>
         <div id="treeWrapper" style={{width: '100%', height: '60em', float: 'right', border: '0.5px solid #ababab', margin: '10px', boxShadow: '1.5px 1.5px 1.5px 1.5px #ababab'}}>
-        <PercentColorInput />
+        <PercentColorInput updateTreeState={this.props.updateTreeState} treeData={this.props.treeData}/>
         <OrientationButtonStyled
               id={'button2'}
               onClick={this.changeOrientation}

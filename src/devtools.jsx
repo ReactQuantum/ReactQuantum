@@ -238,6 +238,7 @@ class App extends Component {
                         updateTreeState={this.updateTreeState}
                       /> */}
                       <TreeComponent
+                        updateTreeState={this.updateTreeState}
                         orientation={orientation}
                         treeData={treeData}
                         grabNodeStats={this.grabNodeStats}
