@@ -54,3 +54,11 @@ In the meantime, local setup instructions are as follows:</p>
 <h2>Contribute</h2>
 Feel free to fork this repo and submit pull requests. If you'd like to report bugs or send suggestions, please contact us at 
 <a href="mailto:react.quantum@gmail.com">react.quantum@gmail.com</a>.
+
+<h2>Team</h2>
+<p>Altai Chiang (https://github.com/alchi126)</p>
+<p>Alyson Swerdloff (https://github.com/alyswerdlova)</p>
+<p>Eric Choy (https://github.com/Silly-Turtle)</p>
+<p>Jae Park (https://github.com/wjp241)</p>
+  
+
