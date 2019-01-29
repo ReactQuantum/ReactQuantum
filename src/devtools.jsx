@@ -166,8 +166,12 @@ class App extends Component {
   }
 
   grabNodeStats(stats) {
-    this.setState({ nodeinfo: { totalTime: stats.time, individualTime: stats.individualTime, name: stats.name, memoizedProps: stats.memoizedProps, memoizedState: stats.memoizedState } })
-    console.log('grab node stats', stats)
+    this.setState({
+      nodeinfo: {
+        totalTime: stats.time, individualTime: stats.individualTime, name: stats.name, memoizedProps: stats.memoizedProps, memoizedState: stats.memoizedState,
+      },
+    });
+    console.log('grab node stats', stats);
   }
 
   clicked(e) {
@@ -190,46 +194,52 @@ class App extends Component {
         <div>
           <img src={image} href="https://github.com/ReactQuantum/ReactQuantum" alt="" />
 
-          {startQuantum === false
-            ? <div style={{ width: '100%', alignContent: 'center', display: 'flex', justifyContent: 'center' }}>
-              <Button
-                id={'startQuantum'}
-                clicked={this.startQuantum}
-                counter={this.state.startButton}>
-              </Button>
-            </div> :
-
-            <div className='content'>
-              <ContentStyled>
-                <StatsPanelStyled>
-                  <Stats stats={this.state.nodeinfo}></Stats>
-                  <p>memoized props</p>
-                  <StatsWindowStyled>
-                    <ReactJson src={this.state.nodeinfo.memoizedProps} />
-                  </StatsWindowStyled>
-                  <p>memoized state</p>
-                  <StatsWindowStyled>
-                    <ReactJson src={this.state.nodeinfo.memoizedState} />
-                  </StatsWindowStyled>
-                </StatsPanelStyled>
-                <div style={{ width: '35em', height: '60em' }}>
-                  <PercentColorInput
-                    treeData={treeData}
-                    percentForGreen={green}
-                    percentForLightGreen={lightGreen}
-                    percentForYellow={yellow}
-                    percentForOrange={orange}
-                    updateTreeState={this.updateTreeState}
+          {
+            (startQuantum === false)
+              ? (
+                <div style={{
+                  width: '100%', alignContent: 'center', display: 'flex', justifyContent: 'center',
+                }}
+                >
+                  <Button
+                    id="startQuantum"
+                    clicked={this.startQuantum}
+                    counter="Start Button"
                   />
-                  <TreeComponent
-                    orientation={this.state.orientation}
-                    treeData={this.state.treeData}
-                    grabNodeStats={this.grabNodeStats}>
-                  </TreeComponent>
                 </div>
-              </ContentStyled>
-            </div>
-
+              )
+              : (
+                <div className="content">
+                  <ContentStyled>
+                    <StatsPanelStyled>
+                      <Stats stats={nodeinfo} />
+                      <p>memoized props</p>
+                      <StatsWindowStyled>
+                        <ReactJson src={nodeinfo.memoizedProps} />
+                      </StatsWindowStyled>
+                      <p>memoized state</p>
+                      <StatsWindowStyled>
+                        <ReactJson src={nodeinfo.memoizedState} />
+                      </StatsWindowStyled>
+                    </StatsPanelStyled>
+                    <div style={{ width: '35em', height: '60em' }}>
+                      <PercentColorInput
+                        treeData={treeData}
+                        percentForGreen={green}
+                        percentForLightGreen={lightGreen}
+                        percentForYellow={yellow}
+                        percentForOrange={orange}
+                        updateTreeState={this.updateTreeState}
+                      />
+                      <TreeComponent
+                        orientation={orientation}
+                        treeData={treeData}
+                        grabNodeStats={this.grabNodeStats}
+                      />
+                    </div>
+                  </ContentStyled>
+                </div>
+              )
           }
 
         </div>
