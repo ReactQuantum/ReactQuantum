@@ -36,6 +36,6 @@ Open Chrome Developer Tools (Inspect) and click on the React Quantum panel
 
 Click the Start Quantum button, refresh the page
 
-Optimize!
+Optimize components!
 ```
 
