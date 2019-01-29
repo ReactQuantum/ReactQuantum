@@ -51,5 +51,5 @@ In the meantime, local setup instructions are as follows:</p>
 | Commit Count | The number of times a node’s work has started in the commit phase. This could be changes to a component’s state or props, or a DOM element being added or removed. |
 
 
-<h2>Contributing</h2>
-<h3>Pending Features</h3>
+<h2>Contribute</h2>
+Please let us know about bugs and suggestions at react.quantum@gmail.com. Feel free to fork this repo and submit pull requests!
