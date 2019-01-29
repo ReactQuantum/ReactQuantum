@@ -38,7 +38,6 @@ chrome.runtime.onConnect.addListener((port) => {
 
 chrome.runtime.onMessage.addListener((request) => {
   if (request.target === 'content') {
-    console.log('startQuantum is here in BG', request);
     chrome.tabs.sendMessage(request.tabId, request);
   }
   return true;

@@ -63,7 +63,7 @@ function pullAndCloneTree() {
 }
 
 function treeConstruct(currentTree) {
-  console.log('??????????????');
+
   const pushTarget = filter(currentTree);
   const temp = [pushTarget];
   let targ = filter(currentTree);
@@ -74,7 +74,7 @@ function treeConstruct(currentTree) {
   // add
   function filter(fiber) {
     let {
-      actualDuration, elementType, stateNode, memoizedState, memoizedProps, _REACT_QUANTUM_render_count,
+      actualDuration, elementType, stateNode, memoizedState, memoizedProps, _REACT_QUANTUM_render_count, effectTag,
     } = fiber;
     let name = elementType;
     if (elementType !== null) {
@@ -94,17 +94,6 @@ function treeConstruct(currentTree) {
       name = 'Unknown';
     }
 
-<<<<<<< HEAD
-        if (memoizedProps) {
-          memoizedProps = JSON.stringify(memoizedProps, function (key, val) {
-            console.log()
-            if (!Array.isArray(val) && val !== null && typeof val === "object") {
-              delete val["children"]
-            }
-            return val
-          })
-        }
-=======
     if (memoizedProps) {
       memoizedProps = JSON.stringify(memoizedProps, (key, val) => {
         if (!Array.isArray(val) && val !== null && typeof val === 'object') {
@@ -113,7 +102,6 @@ function treeConstruct(currentTree) {
         return val;
       });
     }
->>>>>>> dev
 
     const filteredFiber = {
       name,

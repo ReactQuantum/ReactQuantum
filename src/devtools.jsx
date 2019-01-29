@@ -214,7 +214,7 @@ class App extends Component {
                   <ContentStyled>
                     <StatsPanelStyled>
                       <Stats stats={nodeinfo} />
-                      <StatsStyled style={{ marginTop: '-10px'}}>
+                      <StatsStyled style={{ marginTop: '-10px' }}>
                         <h1>Memoized State:</h1>
                       </StatsStyled>
                       <StatsWindowStyled>
