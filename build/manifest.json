@@ -5,7 +5,7 @@
   "devtools_page": "devtools.html",
   "content_security_policy": "script-src 'self'; object-src 'self'",
   "permissions": [
-    "tabs"
+    "activeTab"
   ],
   "content_scripts": [
     {
@@ -33,6 +33,6 @@
     ]
   },
   "icons": {
-    "128": "ReactQuantumLogo_WebStoreIcon.png"
+    "128": "QuantumWebStore.png"
   }
 }
