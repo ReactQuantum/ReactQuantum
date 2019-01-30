@@ -3,8 +3,8 @@
 </p>
 <h4 align="center">Visualize your React application's component performance metrics with a live heat map.</h4>
 <p align="center">
-<img src="https://img.shields.io/badge/release-beta-yellow.svg">
-<img src="https://img.shields.io/badge/contributions-welcome-green.svg">
+<img src="https://img.shields.io/badge/release-beta-yellow.svg?style=plastic">
+<img src="https://img.shields.io/badge/contributions-welcome-green.svg?style=plastic">
  <p>
 
 ___
@@ -43,8 +43,22 @@ In the meantime, local setup instructions are as follows:</p>
 
 | Term | Definition |
 | --- | --- |
-| Render | When a React component instance or DOM element is updated on the HTML DOM |
-| Total render time | Total time a component took to render, including its children |
-| Individual render time | Total time an individual component instance or DOM element took to render |
-| Memoized state and props | The state and props before the component re-rendered |
+| Render | When a React component instance or DOM element is processed and checked to see if work needs to be done.  |
+| Total render time | Total time a component took to render, including its children. |
+| Individual render time | Total time an individual component instance or DOM element took to render. |
+| Current State | The current state of a component. Only stateful nodes will have a value for this property. |
+| Props | The current props object being passed to this node. |
+| Commit Count | The number of times a node’s work has started in the commit phase. This could be changes to a component’s state or props, or a DOM element being added or removed. |
+
+
+<h2>Contribute</h2>
+Feel free to fork this repo and submit pull requests. If you'd like to report bugs or send suggestions, please contact us at 
+<a href="mailto:react.quantum@gmail.com">react.quantum@gmail.com</a>.
+
+<h2>Team</h2>
+<p>Altai Chiang (https://github.com/alchi126)</p>
+<p>Alyson Swerdloff (https://github.com/alyswerdlova)</p>
+<p>Eric Choy (https://github.com/Silly-Turtle)</p>
+<p>Jae Park (https://github.com/wjp241)</p>
+  
 
