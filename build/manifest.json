@@ -31,5 +31,8 @@
     "ids": [
       "*"
     ]
+  },
+  "icons": {
+    "128": "ReactQuantumLogo_WebStoreIcon.png"
   }
 }
