@@ -14,7 +14,7 @@ ___
 
 The beauty is in the heat map: Nodes will change color depending on the component's rendering performance, making it easy to pinpoint possible bottlenecks at a glance. :fire:</p>
 
-![Demo]<iframe src='https://gfycat.com/ifr/JoyousThunderousImpala' frameborder='0' scrolling='no' allowfullscreen width='640' height='444'></iframe>
+![Demo](https://thumbs.gfycat.com/JoyousThunderousImpala-size_restricted.gif)
 
 <h2>How To Get It</h2>
 <p>Quantum will soon be available as an extension through the Google Chrome Web Store.<br>
