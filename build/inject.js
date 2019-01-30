@@ -94,17 +94,6 @@ function treeConstruct(currentTree) {
       name = 'Unknown';
     }
 
-<<<<<<< HEAD
-        if (memoizedProps) {
-          memoizedProps = JSON.stringify(memoizedProps, function (key, val) {
-            console.log()
-            if (!Array.isArray(val) && val !== null && typeof val === "object") {
-              delete val["children"]
-            }
-            return val
-          })
-        }
-=======
     if (memoizedProps) {
       memoizedProps = JSON.stringify(memoizedProps, (key, val) => {
         if (!Array.isArray(val) && val !== null && typeof val === 'object') {
@@ -113,7 +102,6 @@ function treeConstruct(currentTree) {
         return val;
       });
     }
->>>>>>> dev
 
     const filteredFiber = {
       name,
