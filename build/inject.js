@@ -63,7 +63,7 @@ function pullAndCloneTree() {
 }
 
 function treeConstruct(currentTree) {
-  console.log('??????????????');
+
   const pushTarget = filter(currentTree);
   const temp = [pushTarget];
   let targ = filter(currentTree);
@@ -74,7 +74,7 @@ function treeConstruct(currentTree) {
   // add
   function filter(fiber) {
     let {
-      actualDuration, elementType, stateNode, memoizedState, memoizedProps, _REACT_QUANTUM_render_count,
+      actualDuration, elementType, stateNode, memoizedState, memoizedProps, _REACT_QUANTUM_render_count, effectTag,
     } = fiber;
     let name = elementType;
     if (elementType !== null) {
