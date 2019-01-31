@@ -4,7 +4,6 @@ import styled from 'styled-components';
 import ReactJson from 'react-json-view';
 import TreeComponent from './components/TreeComponent.jsx';
 import Button from './components/Button';
-import PercentColorInput from './components/PercentColorInput';
 import { Stats, StatsStyled } from './components/Stats';
 import image from './assets/ReactQuantumLogo.png';
 
@@ -74,6 +73,7 @@ class App extends Component {
   componentDidMount() {
     const port = chrome.runtime.connect(null, { name: 'devTools' });
     const { tabId } = chrome.devtools.inspectedWindow;
+    let timeout;
 
     function post(message) {
       const newMessage = message;
@@ -143,11 +143,15 @@ class App extends Component {
       } = this.state;
 
       let tempTreeData = JSON.parse(message.message);
-      console.log('tempTreeData', tempTreeData);
+      //console.log('tempTreeData', tempTreeData);
       tempTreeData = tempTreeData[0].children;
       addIndividualTime(tempTreeData);
       addColor(tempTreeData, green, lightGreen, yellow, orange);
-      this.setState({ treeData: tempTreeData });
+      clearTimeout(timeout);
+      timeout = setTimeout(() => {
+        console.log('tempTreeData', tempTreeData);
+        this.setState({ treeData: tempTreeData });
+      }, 750);
     });
   }
 
@@ -205,7 +209,7 @@ class App extends Component {
                   <Button
                     id="startQuantum"
                     clicked={this.startQuantum}
-                    counter="Start Button"
+                    counter="Start Quantum"
                   />
                 </div>
               )
@@ -215,13 +219,13 @@ class App extends Component {
                     <StatsPanelStyled>
                       <Stats stats={nodeinfo} />
                       <StatsStyled style={{ marginTop: '-10px' }}>
-                        <h1>Memoized State:</h1>
+                        <h1>Current State:</h1>
                       </StatsStyled>
                       <StatsWindowStyled>
                         <ReactJson src={nodeinfo.memoizedState} />
                       </StatsWindowStyled>
                       <StatsStyled>
-                        <h1>Memoized Props:</h1>
+                        <h1>Props:</h1>
                       </StatsStyled>
                       <StatsWindowStyled>
                         <ReactJson src={nodeinfo.memoizedProps} />
@@ -238,6 +242,7 @@ class App extends Component {
                         updateTreeState={this.updateTreeState}
                       /> */}
                       <TreeComponent
+                        updateTreeState={this.updateTreeState}
                         orientation={orientation}
                         treeData={treeData}
                         grabNodeStats={this.grabNodeStats}

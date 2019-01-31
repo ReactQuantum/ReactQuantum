@@ -51,7 +51,7 @@ const svgSquare = {
 }
 
 const svgEllipse = {
-  shape:'ellipse',
+  shape: 'ellipse',
   shapeProps: {
     rx: 20,
     ry: 20
@@ -93,23 +93,23 @@ class TreeComponent extends React.Component {
     const { treeData } = this.props;
     return (
       <div>
-        <div id="treeWrapper" style={{width: '100%', height: '60em', float: 'right', border: '0.5px solid #ababab', margin: '10px', boxShadow: '1.5px 1.5px 1.5px 1.5px #ababab'}}>
-        <PercentColorInput />
-        <OrientationButtonStyled
-              id={'button2'}
-              onClick={this.changeOrientation}
-              counter='Orientation'>
-              Change Orientation
+        <div id="treeWrapper" style={{ width: '100%', height: '60em', float: 'right', border: '0.5px solid #ababab', margin: '10px', boxShadow: '1.5px 1.5px 1.5px 1.5px #ababab' }}>
+          <PercentColorInput updateTreeState={this.props.updateTreeState} treeData={this.props.treeData} />
+          <OrientationButtonStyled
+            id={'button2'}
+            onClick={this.changeOrientation}
+            counter='Orientation'>
+            Change Orientation
           </OrientationButtonStyled>
-            <div style={{width: '98%', height: '50em'}}>
+          <div style={{ width: '98%', height: '45em' }}>
 
             <Tree
-              translate={{x: 200, y: 100}}
-              orientation={this.state.orientation}
+              translate={{ x: 100, y: 100 }}
+              orientation={orientation}
               onMouseOver={this.mouseOver}
-              nodeSvgShape={this.state.shape}
-              separation={{siblings: .6,nonSiblings: .6}}
-              data={this.props.treeData}
+              nodeSvgShape={shape}
+              separation={{ siblings: .6, nonSiblings: .6 }}
+              data={treeData}
             />
           </div>
 
