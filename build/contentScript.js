@@ -75,7 +75,6 @@ function subscriber(mutations) {
   let fiberUpdate = true;
   let timeout;
   if (initialized) {
-    console.log(mutations);
     if (mutations.length) {
       mutations.forEach((mutation) => {
         if (mutation.addedNodes.length) {
@@ -101,3 +100,4 @@ function subscriber(mutations) {
 }
 const observer = new MutationObserver(subscriber);
 observer.observe(target, config);
+
