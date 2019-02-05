@@ -72,7 +72,7 @@ class TreeComponent extends React.Component {
 
   mouseOver(e) {
     const stats = {
-      name: e.name, time: e.renderTime, individualTime: e.individualTime, memoizedProps: e.memoizedProps, memoizedState: e.memoizedState,
+      name: e.name, time: e.renderTime, individualTime: e.individualTime, props: e.props, memoizedState: e.memoizedState,
     };
     const { grabNodeStats } = this.props;
     grabNodeStats(stats);

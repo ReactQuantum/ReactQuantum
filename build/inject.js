@@ -1,81 +1,140 @@
-function pullAndCloneTree() {
-  function deepClone(obj) {
-    const visitedNodes = [];
-    const clonedCopy = [];
-    function clone(item) {
-      if (typeof item === 'object' && !Array.isArray(item) && item !== null) {
-        if (visitedNodes.indexOf(item) === -1) {
-          visitedNodes.push(item);
-          const cloneObject = {};
-          clonedCopy.push(cloneObject);
-          if (Object.keys(item).includes('alternate')) {
-            cloneObject._REACT_QUANTUM_render_count = 0;
+/*
+declare timeout outside
+cleartime first within setHook function
+clearTimeout(timeout);
+timeout = setTimeout(() => { everything before postMessage}, time)
+*/
+function deepClone(obj) {
+  var visitedNodes = [];
+  var clonedCopy = [];
+  function clone(item) {
+    if (typeof item === "object" && !Array.isArray(item) && item !== null) {
+      if (visitedNodes.indexOf(item) === -1) {
+        visitedNodes.push(item);
+        var cloneObject = {};
+        // delete item.memoizedProps;
+        clonedCopy.push(cloneObject);
+        for (var i in item) {
+          if (item.hasOwnProperty(i)) {
+            cloneObject[i] = clone(item[i]);
           }
-
-          for (let i in item) {
-            if (item.hasOwnProperty(i)) {
-              cloneObject[i] = clone(item[i]);
-            }
-          }
-          return cloneObject;
         }
+
+        return cloneObject;
+      } else {
         return clonedCopy[visitedNodes.indexOf(item)];
       }
-      if (typeof item === 'object' && Array.isArray(item)) {
-        if (visitedNodes.indexOf(item) === -1) {
-          const cloneArray = [];
-          visitedNodes.push(item);
-          clonedCopy.push(cloneArray);
-          for (let j = 0; j < item.length; j += 1) {
-            cloneArray.push(clone(item[j]));
-          }
-          return cloneArray;
-        }
-        return clonedCopy[visitedNodes.indexOf(item)];
-      }
-
-      return item; // not object, not array, therefore primitive
     }
-    return clone(obj);
-  }
-
-  let currentTree;
-  function getTree() {
-    return new Promise(((resolve) => {
-      const hookedTree = Object.values(window.__REACT_DEVTOOLS_GLOBAL_HOOK__._fiberRoots)[0];
-      let current;
-      for (let i of hookedTree.values()) {
-        current = i.current;
+    else if (typeof item === "object" && Array.isArray(item)) {
+      if (visitedNodes.indexOf(item) === -1) {
+        var cloneArray = [];
+        visitedNodes.push(item);
+        clonedCopy.push(cloneArray);
+        for (var j = 0; j < item.length; j++) {
+          cloneArray.push(clone(item[j]));
+        }
+        return cloneArray;
+      } else {
+        return clonedCopy[visitedNodes.indexOf(item)];
       }
-      console.log(current);
+    }
 
-      let tree;
-
-      currentTree = deepClone(current);
-      tree = currentTree;
-
-      resolve(tree);
-    }));
+    return item; // not object, not array, therefore primitive
   }
-  getTree();
-
-  return currentTree;
+  return clone(obj);
 }
 
-function treeConstruct(currentTree) {
+function pullAndCloneTree() {
+  // console.log("-------------------------------pullAndCloneTree func-----------------------------------")
+  const hookedTree = Object.values(window.__REACT_DEVTOOLS_GLOBAL_HOOK__._fiberRoots)[0];
+  let current;
+  for (let i of hookedTree.values()) {
+    current = i.current;
+  }
+  // console.log("---------------------pulledTree---------------------", current)
+  let treeToFilter;
+  let clonedTree = deepClone(current);
 
-  const pushTarget = filter(currentTree);
-  const temp = [pushTarget];
-  let targ = filter(currentTree);
+  // console.log("---------------after deepCloning----------------", clonedTree)
+  let initiallyRendered = JSON.parse(sessionStorage.getItem("initiallyRendered"));
+  if (initiallyRendered !== null) {
+    treeToFilter = diffing(clonedTree)
+    // console.log("---------------after diffing is over--------------", treeToFilter)
+  } else {
+    sessionStorage.setItem("initiallyRendered", "true");
+    treeToFilter = clonedTree;
+  }
+  // console.log("-----------------------before entering filterDelCirc------------------", treeToFilter)
+  filterDelCirc(treeToFilter);
+}
+
+pullAndCloneTree()
+
+function diffing(newTree) {
+  // console.log("-------------------------------entering diffing func-----------------------------------")
+  let nextUnitOfWork = newTree;
+  function workLoop() {
+    while (nextUnitOfWork !== null) {
+      nextUnitOfWork = performUnitOfWork(nextUnitOfWork);
+    }
+    // console.log(newTree);
+    return newTree
+  }
+
+  function performUnitOfWork(workInProgress) {
+    let next = beginWork(workInProgress);
+    if (next === null) {
+      next = completeUnitOfWork(workInProgress);
+    }
+    return next;
+  }
+
+  function beginWork(workInProgress) {
+    let newEffect = workInProgress.effectTag;
+    if (newEffect === 0 || newEffect === 2) {
+      workInProgress.commitCount = 1;
+    } else if (newEffect === 3 || newEffect === 4) {
+      // console.log("----------------------updated------------------", workInProgress)
+      workInProgress.commitCount = workInProgress.alternate.commitCount + 1;
+    }
+    // console.log("--------------------------------beginWork----------------------", workInProgress)
+    if (workInProgress.child !== null) {
+    }
+    return workInProgress.child;
+  }
+
+  function completeUnitOfWork(workInProgress) {
+    while (true) {
+      let returnFiber = workInProgress.return;
+      let siblingFiber = workInProgress.sibling;
+      nextUnitOfWork = completeWork(workInProgress);
+      if (siblingFiber !== null) {
+        return siblingFiber;
+      } else if (returnFiber !== null) {
+        workInProgress = returnFiber;
+        continue;
+      } else {
+        return null;
+      }
+    }
+  }
+
+  function completeWork(workInProgress) {
+    return null;
+  }
+  return workLoop();
+}
+
+function filterDelCirc(tree) {
+  // console.log("------------------------------entering filterDelCirc func----------------------------------", tree)
+
+  let targ = filter(tree)
   const arr = [targ];
   let curr;
 
-
-  // add
   function filter(fiber) {
-    let {
-      actualDuration, elementType, stateNode, memoizedState, memoizedProps, _REACT_QUANTUM_render_count, effectTag,
-    } = fiber;
+    // console.log("-----------------------------entering filter func--------------------", fiber)
+    let { actualDuration, commitCount, elementType, memoizedState, pendingProps } = fiber;
     let name = elementType;
     if (elementType !== null) {
       if (typeof elementType === 'function') {
@@ -83,41 +142,36 @@ function treeConstruct(currentTree) {
       } else if (typeof elementType === 'object') {
         name = elementType.displayName;
       }
-    } else if (stateNode) {
-      if (stateNode.containerInfo) {
-        name = stateNode.containerInfo.id;
-      }
-      name = stateNode.nodeName;
     }
-
     if (name === undefined || name === '' || name === null) {
       name = 'Unknown';
     }
 
-    if (memoizedProps) {
-      memoizedProps = JSON.stringify(memoizedProps, (key, val) => {
-        if (!Array.isArray(val) && val !== null && typeof val === 'object') {
-          delete val.children;
-        }
-        return val;
-      });
+    if (pendingProps) {
+      if (Object.keys(pendingProps).includes('children')) {
+        delete pendingProps.children;
+      }
     }
 
-    const filteredFiber = {
+    // console.log("-----------------------------after destructuring--------------------")
+    let filteredFiber = {
       name,
       renderTime: actualDuration === undefined ? 'Only available in Dev Mode' : actualDuration,
+      commitCount: commitCount,
+      memoizedState: memoizedState,
+      props: pendingProps,
       children: [],
       return: fiber.return !== null ? targ : null,
       sibling: null,
-      memoizedState,
-      memoizedProps,
-      _REACT_QUANTUM_render_count,
+
     };
+    // console.log("---------------------- filteredFiber-------------------", filteredFiber)
 
     return filteredFiber;
   }
 
   function createChild(workInProgress) {
+
     // 3.create a child
     let next = workInProgress;
     let bottomFiber;
@@ -150,8 +204,7 @@ function treeConstruct(currentTree) {
       targ = curr;
       // if there's no next child;
       if (next.child === null) {
-        // check if there's a sibling;
-        // look for sibling that has a child
+        // check if there's a sibling, look for sibling that has a child
         if (next.sibling !== null) {
           let lastChSib = next.sibling;
           let lastChTarg = targ.sibling;
@@ -190,7 +243,7 @@ function treeConstruct(currentTree) {
       const bottomFiber = createChild(next);
       let climber = bottomFiber;
       let climberSib;
-      //       if bottomfiber has a child go back into the loop
+      //if bottomfiber has a child go back into the loop
       if (climber.child !== null) {
         climberSib = climber.child;
       }
@@ -203,7 +256,6 @@ function treeConstruct(currentTree) {
         // if bottomFiber has a parent
         if (climber.return !== null) {
           // if the parent has a sibling
-          //         if (climber.return.sibling !== null && climber.return.sibling.child !== null) {
           if (climber.return.sibling !== null) {
             // break the loop and process the child of that sibling.
             let parentSib = climber.return.sibling;
@@ -241,6 +293,7 @@ function treeConstruct(currentTree) {
       }
     }
 
+    // console.log("---------------------filtered array-------------", arr);
     // deleting circular references
     const noCirc = JSON.stringify(arr, (key, val) => {
       if (!Array.isArray(val) && val !== null && typeof val === 'object') {
@@ -248,12 +301,12 @@ function treeConstruct(currentTree) {
       }
       return val;
     });
+
     window.postMessage({
       name: 'inject',
       data: noCirc,
     });
   }
 
-  createTree(currentTree);
+  createTree(tree)
 }
-treeConstruct(pullAndCloneTree());
