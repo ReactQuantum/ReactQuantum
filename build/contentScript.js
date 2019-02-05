@@ -94,7 +94,7 @@ function subscriber(mutations) {
       timeout = setTimeout(() => {
         shouldInject();
         fiberUpdate = false;
-      }, 5000);
+      }, 750);
     }
   }
 }

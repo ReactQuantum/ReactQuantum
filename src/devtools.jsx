@@ -175,7 +175,7 @@ class App extends Component {
   grabNodeStats(stats) {
     this.setState({
       nodeinfo: {
-        totalTime: stats.time, individualTime: stats.individualTime, name: stats.name, memoizedProps: stats.memoizedProps, memoizedState: stats.memoizedState,
+        totalTime: stats.time, individualTime: stats.individualTime, name: stats.name, memoizedProps: stats.props, memoizedState: stats.memoizedState,
       },
     });
   }
