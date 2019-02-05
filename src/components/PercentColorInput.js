@@ -85,7 +85,7 @@ class PercentColorInput extends Component {
     return (
       <form style={{ borderBottom: '0.5px solid #ababab', boxShadow: '0 4px 2px -2px #ababab', paddingBottom: '5px' }}>
         <div style={{ width: '98%', display: 'inline', justifyContent: 'left' }}>
-          <p>Node colors are determined by lowest input percentage above individual render time divided by total render time of app. Nodes are be red otherwise.</p>
+          <p>Node colors are determined by lowest input percentage above individual render time, divided by total render time of app. Nodes appear red otherwise.</p>
           <div style={{ display: 'flex', justifyContent: 'space-around', padding: '5px'}}>
             <span><input type="number" step="0.1" style={{ width: '45px', padding: '3px' }} value={this.state.green * 100} placeholder="percentForGreen" id='green' onChange={this.changeTempPercentages} />%<br/><label>Green</label></span>
             <span><input type="number" step="0.1" style={{ width: '45px', padding: '3px' }} value={this.state.lightGreen * 100} placeholder="percentForLightGreen" id='lightGreen' onChange={this.changeTempPercentages} />%<br/><label>Light Green</label></span>

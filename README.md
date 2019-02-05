@@ -14,8 +14,6 @@ ___
 
 The beauty is in the heat map: Nodes will change color depending on the component's rendering performance, making it easy to pinpoint possible bottlenecks at a glance. :fire:</p>
 <br>
-<img src="./assets/Quantum.gif">
-
 
 <p align="center"> 
   <img src="https://thumbs.gfycat.com/JoyousThunderousImpala-size_restricted.gif">
