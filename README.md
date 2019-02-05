@@ -20,7 +20,7 @@ The beauty is in the heat map: Nodes will change color depending on the componen
 </p>
 
 <h2>How To Get It</h2>
-<p>Quantum is available as a Chrome extension through the <span src="https://chrome.google.com/webstore/detail/react-quantum/hhfmmpjgnlcdnicngllnglhbakdkcafk?authuser=1">Google Chrome Web Store</span>.<br>
+<p>Quantum is available as a Chrome extension through the [Google Chrome Web Store](https://chrome.google.com/webstore/detail/react-quantum/hhfmmpjgnlcdnicngllnglhbakdkcafk?authuser=1).<br>
   
 In the meantime, local setup instructions are as follows:</p>
 
