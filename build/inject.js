@@ -1,87 +1,83 @@
-function deepClone(obj) {
-  console.log("-------------------------------deepClone func-----------------------------------")
-  const visitedNodes = [];
-  const clonedCopy = [];
-  function clone(item) {
-    if (typeof item === 'object' && !Array.isArray(item) && item !== null) {
-      if (visitedNodes.indexOf(item) === -1) {
-        visitedNodes.push(item);
-        const cloneObject = {};
-        clonedCopy.push(cloneObject);
-        if (Object.keys(item).includes('alternate')) {
-          cloneObject.commitCount = 1;
-        }
-        for (let i in item) {
-          if (item.hasOwnProperty(i)) {
-            if (i !== "stateNode") {
-              cloneObject[i] = clone(item[i]);
-              delete item.memoizedProps;
-            }
-          }
-        }
-        return cloneObject;
-      }
-      return clonedCopy[visitedNodes.indexOf(item)];
-    }
-    if (typeof item === 'object' && Array.isArray(item)) {
-      if (visitedNodes.indexOf(item) === -1) {
-        const cloneArray = [];
-        visitedNodes.push(item);
-        clonedCopy.push(cloneArray);
-        for (let j = 0; j < item.length; j += 1) {
-          cloneArray.push(clone(item[j]));
-        }
-        return cloneArray;
-      }
-      return clonedCopy[visitedNodes.indexOf(item)];
-    }
-
-    return item; // not object, not array, therefore primitive
-  }
-  return clone(obj);
-}
 /*
 declare timeout outside
 cleartime first within setHook function
 clearTimeout(timeout);
 timeout = setTimeout(() => { everything before postMessage}, time)
 */
+function deepClone(obj) {
+  var visitedNodes = [];
+  var clonedCopy = [];
+  function clone(item) {
+    if (typeof item === "object" && !Array.isArray(item) && item !== null) {
+      if (visitedNodes.indexOf(item) === -1) {
+        visitedNodes.push(item);
+        var cloneObject = {};
+        // delete item.memoizedProps;
+        clonedCopy.push(cloneObject);
+        for (var i in item) {
+          if (item.hasOwnProperty(i)) {
+            cloneObject[i] = clone(item[i]);
+          }
+        }
+
+        return cloneObject;
+      } else {
+        return clonedCopy[visitedNodes.indexOf(item)];
+      }
+    }
+    else if (typeof item === "object" && Array.isArray(item)) {
+      if (visitedNodes.indexOf(item) === -1) {
+        var cloneArray = [];
+        visitedNodes.push(item);
+        clonedCopy.push(cloneArray);
+        for (var j = 0; j < item.length; j++) {
+          cloneArray.push(clone(item[j]));
+        }
+        return cloneArray;
+      } else {
+        return clonedCopy[visitedNodes.indexOf(item)];
+      }
+    }
+
+    return item; // not object, not array, therefore primitive
+  }
+  return clone(obj);
+}
+
 function pullAndCloneTree() {
-  console.log("-------------------------------pullAndCloneTree func-----------------------------------")
+  // console.log("-------------------------------pullAndCloneTree func-----------------------------------")
   const hookedTree = Object.values(window.__REACT_DEVTOOLS_GLOBAL_HOOK__._fiberRoots)[0];
   let current;
   for (let i of hookedTree.values()) {
     current = i.current;
   }
+  // console.log("---------------------pulledTree---------------------", current)
+  let treeToFilter;
   let clonedTree = deepClone(current);
 
-  let treeToFilter;
-  /*Logic for SessionStorage(in prog)
-  let oldTree = JSON.parse(sessionStorage.getItem("oldTree"));
-  let newTree = JSON.parse(sessionStorage.getItem("newTree"));
-  oldTree === null ? sessionStorage.setItem("oldTree", clonedTree) : sessionStorage.setItem("newTree", clonedTree);
-  oldTree !== null && newTree !== null ? treeToFilter = diffing(oldTree, newTree) : treeToFilter = clonedTree;*/
+  // console.log("---------------after deepCloning----------------", clonedTree)
   let initiallyRendered = JSON.parse(sessionStorage.getItem("initiallyRendered"));
   if (initiallyRendered !== null) {
     treeToFilter = diffing(clonedTree)
-    console.log("---------------after diffing is over--------------", treeToFilter)
+    // console.log("---------------after diffing is over--------------", treeToFilter)
   } else {
     sessionStorage.setItem("initiallyRendered", "true");
     treeToFilter = clonedTree;
   }
+  // console.log("-----------------------before entering filterDelCirc------------------", treeToFilter)
   filterDelCirc(treeToFilter);
 }
 
 pullAndCloneTree()
 
 function diffing(newTree) {
-  console.log("-------------------------------entering diffing func-----------------------------------")
+  // console.log("-------------------------------entering diffing func-----------------------------------")
   let nextUnitOfWork = newTree;
   function workLoop() {
     while (nextUnitOfWork !== null) {
       nextUnitOfWork = performUnitOfWork(nextUnitOfWork);
     }
-    console.log(newTree);
+    // console.log(newTree);
     return newTree
   }
 
@@ -98,7 +94,7 @@ function diffing(newTree) {
     if (newEffect === 0 || newEffect === 2) {
       workInProgress.commitCount = 1;
     } else if (newEffect === 3 || newEffect === 4) {
-      console.log("----------------------updated------------------", workInProgress)
+      // console.log("----------------------updated------------------", workInProgress)
       workInProgress.commitCount = workInProgress.alternate.commitCount + 1;
     }
     // console.log("--------------------------------beginWork----------------------", workInProgress)
@@ -130,15 +126,15 @@ function diffing(newTree) {
 }
 
 function filterDelCirc(tree) {
-  console.log("------------------------------entering filterDelCirc func----------------------------------", tree)
+  // console.log("------------------------------entering filterDelCirc func----------------------------------", tree)
 
   let targ = filter(tree)
   const arr = [targ];
   let curr;
 
   function filter(fiber) {
-    console.log("-----------------------------entering filter func--------------------", fiber)
-    let { actualDuration, commitCount, elementType, memoizedProps } = fiber;
+    // console.log("-----------------------------entering filter func--------------------", fiber)
+    let { actualDuration, commitCount, elementType, memoizedState, pendingProps } = fiber;
     let name = elementType;
     if (elementType !== null) {
       if (typeof elementType === 'function') {
@@ -151,29 +147,31 @@ function filterDelCirc(tree) {
       name = 'Unknown';
     }
 
-    if (memoizedProps) {
-      if (Object.keys(memoizedProps).includes('children')) {
-        delete memoizedProps.children;
+    if (pendingProps) {
+      if (Object.keys(pendingProps).includes('children')) {
+        delete pendingProps.children;
       }
     }
 
-    console.log("-----------------------------after destructuring--------------------")
+    // console.log("-----------------------------after destructuring--------------------")
     let filteredFiber = {
       name,
       renderTime: actualDuration === undefined ? 'Only available in Dev Mode' : actualDuration,
       commitCount: commitCount,
-      props: memoizedProps,
+      memoizedState: memoizedState,
+      props: pendingProps,
       children: [],
       return: fiber.return !== null ? targ : null,
       sibling: null,
 
     };
-    console.log("---------------------- filteredFiber-------------------", filteredFiber)
+    // console.log("---------------------- filteredFiber-------------------", filteredFiber)
 
     return filteredFiber;
   }
 
   function createChild(workInProgress) {
+
     // 3.create a child
     let next = workInProgress;
     let bottomFiber;
@@ -295,7 +293,7 @@ function filterDelCirc(tree) {
       }
     }
 
-    console.log("---------------------filtered array-------------", arr);
+    // console.log("---------------------filtered array-------------", arr);
     // deleting circular references
     const noCirc = JSON.stringify(arr, (key, val) => {
       if (!Array.isArray(val) && val !== null && typeof val === 'object') {
