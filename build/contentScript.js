@@ -1,4 +1,5 @@
 let port = chrome.runtime.connect({ name: 'content' });
+let initialized = false;
 
 function injectScript(file) {
   const body = document.getElementsByTagName('body')[0];
@@ -11,7 +12,9 @@ function injectScript(file) {
 
 function setupPortIfNeeded() {
   if (!port) {
-    port = chrome.runtime.connect({ name: 'content' });
+    port = chrome.runtime.connect({ name: 'content' }, () => {
+      console.log('connected')
+    });
     port.postMessage({ message: 'initialize' });
     port.onDisconnect.addListener(() => {
       port = null;
@@ -30,11 +33,16 @@ function shouldInject() {
 }
 
 window.addEventListener('load', () => {
-  shouldInject();
+  console.log(initialized);
+  if (initialized) {
+    shouldInject();
+  }
 });
 
 chrome.runtime.onMessage.addListener((message) => {
+  console.log(message);
   if (message.name === 'startQuantum') {
+    initialized = true;
     shouldInject();
   }
 });
@@ -65,24 +73,31 @@ const config = {
 
 function subscriber(mutations) {
   let fiberUpdate = true;
-  if (mutations.length) {
-    mutations.forEach((mutation) => {
-      if (mutation.addedNodes.length) {
-        if (mutation.addedNodes[0].nodeName === 'SCRIPT' && mutation.addedNodes[0].getAttribute('id') === 'injectScript') {
-          fiberUpdate = false;
+  let timeout;
+  if (initialized) {
+    if (mutations.length) {
+      mutations.forEach((mutation) => {
+        if (mutation.addedNodes.length) {
+          if (mutation.addedNodes[0].nodeName === 'SCRIPT' && mutation.addedNodes[0].getAttribute('id') === 'injectScript') {
+            fiberUpdate = false;
+          }
         }
-      }
-      if (mutation.removedNodes.length > 0) {
-        if (mutation.removedNodes[0].nodeName === 'SCRIPT' && mutation.removedNodes[0].getAttribute('id') === 'injectScript') {
-          fiberUpdate = false;
+        if (mutation.removedNodes.length > 0) {
+          if (mutation.removedNodes[0].nodeName === 'SCRIPT' && mutation.removedNodes[0].getAttribute('id') === 'injectScript') {
+            fiberUpdate = false;
+          }
         }
-      }
-    });
-  }
-  if (fiberUpdate) {
-    shouldInject();
-    fiberUpdate = false;
+      });
+    }
+    if (fiberUpdate) {
+      clearTimeout(timeout);
+      timeout = setTimeout(() => {
+        shouldInject();
+        fiberUpdate = false;
+      }, 750);
+    }
   }
 }
 const observer = new MutationObserver(subscriber);
 observer.observe(target, config);
+
