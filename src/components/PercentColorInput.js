@@ -1,12 +1,4 @@
 import React, { Component } from "react";
-import styled from 'styled-components';
-
-const InputStyled = styled.input`
-  width: 10%;
-  outline: none;
-  display: inline;
-`;
-
 
 class PercentColorInput extends Component {
   constructor(props) {
@@ -46,7 +38,7 @@ class PercentColorInput extends Component {
     return treeDataArr;
   }
 
-  //deep clone of tree data
+  // Deep clone of tree data
   cloneTree(treeDataArr) {
     let newTree = [];
     for (var i = 0; i < treeDataArr.length; i++) {
@@ -65,7 +57,7 @@ class PercentColorInput extends Component {
     return newTree
   }
 
-  //takes clone of tree date in state of App, updates color based on user input and updates tree
+  // Takes clone of tree data in state of App, updates color based on user input and updates tree
   updateTree() {
     let clone = this.cloneTree(this.props.treeData);
     this.addColor(clone, this.state.green, this.state.lightGreen, this.state.yellow, this.state.orange)
@@ -73,11 +65,11 @@ class PercentColorInput extends Component {
 
   }
 
+  // So user can input percentages instead of decimals
   changeTempPercentages(e) {
     let temp = {};
     temp[e.target.id] = e.target.value / 100;
     this.setState(temp);
-    console.log(this.state);
   }
 
 
