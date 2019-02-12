@@ -1,5 +1,6 @@
+// Establishing connection with the background script
 let port = chrome.runtime.connect({ name: 'content' });
-let initialized = false;
+let initialized = false; 
 
 function injectScript(file) {
   const body = document.getElementsByTagName('body')[0];
@@ -13,7 +14,6 @@ function injectScript(file) {
 function setupPortIfNeeded() {
   if (!port) {
     port = chrome.runtime.connect({ name: 'content' }, () => {
-      console.log('connected')
     });
     port.postMessage({ message: 'initialize' });
     port.onDisconnect.addListener(() => {
@@ -33,14 +33,12 @@ function shouldInject() {
 }
 
 window.addEventListener('load', () => {
-  console.log(initialized);
   if (initialized) {
     shouldInject();
   }
 });
 
 chrome.runtime.onMessage.addListener((message) => {
-  console.log(message);
   if (message.name === 'startQuantum') {
     initialized = true;
     shouldInject();

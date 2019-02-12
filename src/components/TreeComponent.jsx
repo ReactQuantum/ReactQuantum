@@ -38,27 +38,6 @@ margin: 8px;
 }
 `;
 
-
-const svgSquare = {
-  shape: 'rect',
-  shapeProps: {
-    width: 20,
-    height: 20,
-    x: -10,
-    y: -10,
-    fill: 'blue'
-  }
-}
-
-const svgEllipse = {
-  shape: 'ellipse',
-  shapeProps: {
-    rx: 20,
-    ry: 20
-  }
-}
-
-
 class TreeComponent extends React.Component {
   constructor(props) {
     super(props);
@@ -86,7 +65,6 @@ class TreeComponent extends React.Component {
       this.setState({ orientation: 'vertical' });
     }
   }
-
 
   render() {
     const { orientation, shape } = this.state;

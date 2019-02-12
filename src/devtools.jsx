@@ -49,7 +49,6 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      // orientation: 'vertical',
       nodeinfo: 5,
       startQuantum: false,
       treeData: {
@@ -64,12 +63,11 @@ class App extends Component {
 
     this.updateTreeState = this.updateTreeState.bind(this);
     this.grabNodeStats = this.grabNodeStats.bind(this);
-    // this.changeOrientation = this.changeOrientation.bind(this);
-    this.clicked = this.clicked.bind(this);
     this.startQuantum = this.startQuantum.bind(this);
-    chrome.devtools.panels.create('React Quantum', null, 'devtools.html');
+    chrome.devtools.panels.create('React Quantum', null, 'devtools.html'); 
   }
 
+  
   componentDidMount() {
     const port = chrome.runtime.connect(null, { name: 'devTools' });
     const { tabId } = chrome.devtools.inspectedWindow;
@@ -82,7 +80,7 @@ class App extends Component {
     }
     post({ message: 'initialize' });
     port.onMessage.addListener((message) => {
-      // function subtracts children render time from its own render time to get individual render time
+      // This function subtracts children render time from its own render time to get individual render time
       function addIndividualTime(treeDataArr) {
         const treeDataArrCopy = treeDataArr;
         for (let i = 0; i < treeDataArrCopy.length; i += 1) {
@@ -113,7 +111,7 @@ class App extends Component {
         }
       }
 
-      // adds color based on render time of node relative to total render time of app
+      // Adds color based on render time of node relative to total render time of app
       function addColor(treeDataArr, green, lightGreen, yellow, orange) {
         const totalTime = treeDataArr[0].renderTime;
         const workToBeDone = [treeDataArr[0]];
@@ -143,18 +141,17 @@ class App extends Component {
       } = this.state;
 
       let tempTreeData = JSON.parse(message.message);
-      //console.log('tempTreeData', tempTreeData);
       tempTreeData = tempTreeData[0].children;
       addIndividualTime(tempTreeData);
       addColor(tempTreeData, green, lightGreen, yellow, orange);
       clearTimeout(timeout);
       timeout = setTimeout(() => {
-        console.log('tempTreeData', tempTreeData);
         this.setState({ treeData: tempTreeData });
       }, 750);
     });
   }
 
+// This fires off a message to the content script to start the program
   startQuantum() {
     const { tabId } = chrome.devtools.inspectedWindow;
     chrome.runtime.sendMessage({
@@ -180,15 +177,6 @@ class App extends Component {
     });
   }
 
-  clicked(e) {
-    const counterI = `${e.target.id}counter`;
-    const { counterId } = this.state;
-    const counter = counterId + 1;
-    const updateCounter = {};
-
-    updateCounter[counterI] = counter;
-    this.setState(updateCounter);
-  }
 
   render() {
     const {
@@ -233,14 +221,6 @@ class App extends Component {
                     </StatsPanelStyled>
 
                     <div style={{ width: '45%', height: '60em' }}>
-                      {/* <PercentColorInput
-                        treeData={treeData}
-                        percentForGreen={green}
-                        percentForLightGreen={lightGreen}
-                        percentForYellow={yellow}
-                        percentForOrange={orange}
-                        updateTreeState={this.updateTreeState}
-                      /> */}
                       <TreeComponent
                         updateTreeState={this.updateTreeState}
                         orientation={orientation}
