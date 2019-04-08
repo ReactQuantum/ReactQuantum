@@ -49,7 +49,6 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      // orientation: 'vertical',
       nodeinfo: 5,
       startQuantum: false,
       treeData: {
@@ -64,7 +63,6 @@ class App extends Component {
 
     this.updateTreeState = this.updateTreeState.bind(this);
     this.grabNodeStats = this.grabNodeStats.bind(this);
-    // this.changeOrientation = this.changeOrientation.bind(this);
     this.clicked = this.clicked.bind(this);
     this.startQuantum = this.startQuantum.bind(this);
     chrome.devtools.panels.create('React Quantum', null, 'devtools.html');
@@ -143,7 +141,6 @@ class App extends Component {
       } = this.state;
 
       let tempTreeData = JSON.parse(message.message);
-      //console.log('tempTreeData', tempTreeData);
       tempTreeData = tempTreeData[0].children;
       addIndividualTime(tempTreeData);
       addColor(tempTreeData, green, lightGreen, yellow, orange);
@@ -233,14 +230,7 @@ class App extends Component {
                     </StatsPanelStyled>
 
                     <div style={{ width: '45%', height: '60em' }}>
-                      {/* <PercentColorInput
-                        treeData={treeData}
-                        percentForGreen={green}
-                        percentForLightGreen={lightGreen}
-                        percentForYellow={yellow}
-                        percentForOrange={orange}
-                        updateTreeState={this.updateTreeState}
-                      /> */}
+
                       <TreeComponent
                         updateTreeState={this.updateTreeState}
                         orientation={orientation}

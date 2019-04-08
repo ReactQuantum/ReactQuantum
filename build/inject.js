@@ -1,9 +1,4 @@
-/*
-declare timeout outside
-cleartime first within setHook function
-clearTimeout(timeout);
-timeout = setTimeout(() => { everything before postMessage}, time)
-*/
+
 function deepClone(obj) {
   var visitedNodes = [];
   var clonedCopy = [];

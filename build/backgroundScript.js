@@ -1,7 +1,9 @@
 const connections = {};
+//check to see if connection is from devtool or content script
 chrome.runtime.onConnect.addListener((port) => {
   if (port.name !== 'devTools' && port.name !== 'content') {
     return;
+    //check to see if port has been established
   }
   const extentionListener = (message) => {
     const tabId = port.sender.tab ? port.sender.tab.id : message.tabId;
@@ -20,6 +22,7 @@ chrome.runtime.onConnect.addListener((port) => {
       }
     }
   };
+
   port.onMessage.addListener(extentionListener);
   port.onDisconnect.addListener(() => {
     const tabs = Object.keys(connections);
@@ -36,6 +39,7 @@ chrome.runtime.onConnect.addListener((port) => {
   });
 });
 
+//sending message from devtool panel to content script
 chrome.runtime.onMessage.addListener((request) => {
   if (request.target === 'content') {
     chrome.tabs.sendMessage(request.tabId, request);

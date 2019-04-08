@@ -1,6 +1,8 @@
+//establish connection for background script
 let port = chrome.runtime.connect({ name: 'content' });
 let initialized = false;
 
+//inject script to the dom
 function injectScript(file) {
   const body = document.getElementsByTagName('body')[0];
   const scriptFile = document.createElement('script');
