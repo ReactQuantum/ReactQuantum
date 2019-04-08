@@ -63,15 +63,11 @@ class App extends Component {
 
     this.updateTreeState = this.updateTreeState.bind(this);
     this.grabNodeStats = this.grabNodeStats.bind(this);
-<<<<<<< HEAD
-    this.clicked = this.clicked.bind(this);
-=======
->>>>>>> 779e9514b2a0133f0cc3ce80d5bc5f8d27cdc77e
     this.startQuantum = this.startQuantum.bind(this);
-    chrome.devtools.panels.create('React Quantum', null, 'devtools.html'); 
+    chrome.devtools.panels.create('React Quantum', null, 'devtools.html');
   }
 
-  
+
   componentDidMount() {
     const port = chrome.runtime.connect(null, { name: 'devTools' });
     const { tabId } = chrome.devtools.inspectedWindow;
@@ -155,7 +151,7 @@ class App extends Component {
     });
   }
 
-// This fires off a message to the content script to start the program
+  // This fires off a message to the content script to start the program
   startQuantum() {
     const { tabId } = chrome.devtools.inspectedWindow;
     chrome.runtime.sendMessage({
@@ -225,10 +221,6 @@ class App extends Component {
                     </StatsPanelStyled>
 
                     <div style={{ width: '45%', height: '60em' }}>
-<<<<<<< HEAD
-
-=======
->>>>>>> 779e9514b2a0133f0cc3ce80d5bc5f8d27cdc77e
                       <TreeComponent
                         updateTreeState={this.updateTreeState}
                         orientation={orientation}
