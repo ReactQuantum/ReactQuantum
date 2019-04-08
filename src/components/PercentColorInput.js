@@ -1,12 +1,4 @@
 import React, { Component } from "react";
-import styled from 'styled-components';
-
-const InputStyled = styled.input`
-  width: 10%;
-  outline: none;
-  display: inline;
-`;
-
 
 class PercentColorInput extends Component {
   constructor(props) {
@@ -46,7 +38,7 @@ class PercentColorInput extends Component {
     return treeDataArr;
   }
 
-  //deep clone of tree data
+  // Deep clone of tree data
   cloneTree(treeDataArr) {
     let newTree = [];
     for (var i = 0; i < treeDataArr.length; i++) {
@@ -65,7 +57,7 @@ class PercentColorInput extends Component {
     return newTree
   }
 
-  //takes clone of tree date in state of App, updates color based on user input and updates tree
+  // Takes clone of tree data in state of App, updates color based on user input and updates tree
   updateTree() {
     let clone = this.cloneTree(this.props.treeData);
     this.addColor(clone, this.state.green, this.state.lightGreen, this.state.yellow, this.state.orange)
@@ -73,11 +65,11 @@ class PercentColorInput extends Component {
 
   }
 
+  // So user can input percentages instead of decimals
   changeTempPercentages(e) {
     let temp = {};
     temp[e.target.id] = e.target.value / 100;
     this.setState(temp);
-    console.log(this.state);
   }
 
 
@@ -85,7 +77,7 @@ class PercentColorInput extends Component {
     return (
       <form style={{ borderBottom: '0.5px solid #ababab', boxShadow: '0 4px 2px -2px #ababab', paddingBottom: '5px' }}>
         <div style={{ width: '98%', display: 'inline', justifyContent: 'left' }}>
-          <p>Node colors are determined by lowest input percentage above individual render time divided by total render time of app. Nodes are be red otherwise.</p>
+          <p>Node colors are determined by lowest input percentage above individual render time, divided by total render time of app. Nodes appear red otherwise.</p>
           <div style={{ display: 'flex', justifyContent: 'space-around', padding: '5px'}}>
             <span><input type="number" step="0.1" style={{ width: '45px', padding: '3px' }} value={this.state.green * 100} placeholder="percentForGreen" id='green' onChange={this.changeTempPercentages} />%<br/><label>Green</label></span>
             <span><input type="number" step="0.1" style={{ width: '45px', padding: '3px' }} value={this.state.lightGreen * 100} placeholder="percentForLightGreen" id='lightGreen' onChange={this.changeTempPercentages} />%<br/><label>Light Green</label></span>

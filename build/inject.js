@@ -1,7 +1,7 @@
 import seralize from './serailize.js'
 import extractFiber from './extractFiber.js'
 
-(() => {
+((current) => {
   const d3 = fiber => {
     if (fiber.child === null) return fiber;
     const child = vertical(fiber);
@@ -33,8 +33,6 @@ import extractFiber from './extractFiber.js'
 
   d3(current)
 })(extractFiber())
-
-
 
 
 

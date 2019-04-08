@@ -14,17 +14,15 @@ ___
 
 The beauty is in the heat map: Nodes will change color depending on the component's rendering performance, making it easy to pinpoint possible bottlenecks at a glance. :fire:</p>
 <br>
-<img src="./assets/Quantum.gif">
-
 
 <p align="center"> 
   <img src="https://thumbs.gfycat.com/JoyousThunderousImpala-size_restricted.gif">
 </p>
 
 <h2>How To Get It</h2>
-<p>Quantum will soon be available as an extension through the Google Chrome Web Store.<br>
+<p>Quantum is available as a Chrome extension through the <a href="https://chrome.google.com/webstore/detail/react-quantum/hhfmmpjgnlcdnicngllnglhbakdkcafk?authuser=1" rel="nofollow">Google Chrome Web Store</a>.<br>
   
-In the meantime, local setup instructions are as follows:</p>
+If you prefer to install locally, setup instructions are as follows:</p>
 
 1. `$ git clone https://github.com/ReactQuantum/ReactQuantum.git`
 
