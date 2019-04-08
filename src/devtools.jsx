@@ -64,10 +64,10 @@ class App extends Component {
     this.updateTreeState = this.updateTreeState.bind(this);
     this.grabNodeStats = this.grabNodeStats.bind(this);
     this.startQuantum = this.startQuantum.bind(this);
-    chrome.devtools.panels.create('React Quantum', null, 'devtools.html'); 
+    chrome.devtools.panels.create('React Quantum', null, 'devtools.html');
   }
 
-  
+
   componentDidMount() {
     const port = chrome.runtime.connect(null, { name: 'devTools' });
     const { tabId } = chrome.devtools.inspectedWindow;
@@ -151,7 +151,7 @@ class App extends Component {
     });
   }
 
-// This fires off a message to the content script to start the program
+  // This fires off a message to the content script to start the program
   startQuantum() {
     const { tabId } = chrome.devtools.inspectedWindow;
     chrome.runtime.sendMessage({

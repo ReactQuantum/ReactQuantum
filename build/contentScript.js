@@ -1,7 +1,12 @@
+<<<<<<< HEAD
+//establish connection for background script
+=======
 // Establishing connection with the background script
+>>>>>>> 779e9514b2a0133f0cc3ce80d5bc5f8d27cdc77e
 let port = chrome.runtime.connect({ name: 'content' });
 let initialized = false; 
 
+//inject script to the dom
 function injectScript(file) {
   const body = document.getElementsByTagName('body')[0];
   const scriptFile = document.createElement('script');

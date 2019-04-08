@@ -1,11 +1,11 @@
 const connections = {};
-
-// Check to see if connection is from devtool or the content script
+//check to see if connection is from devtool or content script
 chrome.runtime.onConnect.addListener((port) => {
   if (port.name !== 'devTools' && port.name !== 'content') {
     return;
+    //check to see if port has been established
   }
-// Check to see if the connection has been established and stored in the connection object
+  // Check to see if the connection has been established and stored in the connection object
   const extentionListener = (message) => {
     const tabId = port.sender.tab ? port.sender.tab.id : message.tabId;
 
@@ -23,6 +23,7 @@ chrome.runtime.onConnect.addListener((port) => {
       }
     }
   };
+
   port.onMessage.addListener(extentionListener);
   // Upon closing the tab, we'll remove the connection from the connections object
   port.onDisconnect.addListener(() => {
