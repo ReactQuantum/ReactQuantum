@@ -1,7 +1,9 @@
 import seralize from './serailize.js'
 import extractFiber from './extractFiber.js'
+import filter from './filter.js'
 
-((current) => {
+(current => {
+  const root = filter(current);
   const d3 = fiber => {
     if (fiber.child === null) return fiber;
     const child = vertical(fiber);
@@ -22,16 +24,17 @@ import extractFiber from './extractFiber.js'
   }
 
   const horizontal = fiber => {
-    let nthSib = fiber;
+    let nthSib = filter(fiber);
     const arr = [nthSib]
     while (nthSib.sibling) {
-      nthSib = nthSib.sibling;
+      nthSib = filter(nthSib.sibling);
       arr.push(nthSib);
     }
     return arr;
   }
 
-  d3(current)
+  d3(root);
+  return root
 })(extractFiber())
 
 
