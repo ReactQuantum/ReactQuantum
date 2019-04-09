@@ -80,7 +80,7 @@ class App extends Component {
     }
     post({ message: 'initialize' });
     port.onMessage.addListener((message) => {
-      // This function subtracts children render time from its own render time to get individual render time
+      // This function subtracts child render time from its own render time to get individual render time
       function addIndividualTime(treeDataArr) {
         const treeDataArrCopy = treeDataArr;
         for (let i = 0; i < treeDataArrCopy.length; i += 1) {
@@ -90,23 +90,23 @@ class App extends Component {
           if (treeDataArrCopy[i].renderTime === 0) {
             treeDataArrCopy[i].individualTime = 0;
           } else {
-            let sumChildrenTime = 0;
-            for (let j = 0; j < treeDataArrCopy[i].children.length; j += 1) {
-              const currentNode = treeDataArrCopy[i].children[j];
-              if (currentNode.renderTime === 0 && currentNode.children > 0) {
-                for (let k = 0; k < currentNode.children.length; k += 1) {
-                  sumChildrenTime += currentNode.children[k].renderTime;
+            let sumchildTime = 0;
+            for (let j = 0; j < treeDataArrCopy[i].child.length; j += 1) {
+              const currentNode = treeDataArrCopy[i].child[j];
+              if (currentNode.renderTime === 0 && currentNode.child > 0) {
+                for (let k = 0; k < currentNode.child.length; k += 1) {
+                  sumchildTime += currentNode.child[k].renderTime;
                 }
               } else {
-                sumChildrenTime += treeDataArrCopy[i].children[j].renderTime;
+                sumchildTime += treeDataArrCopy[i].child[j].renderTime;
               }
             }
-            treeDataArrCopy[i].individualTime = treeDataArrCopy[i].renderTime - sumChildrenTime;
+            treeDataArrCopy[i].individualTime = treeDataArrCopy[i].renderTime - sumchildTime;
           }
         }
         for (let i = 0; i < treeDataArrCopy.length; i += 1) {
-          if (treeDataArrCopy[i].children.length > 0) {
-            addIndividualTime(treeDataArrCopy[i].children);
+          if (treeDataArrCopy[i].child.length > 0) {
+            addIndividualTime(treeDataArrCopy[i].child);
           }
         }
       }
@@ -128,8 +128,8 @@ class App extends Component {
           } else {
             workToBeDone[0].nodeSvgShape = { shape: 'ellipse', shapeProps: { rx: 20, ry: 20, fill: '#e74e2c' } };
           }
-          for (let i = 0; i < workToBeDone[0].children.length; i += 1) {
-            workToBeDone.push(workToBeDone[0].children[i]);
+          for (let i = 0; i < workToBeDone[0].child.length; i += 1) {
+            workToBeDone.push(workToBeDone[0].child[i]);
           }
           workToBeDone.shift();
         }
@@ -141,7 +141,7 @@ class App extends Component {
       } = this.state;
 
       let tempTreeData = JSON.parse(message.message);
-      tempTreeData = tempTreeData[0].children;
+      tempTreeData = tempTreeData[0].child;
       addIndividualTime(tempTreeData);
       addColor(tempTreeData, green, lightGreen, yellow, orange);
       clearTimeout(timeout);

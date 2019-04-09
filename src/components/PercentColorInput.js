@@ -30,8 +30,8 @@ class PercentColorInput extends Component {
       } else {
         workToBeDone[0].nodeSvgShape = { shape: 'ellipse', shapeProps: { rx: 20, ry: 20, fill: '#e74e2c' } };
       }
-      for (var i = 0; i < workToBeDone[0].children.length; i++) {
-        workToBeDone.push(workToBeDone[0].children[i]);
+      for (var i = 0; i < workToBeDone[0].child.length; i++) {
+        workToBeDone.push(workToBeDone[0].child[i]);
       }
       workToBeDone.shift();
     }
@@ -45,7 +45,7 @@ class PercentColorInput extends Component {
       let newNode = {};
       for (let k in treeDataArr[i]) {
         if (treeDataArr[i].hasOwnProperty(k)) {
-          if (k === 'children') {
+          if (k === 'child') {
             newNode[k] = this.cloneTree(treeDataArr[i][k]);
           } else {
             newNode[k] = treeDataArr[i][k]
@@ -78,12 +78,12 @@ class PercentColorInput extends Component {
       <form style={{ borderBottom: '0.5px solid #ababab', boxShadow: '0 4px 2px -2px #ababab', paddingBottom: '5px' }}>
         <div style={{ width: '98%', display: 'inline', justifyContent: 'left' }}>
           <p>Node colors are determined by lowest input percentage above individual render time, divided by total render time of app. Nodes appear red otherwise.</p>
-          <div style={{ display: 'flex', justifyContent: 'space-around', padding: '5px'}}>
-            <span><input type="number" step="0.1" style={{ width: '45px', padding: '3px' }} value={this.state.green * 100} placeholder="percentForGreen" id='green' onChange={this.changeTempPercentages} />%<br/><label>Green</label></span>
-            <span><input type="number" step="0.1" style={{ width: '45px', padding: '3px' }} value={this.state.lightGreen * 100} placeholder="percentForLightGreen" id='lightGreen' onChange={this.changeTempPercentages} />%<br/><label>Light Green</label></span>
-            <span><input type="number" step="0.1" style={{ width: '45px', padding: '3px' }} value={this.state.yellow * 100} placeholder="percentForYellow" id='yellow' onChange={this.changeTempPercentages} />%<br/><label>Yellow</label></span>
-            <span><input type="number" step="0.1" style={{ width: '45px', padding: '3px' }} value={this.state.orange * 100} placeholder="percentForOrange" id='orange' onChange={this.changeTempPercentages} />%<br/><label>Orange</label></span>
-            <input style={{height: '40px', width: '60px'}} type="button" onClick={this.updateTree} value="Submit"></input>
+          <div style={{ display: 'flex', justifyContent: 'space-around', padding: '5px' }}>
+            <span><input type="number" step="0.1" style={{ width: '45px', padding: '3px' }} value={this.state.green * 100} placeholder="percentForGreen" id='green' onChange={this.changeTempPercentages} />%<br /><label>Green</label></span>
+            <span><input type="number" step="0.1" style={{ width: '45px', padding: '3px' }} value={this.state.lightGreen * 100} placeholder="percentForLightGreen" id='lightGreen' onChange={this.changeTempPercentages} />%<br /><label>Light Green</label></span>
+            <span><input type="number" step="0.1" style={{ width: '45px', padding: '3px' }} value={this.state.yellow * 100} placeholder="percentForYellow" id='yellow' onChange={this.changeTempPercentages} />%<br /><label>Yellow</label></span>
+            <span><input type="number" step="0.1" style={{ width: '45px', padding: '3px' }} value={this.state.orange * 100} placeholder="percentForOrange" id='orange' onChange={this.changeTempPercentages} />%<br /><label>Orange</label></span>
+            <input style={{ height: '40px', width: '60px' }} type="button" onClick={this.updateTree} value="Submit"></input>
           </div>
         </div>
       </form>

@@ -1,4 +1,3 @@
-import seralize from './serailize.js'
 import extractFiber from './extractFiber.js'
 import filter from './filter.js'
 
@@ -27,14 +26,18 @@ import filter from './filter.js'
     let nthSib = filter(fiber);
     const arr = [nthSib];
     while (nthSib.sibling) {
-      nthSib = filter(nthSib.sibling);
+      nthSib = nthSib.sibling;
       arr.push(nthSib);
     }
     return arr;
   }
-
   d3(root);
-  return root;
+
+  window.postMessage({
+    name: 'inject',
+    data: JSON.stringify(root),
+  });
+
 })(extractFiber())
 
 
