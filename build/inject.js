@@ -11,10 +11,10 @@ import filter from './filter.js'
     fiber.child = arr;
     let i = arr.length - 1;
     while (i >= 0) {
-      d3(arr[i])
+      d3(arr[i]);
       i--;
     }
-    return fiber
+    return fiber;
   }
 
   const vertical = fiber => {
@@ -25,7 +25,7 @@ import filter from './filter.js'
 
   const horizontal = fiber => {
     let nthSib = filter(fiber);
-    const arr = [nthSib]
+    const arr = [nthSib];
     while (nthSib.sibling) {
       nthSib = filter(nthSib.sibling);
       arr.push(nthSib);
@@ -34,7 +34,7 @@ import filter from './filter.js'
   }
 
   d3(root);
-  return root
+  return root;
 })(extractFiber())
 
 
