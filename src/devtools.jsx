@@ -141,7 +141,8 @@ class App extends Component {
       } = this.state;
 
       let tempTreeData = JSON.parse(message.message);
-      tempTreeData = tempTreeData[0].child;
+      console.log("wthhhhhhhhhhhhhhhhhhhhhhhhhhhhh",tempTreeData)
+      tempTreeData = tempTreeData.child;
       addIndividualTime(tempTreeData);
       addColor(tempTreeData, green, lightGreen, yellow, orange);
       clearTimeout(timeout);

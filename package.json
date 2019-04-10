@@ -5,7 +5,6 @@
   "main": "devtools.js",
   "scripts": {
     "build": "webpack --mode production --devtool inline-source-map",
-    "start-dev": "webpack-dev-server --mode development --devtool inline-source-map --hot",
     "build-dev": "webpack --mode development --devtool inline-source-map",
     "lint": "eslint"
   },
