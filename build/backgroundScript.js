@@ -8,19 +8,16 @@ chrome.runtime.onConnect.addListener((port) => {
   // Check to see if the connection has been established and stored in the connection object
   const extentionListener = (message) => {
     const tabId = port.sender.tab ? port.sender.tab.id : message.tabId;
-
+    console.log("background script&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&", message)
     if (message.message === 'initialize') {
-      if (!connections[tabId]) {
-        connections[tabId] = {};
-      }
+      if (!connections[tabId]) connections[tabId] = {};
+
       connections[tabId][port.name] = port;
       return;
     }
     if (message.target) {
       const conn = connections[tabId][message.target];
-      if (conn) {
-        conn.postMessage(message);
-      }
+      if (conn) conn.postMessage(message);
     }
   };
 
@@ -43,8 +40,8 @@ chrome.runtime.onConnect.addListener((port) => {
 
 // This is sending a message from the devtool panel to the content script
 chrome.runtime.onMessage.addListener((request) => {
-  if (request.target === 'content') {
-    chrome.tabs.sendMessage(request.tabId, request);
-  }
+  console.log("chrome runtime background script %%%%%%%%%%%%%%%%%%%%%", request)
+  if (request.target === 'content') chrome.tabs.sendMessage(request.tabId, request);
+
   return true;
 });
