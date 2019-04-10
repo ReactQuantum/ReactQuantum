@@ -15,7 +15,6 @@ const WrapperStyled = styled.div`
 const ContentStyled = styled.div`
   display: flex;
   justify-content: space-between;
-
 `;
 
 const StatsPanelStyled = styled.div`
@@ -80,6 +79,7 @@ class App extends Component {
     }
     post({ message: 'initialize' });
     port.onMessage.addListener((message) => {
+      console.log("Devtools listening to message from content script", message)
       // This function subtracts child render time from its own render time to get individual render time
       function addIndividualTime(treeDataArr) {
         const treeDataArrCopy = treeDataArr;

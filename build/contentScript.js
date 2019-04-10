@@ -3,7 +3,7 @@ let port = chrome.runtime.connect({ name: 'content' });
 let initialized = false;
 
 //inject script to the dom
-function injectScript(file) {
+const injectScript = (file) => {
   const body = document.getElementsByTagName('body')[0];
   const scriptFile = document.createElement('script');
   scriptFile.id = 'injectScript';
@@ -12,19 +12,17 @@ function injectScript(file) {
   body.appendChild(scriptFile);
 }
 
-function setupPortIfNeeded() {
+const setupPortIfNeeded = () => {
   if (!port) {
-    port = chrome.runtime.connect({ name: 'content' }, () => {
-    });
+    port = chrome.runtime.connect({ name: 'content' }, () => { });
     port.postMessage({ message: 'initialize' });
-    port.onDisconnect.addListener(() => {
-      port = null;
-    });
+    port.onDisconnect.addListener(() => port = null);
   }
 }
 
-function shouldInject() {
+const shouldInject = () => {
   const injected = document.getElementById('injectScript');
+  console.log('Injecting inject.js .......!!!!!!', injected)
   if (injected === null) {
     injectScript(chrome.extension.getURL('inject.js'));
   } else {
@@ -33,13 +31,8 @@ function shouldInject() {
   }
 }
 
-window.addEventListener('load', () => {
-  if (initialized) {
-    shouldInject();
-  }
-});
-
-chrome.runtime.onMessage.addListener((message) => {
+chrome.runtime.onMessage.addListener(message => {
+  console.log("listening to messages", message)
   if (message.name === 'startQuantum') {
     initialized = true;
     shouldInject();
@@ -47,6 +40,7 @@ chrome.runtime.onMessage.addListener((message) => {
 });
 
 window.addEventListener('message', (message) => {
+  console.log("Message sent from Inject js", message);
   if (message.data.name === undefined) return;
   if (message.data.name === 'inject') {
     setupPortIfNeeded();
@@ -70,7 +64,7 @@ const config = {
   subtree: true,
 };
 
-function subscriber(mutations) {
+const subscriber = (mutations) => {
   let fiberUpdate = true;
   let timeout;
   if (initialized) {
