@@ -3,7 +3,7 @@
 
   const extractFiber = () => {
     const hookedTree = Object.values(window.__REACT_DEVTOOLS_GLOBAL_HOOK__._fiberRoots)[0];
-    const fiber
+    let fiber
 
     for (const value of hookedTree.values()) {
       fiber = value.current;
@@ -19,7 +19,7 @@
     let name;
 
     if (elementType !== null) {
-      if (typeof elementType === 'string') name = elementType.name;
+      if (typeof elementType === 'string') name = elementType;
       if (typeof elementType === 'function') name = elementType.name;
       if (typeof elementType === 'object') name = elementType.displayName;
     }
