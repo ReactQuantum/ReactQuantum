@@ -28,12 +28,11 @@
 
         const filteredFiber = {
             name,
-            renderTime: actualDuration ? actualDuration : 'Only available in Dev Mode',
+            renderTime: actualDuration ? actualDuration : "Only available in Dev Mode",
             child,
             sibling: filter(sibling)
         };
 
-        console.log(filteredFiber.renderTime);
         return filteredFiber;
     }
 
@@ -41,7 +40,10 @@
     const root = filter(current);
 
     const d3 = fiber => {
-        if (fiber.child === null) return fiber;
+        if (fiber.child === null) {
+            fiber.child = [];
+            return fiber;
+        };
 
         const child = vertical(fiber);
         const arr = horizontal(child);
@@ -76,7 +78,7 @@
     }
 
     d3(root);
-
+    console.log(root)
     window.postMessage({
         name: 'inject',
         data: JSON.stringify(root),
