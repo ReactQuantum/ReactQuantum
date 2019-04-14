@@ -41,50 +41,53 @@ margin: 8px;
 class TreeComponent extends React.Component {
   constructor(props) {
     super(props);
-    this.mouseOver = this.mouseOver.bind(this);
+    // this.mouseOver = this.mouseOver.bind(this);
     this.state = {
       orientation: 'vertical',
     };
 
-    this.changeOrientation = this.changeOrientation.bind(this);
+    // this.changeOrientation = this.changeOrientation.bind(this);
   }
 
-  mouseOver(e) {
-    const stats = {
-      name: e.name, time: e.renderTime, individualTime: e.individualTime, props: e.props, memoizedState: e.memoizedState,
-    };
-    const { grabNodeStats } = this.props;
-    grabNodeStats(stats);
-  }
+  // mouseOver(e) {
+  //   const stats = {
+  //     name: e.name, time: e.renderTime, individualTime: e.individualTime, props: e.props, memoizedState: e.memoizedState,
+  //   };
+  //   const { grabNodeStats } = this.props;
+  //   grabNodeStats(stats);
+  // }
 
-  changeOrientation() {
-    const { orientation } = this.state;
-    if (orientation === 'vertical') {
-      this.setState({ orientation: 'horizontal' });
-    } else {
-      this.setState({ orientation: 'vertical' });
-    }
-  }
+  // changeOrientation() {
+  //   const { orientation } = this.state;
+  //   if (orientation === 'vertical') {
+  //     this.setState({ orientation: 'horizontal' });
+  //   } else {
+  //     this.setState({ orientation: 'vertical' });
+  //   }
+  // }
 
   render() {
-    const { orientation, shape } = this.state;
+    console.log(this.props);
+
+    // const { orientation, shape } = this.state;
+    const { shape } = this.state;
     const { treeData } = this.props;
     return (
       <div>
         <div id="treeWrapper" style={{ width: '100%', height: '60em', float: 'right', border: '0.5px solid #ababab', margin: '10px', boxShadow: '1.5px 1.5px 1.5px 1.5px #ababab' }}>
           <PercentColorInput updateTreeState={this.props.updateTreeState} treeData={this.props.treeData} />
-          <OrientationButtonStyled
+          {/* <OrientationButtonStyled
             id={'button2'}
             onClick={this.changeOrientation}
             counter='Orientation'>
             Change Orientation
-          </OrientationButtonStyled>
+          </OrientationButtonStyled> */}
           <div style={{ width: '98%', height: '45em' }}>
 
             <Tree
               translate={{ x: 100, y: 100 }}
-              orientation={orientation}
-              onMouseOver={this.mouseOver}
+              orientation='vertical'
+              // onMouseOver={this.mouseOver}
               nodeSvgShape={shape}
               separation={{ siblings: .6, nonSiblings: .6 }}
               data={treeData}

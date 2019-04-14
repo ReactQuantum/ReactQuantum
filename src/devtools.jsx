@@ -82,7 +82,7 @@ class App extends Component {
       console.log("Devtools listening to message from content script", message)
       // This function subtracts child render time from its own render time to get individual render time
       function addIndividualTime(treeDataArr) {
-        //&*&*&**&*&**&*&*&*&*&*&*&*&*&* start working from this line
+        //tree data from content script is being passed correctly
         const treeDataArrCopy = treeDataArr;
         for (let i = 0; i < treeDataArrCopy.length; i += 1) {
           if (treeDataArrCopy[i].memoizedProps) {
@@ -147,10 +147,12 @@ class App extends Component {
       console.log('after add individual time##############################################', tempTreeData)
       addColor(tempTreeData, green, lightGreen, yellow, orange);
       console.log('after add color###############################################', tempTreeData)
-      clearTimeout(timeout);
-      timeout = setTimeout(() => {
-        this.setState({ treeData: tempTreeData });
-      }, 750);
+      //why did it not render immediately?
+      this.setState({ treeData: tempTreeData })
+      // clearTimeout(timeout);
+      // timeout = setTimeout(() => {
+      //   this.setState({ treeData: tempTreeData });
+      // }, 750);
     });
   }
 
@@ -164,7 +166,7 @@ class App extends Component {
     });
 
     this.setState({
-      startQuantum: true,
+      startQuantum: true
     });
   }
 
