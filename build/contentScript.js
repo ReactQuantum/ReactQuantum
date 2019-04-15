@@ -64,33 +64,33 @@ const config = {
   subtree: true,
 };
 
-const subscriber = (mutations) => {
-  let fiberUpdate = true;
-  let timeout;
-  if (initialized) {
-    if (mutations.length) {
-      mutations.forEach((mutation) => {
-        if (mutation.addedNodes.length) {
-          if (mutation.addedNodes[0].nodeName === 'SCRIPT' && mutation.addedNodes[0].getAttribute('id') === 'injectScript') {
-            fiberUpdate = false;
-          }
-        }
-        if (mutation.removedNodes.length > 0) {
-          if (mutation.removedNodes[0].nodeName === 'SCRIPT' && mutation.removedNodes[0].getAttribute('id') === 'injectScript') {
-            fiberUpdate = false;
-          }
-        }
-      });
-    }
-    if (fiberUpdate) {
-      clearTimeout(timeout);
-      timeout = setTimeout(() => {
-        shouldInject();
-        fiberUpdate = false;
-      }, 750);
-    }
-  }
-}
-const observer = new MutationObserver(subscriber);
-observer.observe(target, config);
+// const subscriber = (mutations) => {
+//   let fiberUpdate = true;
+//   let timeout;
+//   if (initialized) {
+//     if (mutations.length) {
+//       mutations.forEach((mutation) => {
+//         if (mutation.addedNodes.length) {
+//           if (mutation.addedNodes[0].nodeName === 'SCRIPT' && mutation.addedNodes[0].getAttribute('id') === 'injectScript') {
+//             fiberUpdate = false;
+//           }
+//         }
+//         if (mutation.removedNodes.length > 0) {
+//           if (mutation.removedNodes[0].nodeName === 'SCRIPT' && mutation.removedNodes[0].getAttribute('id') === 'injectScript') {
+//             fiberUpdate = false;
+//           }
+//         }
+//       });
+//     }
+//     if (fiberUpdate) {
+//       clearTimeout(timeout);
+//       timeout = setTimeout(() => {
+//         shouldInject();
+//         fiberUpdate = false;
+//       }, 750);
+//     }
+//   }
+// }
+// const observer = new MutationObserver(subscriber);
+// observer.observe(target, config);
 
