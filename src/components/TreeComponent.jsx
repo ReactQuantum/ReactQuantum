@@ -67,11 +67,9 @@ class TreeComponent extends React.Component {
   // }
 
   render() {
-    console.log(this.props);
-
     // const { orientation, shape } = this.state;
-    const { shape } = this.state;
     const { treeData } = this.props;
+    console.log(treeData)
     return (
       <div>
         <div id="treeWrapper" style={{ width: '100%', height: '60em', float: 'right', border: '0.5px solid #ababab', margin: '10px', boxShadow: '1.5px 1.5px 1.5px 1.5px #ababab' }}>
@@ -85,10 +83,10 @@ class TreeComponent extends React.Component {
           <div style={{ width: '98%', height: '45em' }}>
 
             <Tree
-              translate={{ x: 100, y: 100 }}
+              // translate={{ x: 100, y: 100 }}
               orientation='vertical'
               // onMouseOver={this.mouseOver}
-              nodeSvgShape={shape}
+              nodeSvgShape={{ shape: 'ellipse', shapeProps: { rx: 20, ry: 20, fill: '#80b74c' } }}
               separation={{ siblings: .6, nonSiblings: .6 }}
               data={treeData}
             />

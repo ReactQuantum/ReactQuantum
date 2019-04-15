@@ -80,7 +80,7 @@ class App extends Component {
     post({ message: 'initialize' });
     port.onMessage.addListener((message) => {
       console.log("Devtools listening to message from content script", message)
-      // This function subtracts child render time from its own render time to get individual render time
+      // This function subtracts children render time from its own render time to get individual render time
       function addIndividualTime(treeDataArr) {
         //tree data from content script is being passed correctly
         const treeDataArrCopy = treeDataArr;
@@ -91,23 +91,23 @@ class App extends Component {
           if (treeDataArrCopy[i].renderTime === 0) {
             treeDataArrCopy[i].individualTime = 0;
           } else {
-            let sumchildTime = 0;
-            for (let j = 0; j < treeDataArrCopy[i].child.length; j += 1) {
-              const currentNode = treeDataArrCopy[i].child[j];
-              if (currentNode.renderTime === 0 && currentNode.child > 0) {
-                for (let k = 0; k < currentNode.child.length; k += 1) {
-                  sumchildTime += currentNode.child[k].renderTime;
+            let sumchildrenTime = 0;
+            for (let j = 0; j < treeDataArrCopy[i].children.length; j += 1) {
+              const currentNode = treeDataArrCopy[i].children[j];
+              if (currentNode.renderTime === 0 && currentNode.children > 0) {
+                for (let k = 0; k < currentNode.children.length; k += 1) {
+                  sumchildrenTime += currentNode.children[k].renderTime;
                 }
               } else {
-                sumchildTime += treeDataArrCopy[i].child[j].renderTime;
+                sumchildrenTime += treeDataArrCopy[i].children[j].renderTime;
               }
             }
-            treeDataArrCopy[i].individualTime = treeDataArrCopy[i].renderTime - sumchildTime;
+            treeDataArrCopy[i].individualTime = treeDataArrCopy[i].renderTime - sumchildrenTime;
           }
         }
         for (let i = 0; i < treeDataArrCopy.length; i += 1) {
-          if (treeDataArrCopy[i].child.length > 0) {
-            addIndividualTime(treeDataArrCopy[i].child);
+          if (treeDataArrCopy[i].children.length > 0) {
+            addIndividualTime(treeDataArrCopy[i].children);
           }
         }
       }
@@ -129,8 +129,8 @@ class App extends Component {
           } else {
             workToBeDone[0].nodeSvgShape = { shape: 'ellipse', shapeProps: { rx: 20, ry: 20, fill: '#e74e2c' } };
           }
-          for (let i = 0; i < workToBeDone[0].child.length; i += 1) {
-            workToBeDone.push(workToBeDone[0].child[i]);
+          for (let i = 0; i < workToBeDone[0].children.length; i += 1) {
+            workToBeDone.push(workToBeDone[0].children[i]);
           }
           workToBeDone.shift();
         }
@@ -142,12 +142,13 @@ class App extends Component {
       } = this.state;
 
       let tempTreeData = JSON.parse(message.message);
-      tempTreeData = tempTreeData.child;
+      tempTreeData = tempTreeData.children;
       addIndividualTime(tempTreeData);
       console.log('after add individual time##############################################', tempTreeData)
       addColor(tempTreeData, green, lightGreen, yellow, orange);
       console.log('after add color###############################################', tempTreeData)
       //why did it not render immediately?
+
       this.setState({ treeData: tempTreeData })
       // clearTimeout(timeout);
       // timeout = setTimeout(() => {
@@ -182,7 +183,6 @@ class App extends Component {
     });
   }
 
-
   render() {
     const {
       nodeinfo, treeData, green, lightGreen, yellow, orange, orientation, startQuantum,
@@ -191,7 +191,6 @@ class App extends Component {
       <WrapperStyled>
         <div>
           <img src={image} href="https://github.com/ReactQuantum/ReactQuantum" alt="" />
-
           {
             (startQuantum === false)
               ? (
@@ -229,7 +228,7 @@ class App extends Component {
                       <TreeComponent
                         updateTreeState={this.updateTreeState}
                         orientation={orientation}
-                        treeData={treeData}
+                        treeData={this.state.treeData}
                         grabNodeStats={this.grabNodeStats}
                       />
                     </div>

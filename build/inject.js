@@ -36,28 +36,6 @@
         return filteredFiber;
     }
 
-    const current = extractFiber();
-    const root = filter(current);
-
-    const d3 = fiber => {
-        if (fiber.child === null) {
-            fiber.child = [];
-            return fiber;
-        };
-
-        const child = vertical(fiber);
-        const arr = horizontal(child);
-        fiber.child = arr;
-        let i = arr.length - 1;
-
-        while (i >= 0) {
-            d3(arr[i]);
-            i--;
-        }
-
-        return fiber;
-    }
-
     const vertical = fiber => {
         let nthCh = fiber;
         nthCh = fiber.child;
@@ -75,6 +53,29 @@
         }
 
         return arr;
+    }
+
+    const current = extractFiber();
+    const root = filter(current);
+
+    const d3 = fiber => {
+        if (fiber.child === null) {
+            fiber.children = [];
+            return;
+        };
+
+        const child = vertical(fiber);
+        const arr = horizontal(child);
+        delete fiber.child;
+        fiber.children = arr;
+        let i = arr.length - 1;
+
+        while (i >= 0) {
+            d3(arr[i]);
+            i--;
+        }
+
+        return fiber;
     }
 
     d3(root);
