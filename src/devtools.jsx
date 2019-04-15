@@ -6,8 +6,8 @@ import TreeComponent from './components/TreeComponent.jsx';
 import Button from './components/Button';
 import { Stats, StatsStyled } from './components/Stats';
 import image from './assets/ReactQuantumLogo.png';
-import Tree from "./Tree";
-import data from "./data";
+import Tree from "./components/Tree";
+import data from "./components/data";
 
 const WrapperStyled = styled.div`
   width: 100%;
