@@ -70,7 +70,6 @@ class App extends Component {
   componentDidMount() {
     const port = chrome.runtime.connect(null, { name: 'devTools' });
     const { tabId } = chrome.devtools.inspectedWindow;
-    let timeout;
 
     function post(message) {
       const newMessage = message;
@@ -150,10 +149,6 @@ class App extends Component {
       //why did it not render immediately?
 
       this.setState({ treeData: tempTreeData })
-      // clearTimeout(timeout);
-      // timeout = setTimeout(() => {
-      //   this.setState({ treeData: tempTreeData });
-      // }, 750);
     });
   }
 

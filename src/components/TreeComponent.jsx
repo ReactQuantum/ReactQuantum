@@ -83,12 +83,13 @@ class TreeComponent extends React.Component {
           <div style={{ width: '98%', height: '45em' }}>
 
             <Tree
-              // translate={{ x: 100, y: 100 }}
+              translate={{ x: 100, y: 100 }}
               orientation='vertical'
               // onMouseOver={this.mouseOver}
               nodeSvgShape={{ shape: 'ellipse', shapeProps: { rx: 20, ry: 20, fill: '#80b74c' } }}
               separation={{ siblings: .6, nonSiblings: .6 }}
               data={treeData}
+              transitionDuration={0}
             />
           </div>
 

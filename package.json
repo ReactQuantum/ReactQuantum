@@ -30,7 +30,7 @@
   "dependencies": {
     "path": "^0.12.7",
     "react": "^16.8.0-alpha.1",
-    "react-d3-tree": "^1.12.2",
+    "react-d3-tree": "^1.12.3",
     "react-dom": "^16.8.0-alpha.1",
     "react-json-view": "^1.19.1",
     "require": "^2.4.20",
