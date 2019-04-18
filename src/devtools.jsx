@@ -6,7 +6,7 @@ import TreeComponent from './components/TreeComponent.jsx';
 import Button from './components/Button';
 import { Stats, StatsStyled } from './components/Stats';
 import image from './assets/ReactQuantumLogo.png';
-import Tree from "./components/Tree";
+// import Tree from "./components/Tree";
 
 const WrapperStyled = styled.div`
   width: 100%;
@@ -221,13 +221,13 @@ class App extends Component {
                     </StatsPanelStyled> */}
 
                     <div style={{ width: '45%', height: '60em' }}>
-                      {/* <TreeComponent
-                        updateTreeState={this.updateTreeState}
-                        orientation={orientation}
+                      <TreeComponent
+                        // updateTreeState={this.updateTreeState}
+                        // orientation={orientation}
                         treeData={this.state.treeData}
-                        grabNodeStats={this.grabNodeStats}
-                      /> */}
-                      <Tree treeData={this.state.treeData} width={600} height={500} />;
+                      // grabNodeStats={this.grabNodeStats}
+                      />
+                      {/* <Tree treeData={this.state.treeData} width={600} height={500} />; */}
 
                     </div>
                   </ContentStyled>

@@ -1,5 +1,7 @@
-import React from 'react';
-import Tree from 'react-d3-tree';
+import React, { Suspense } from 'react';
+// import Tree from 'react-d3-tree';
+
+const Tree = React.lazy(() => import('react-d3-tree'));
 import styled from 'styled-components';
 import PercentColorInput from './PercentColorInput';
 
@@ -73,7 +75,7 @@ class TreeComponent extends React.Component {
     return (
       <div>
         <div id="treeWrapper" style={{ width: '100%', height: '60em', float: 'right', border: '0.5px solid #ababab', margin: '10px', boxShadow: '1.5px 1.5px 1.5px 1.5px #ababab' }}>
-          <PercentColorInput updateTreeState={this.props.updateTreeState} treeData={this.props.treeData} />
+          {/* <PercentColorInput updateTreeState={this.props.updateTreeState} treeData={this.props.treeData} /> */}
           {/* <OrientationButtonStyled
             id={'button2'}
             onClick={this.changeOrientation}
@@ -81,16 +83,23 @@ class TreeComponent extends React.Component {
             Change Orientation
           </OrientationButtonStyled> */}
           <div style={{ width: '98%', height: '45em' }}>
+            {
+              (treeData !== undefined) ? (
+                <Suspense fallback={<div>Loading...</div>}>
+                  <Tree
+                    // translate={{ x: 100, y: 100 }}
+                    // orientation='vertical'
+                    // onMouseOver={this.mouseOver}
+                    // nodeSvgShape={{ shape: 'ellipse', shapeProps: { rx: 20, ry: 20, fill: '#80b74c' } }}
+                    // separation={{ siblings: .6, nonSiblings: .6 }}
+                    data={treeData}
 
-            <Tree
-              translate={{ x: 100, y: 100 }}
-              orientation='vertical'
-              // onMouseOver={this.mouseOver}
-              nodeSvgShape={{ shape: 'ellipse', shapeProps: { rx: 20, ry: 20, fill: '#80b74c' } }}
-              separation={{ siblings: .6, nonSiblings: .6 }}
-              data={treeData}
-              transitionDuration={0}
-            />
+                  // transitionDuration={0}
+                  />
+                </Suspense>
+              ) : null
+            }
+
           </div>
 
         </div>
