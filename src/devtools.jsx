@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
 import { render } from 'react-dom';
 import styled from 'styled-components';
-import ReactJson from 'react-json-view';
 import TreeComponent from './components/TreeComponent.jsx';
 import Button from './components/Button';
 import { Stats, StatsStyled } from './components/Stats';
 import image from './assets/ReactQuantumLogo.png';
-// import Tree from "./components/Tree";
 
 const WrapperStyled = styled.div`
   width: 100%;

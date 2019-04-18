@@ -1,7 +1,6 @@
 import React, { Suspense } from 'react';
-// import Tree from 'react-d3-tree';
 
-const Tree = React.lazy(() => import('react-d3-tree'));
+// const Tree = React.lazy(() => import('react-d3-tree'));
 import styled from 'styled-components';
 import PercentColorInput from './PercentColorInput';
 
@@ -43,30 +42,13 @@ margin: 8px;
 class TreeComponent extends React.Component {
   constructor(props) {
     super(props);
-    // this.mouseOver = this.mouseOver.bind(this);
     this.state = {
       orientation: 'vertical',
     };
 
-    // this.changeOrientation = this.changeOrientation.bind(this);
   }
 
-  // mouseOver(e) {
-  //   const stats = {
-  //     name: e.name, time: e.renderTime, individualTime: e.individualTime, props: e.props, memoizedState: e.memoizedState,
-  //   };
-  //   const { grabNodeStats } = this.props;
-  //   grabNodeStats(stats);
-  // }
 
-  // changeOrientation() {
-  //   const { orientation } = this.state;
-  //   if (orientation === 'vertical') {
-  //     this.setState({ orientation: 'horizontal' });
-  //   } else {
-  //     this.setState({ orientation: 'vertical' });
-  //   }
-  // }
 
   render() {
     // const { orientation, shape } = this.state;
@@ -86,16 +68,7 @@ class TreeComponent extends React.Component {
             {
               (treeData !== undefined) ? (
                 <Suspense fallback={<div>Loading...</div>}>
-                  <Tree
-                    // translate={{ x: 100, y: 100 }}
-                    // orientation='vertical'
-                    // onMouseOver={this.mouseOver}
-                    // nodeSvgShape={{ shape: 'ellipse', shapeProps: { rx: 20, ry: 20, fill: '#80b74c' } }}
-                    // separation={{ siblings: .6, nonSiblings: .6 }}
-                    data={treeData}
 
-                  // transitionDuration={0}
-                  />
                 </Suspense>
               ) : null
             }
