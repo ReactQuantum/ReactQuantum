@@ -30,19 +30,12 @@
     "webpack-dev-server": "^3.1.14"
   },
   "dependencies": {
-    "@vx/gradient": "0.0.183",
-    "@vx/group": "0.0.183",
-    "@vx/hierarchy": "0.0.183",
-    "@vx/shape": "0.0.184",
-    "classnames": "^2.2.6",
-    "d3-hierarchy": "^1.1.8",
+    "d3": "^5.9.2",
     "path": "^0.12.7",
     "prop-types": "^15.7.2",
     "react": "^16.8.0-alpha.1",
-    "react-d3-tree": "^1.12.3",
     "react-dom": "^16.8.0-alpha.1",
-    "react-json-view": "^1.19.1",
-    "react-move": "^5.2.1",
+    "react-faux-dom": "^4.5.0",
     "require": "^2.4.20",
     "styled-components": "^4.1.3"
   }
