@@ -2,7 +2,8 @@ import React, { Suspense } from 'react';
 // const Tree = React.lazy(() => import('react-d3-tree'));
 import styled from 'styled-components';
 import PercentColorInput from './PercentColorInput';
-
+import * as d3 from 'd3'
+import { withFauxDOM } from 'react-faux-dom'
 
 const OrientationButtonStyled = styled.div`
 -moz-box-shadow: 3px 4px 0px 0px #3dc21b;
@@ -46,38 +47,51 @@ class TreeComponent extends React.Component {
     };
 
   }
+  componentDidMount() {
+    const faux = this.props.connectFauxDOM('div', 'chart')
+    d3.select(faux)
+      .append('div')
+      .html('Hello World!')
+    this.props.animateFauxDOM(800)
+  }
 
   render() {
-    // const { orientation, shape } = this.state;
     const { treeData } = this.props;
     console.log(treeData)
     return (
       <div>
-        <div id="treeWrapper" style={{ width: '100%', height: '60em', float: 'right', border: '0.5px solid #ababab', margin: '10px', boxShadow: '1.5px 1.5px 1.5px 1.5px #ababab' }}>
-          {/* <PercentColorInput updateTreeState={this.props.updateTreeState} treeData={this.props.treeData} /> */}
-          {/* <OrientationButtonStyled
-            id={'button2'}
-            onClick={this.changeOrientation}
-            counter='Orientation'>
-            Change Orientation
-          </OrientationButtonStyled> */}
-          <div style={{ width: '98%', height: '45em' }}>
-            {
-              (treeData !== undefined) ? (
-                <Suspense fallback={<div>Loading...</div>}>
-
-                </Suspense>
-              ) : null
-            }
-
-          </div>
-
+        <h2>Here is some fancy data:</h2>
+        <div className='renderedD3'>
+          {this.props.chart}
         </div>
       </div>
+      // <div>
+      //   <div id="treeWrapper" style={{ width: '100%', height: '60em', float: 'right', border: '0.5px solid #ababab', margin: '10px', boxShadow: '1.5px 1.5px 1.5px 1.5px #ababab' }}>
+      //     {/* <PercentColorInput updateTreeState={this.props.updateTreeState} treeData={this.props.treeData} /> */}
+      //     {/* <OrientationButtonStyled
+      //       id={'button2'}
+      //       onClick={this.changeOrientation}
+      //       counter='Orientation'>
+      //       Change Orientation
+      //     </OrientationButtonStyled> */}
+      //     <div style={{ width: '98%', height: '45em' }}>
+
+      //       {/* {
+      //         (treeData !== undefined) ? (
+      //           <Suspense fallback={<div>Loading...</div>}>
+
+      //           </Suspense>
+      //         ) : null
+      //       } */}
+
+      //     </div>
+
+      //   </div>
+      // </div>
 
     );
   }
 }
 
 
-export default TreeComponent;
+export default withFauxDOM(TreeComponent)
