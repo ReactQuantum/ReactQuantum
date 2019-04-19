@@ -42,52 +42,25 @@ margin: 8px;
 class TreeComponent extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      orientation: 'vertical',
-    };
 
   }
   componentDidMount() {
     const faux = this.props.connectFauxDOM('div', 'chart')
+    console.log(faux)
     d3.select(faux)
-      .append('div')
+      .append('span')
       .html('Hello World!')
     this.props.animateFauxDOM(800)
   }
 
   render() {
-    const { treeData } = this.props;
-    console.log(treeData)
+    console.log("wljasl;fdkja;flkajsdf;lkj", this.props)
     return (
       <div>
-        <h2>Here is some fancy data:</h2>
-        <div className='renderedD3'>
+        <div id="treeWrapper" style={{ width: '100%', height: '60em', float: 'right', border: '0.5px solid #ababab', margin: '10px', boxShadow: '1.5px 1.5px 1.5px 1.5px #ababab' }}>
           {this.props.chart}
         </div>
       </div>
-      // <div>
-      //   <div id="treeWrapper" style={{ width: '100%', height: '60em', float: 'right', border: '0.5px solid #ababab', margin: '10px', boxShadow: '1.5px 1.5px 1.5px 1.5px #ababab' }}>
-      //     {/* <PercentColorInput updateTreeState={this.props.updateTreeState} treeData={this.props.treeData} /> */}
-      //     {/* <OrientationButtonStyled
-      //       id={'button2'}
-      //       onClick={this.changeOrientation}
-      //       counter='Orientation'>
-      //       Change Orientation
-      //     </OrientationButtonStyled> */}
-      //     <div style={{ width: '98%', height: '45em' }}>
-
-      //       {/* {
-      //         (treeData !== undefined) ? (
-      //           <Suspense fallback={<div>Loading...</div>}>
-
-      //           </Suspense>
-      //         ) : null
-      //       } */}
-
-      //     </div>
-
-      //   </div>
-      // </div>
 
     );
   }
