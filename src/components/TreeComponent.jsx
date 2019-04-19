@@ -1,5 +1,4 @@
 import React, { Suspense } from 'react';
-
 // const Tree = React.lazy(() => import('react-d3-tree'));
 import styled from 'styled-components';
 import PercentColorInput from './PercentColorInput';
@@ -47,8 +46,6 @@ class TreeComponent extends React.Component {
     };
 
   }
-
-
 
   render() {
     // const { orientation, shape } = this.state;
