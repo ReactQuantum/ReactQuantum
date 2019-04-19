@@ -120,22 +120,6 @@ class App extends Component {
               : (
                 <div className="content">
                   <ContentStyled>
-                    {/* <StatsPanelStyled>
-                      <Stats stats={nodeinfo} />
-                      <StatsStyled style={{ marginTop: '-10px' }}>
-                        <h1>Current State:</h1>
-                      </StatsStyled>
-                      <StatsWindowStyled>
-                        <ReactJson src={nodeinfo.memoizedState} />
-                      </StatsWindowStyled>
-                      <StatsStyled>
-                        <h1>Props:</h1>
-                      </StatsStyled>
-                      <StatsWindowStyled>
-                        <ReactJson src={nodeinfo.memoizedProps} />
-                      </StatsWindowStyled>
-                    </StatsPanelStyled> */}
-
                     <div style={{ width: '45%', height: '60em' }}>
                       <TreeComponent
                         treeData={this.state.treeData}
