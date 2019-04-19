@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { render } from 'react-dom';
 import styled from 'styled-components';
 import TreeComponent from './components/TreeComponent.jsx';
 import Button from './components/Button';
