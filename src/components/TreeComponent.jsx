@@ -2,8 +2,9 @@ import React, { Suspense } from 'react';
 // const Tree = React.lazy(() => import('react-d3-tree'));
 import styled from 'styled-components';
 import PercentColorInput from './PercentColorInput';
-import * as d3 from 'd3'
-import { withFauxDOM } from 'react-faux-dom'
+import * as d3 from 'd3';
+import { withFauxDOM } from 'react-faux-dom';
+import SVGChart from './Shit.js';
 
 const OrientationButtonStyled = styled.div`
 -moz-box-shadow: 3px 4px 0px 0px #3dc21b;
@@ -44,21 +45,23 @@ class TreeComponent extends React.Component {
     super(props);
 
   }
-  componentDidMount() {
-    const faux = this.props.connectFauxDOM('div', 'chart')
-    console.log(faux)
-    d3.select(faux)
-      .append('span')
-      .html('Hello World!')
-    this.props.animateFauxDOM(800)
-  }
+
+  // componentDidMount() {
+  //   const faux = this.props.connectFauxDOM('div', 'chart')
+  //   // console.log(faux)
+  //   // d3.select(faux)
+  //   //   .append('span')
+  //   //   .html('Hello World!')
+  //   // this.props.animateFauxDOM(800)
+  // }
+
+
 
   render() {
-    console.log("wljasl;fdkja;flkajsdf;lkj", this.props)
     return (
       <div>
         <div id="treeWrapper" style={{ width: '100%', height: '60em', float: 'right', border: '0.5px solid #ababab', margin: '10px', boxShadow: '1.5px 1.5px 1.5px 1.5px #ababab' }}>
-          {this.props.chart}
+          <SVGChart treeData={this.props.treeData}></SVGChart>
         </div>
       </div>
 
@@ -67,4 +70,4 @@ class TreeComponent extends React.Component {
 }
 
 
-export default withFauxDOM(TreeComponent)
+export default TreeComponent

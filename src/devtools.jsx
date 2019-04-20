@@ -48,10 +48,7 @@ class App extends Component {
     this.state = {
       nodeinfo: 5,
       startQuantum: false,
-      treeData: {
-        name: 'PLEASE REFRESH PAGE',
-        nodeSvgShape: { shapeProps: { fill: 'white' } },
-      },
+      treeData: null,
       green: 0.005,
       lightGreen: 0.01,
       yellow: 0.05,
