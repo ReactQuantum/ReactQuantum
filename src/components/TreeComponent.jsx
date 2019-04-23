@@ -50,10 +50,11 @@ class TreeComponent extends React.Component {
     return (
       <div>
         <div id="treeWrapper" style={{ width: '100%', height: '60em', float: 'right', border: '0.5px solid #ababab', margin: '10px', boxShadow: '1.5px 1.5px 1.5px 1.5px #ababab' }}>
-          {this.props.treeData === null ? null : <SVGChart treeData={this.props.treeData}></SVGChart>
 
-          }
         </div>
+        {this.props.treeData === null ? null : <SVGChart treeData={this.props.treeData}></SVGChart>
+
+        }
       </div>
 
     );
