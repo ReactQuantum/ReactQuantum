@@ -46,22 +46,13 @@ class TreeComponent extends React.Component {
 
   }
 
-  // componentDidMount() {
-  //   const faux = this.props.connectFauxDOM('div', 'chart')
-  //   // console.log(faux)
-  //   // d3.select(faux)
-  //   //   .append('span')
-  //   //   .html('Hello World!')
-  //   // this.props.animateFauxDOM(800)
-  // }
-
-
-
   render() {
     return (
       <div>
         <div id="treeWrapper" style={{ width: '100%', height: '60em', float: 'right', border: '0.5px solid #ababab', margin: '10px', boxShadow: '1.5px 1.5px 1.5px 1.5px #ababab' }}>
-          <SVGChart treeData={this.props.treeData}></SVGChart>
+          {this.props.treeData === null ? null : <SVGChart treeData={this.props.treeData}></SVGChart>
+
+          }
         </div>
       </div>
 
