@@ -1,26 +1,30 @@
 import React from 'react'
 import ReactFauxDOM from 'react-faux-dom'
 import * as d3 from 'd3';
-import './../styles/Shit.css';
+import '../styles/Shit.css';
 
 class SVGChart extends React.Component {
-
+  constructor(props) {
+    super(props)
+  }
   render() {
     const div = new ReactFauxDOM.Element('div')
-    var treeData =
-    {
-      "name": "Top Level",
-      "children": [
-        {
-          "name": "Level 2: A",
-          "children": [
-            { "name": "Son of A" },
-            { "name": "Daughter of A" }
-          ]
-        },
-        { "name": "Level 2: B" }
-      ]
-    };
+    console.log("shit js!!!!!!!!!!!!!!!!!!", this.props.treeData[0])
+    var treeData = this.props.treeData[0]
+    // {
+    //   "name": "Top Level",
+
+    //   "children": [
+    //     {
+    //       "name": "Level 2: A",
+    //       "children": [
+    //         { "name": "Son of A" },
+    //         { "name": "Daughter of A" }
+    //       ]
+    //     },
+    //     { "name": "Level 2: B" }
+    //   ]
+    // };
 
     // set the dimensions and margins of the diagram
     var margin = { top: 40, right: 30, bottom: 50, left: 30 },
